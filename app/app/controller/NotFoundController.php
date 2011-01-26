@@ -18,11 +18,11 @@ class NotFoundController extends Controller{
 
         // if match content by title
         if ( $oContent->get( $title ) ) {
-            $oFucky = Liber::loadClass('Fucky', true);
-            $fucky_cache = $this->view()->template()->load('content_page.html', Array('content'=>$oContent->toArray()), true);
-            if ( $oFucky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$title.'.html', $fucky_cache ) ) {
+            $oFunky = Liber::loadClass('Funky', true);
+            $funky_cache = $this->view()->template()->load('content_page.html', Array('content'=>$oContent->toArray()), true);
+            if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$title.'.html', $funky_cache ) ) {
                 //$url = Liber::conf('APP_URL').Liber::conf('CONTENT_PATH').rawurlencode($title).'.html';
-                die($fucky_cache);
+                die($funky_cache);
             }
         }
 
