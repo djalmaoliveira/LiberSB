@@ -1,0 +1,73 @@
+    <script type="text/javascript" src="<?url_asset_('/ckeditor')?>/ckeditor.js"></script>
+    <script type="text/javascript" src="<?url_asset_('/ckeditor')?>/adapters/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/editor.css')?>">
+<br/>
+<div class='form_area'>
+
+    <div class='tabs'>Editing</div>
+    <div class='tabs'>Visualization</div>
+
+    <div class='clear'></div>
+    <div id="editor_tab_area">
+
+        <div id='ckeditor_area' style='visibility:hidden'>
+            <form action="" method="post" id='frmEditor'>
+                <?form_hidden_('content_id', $content)?>
+                <?form_hidden_('content_type_id', $content_type_id)?>
+                <span class='admin_field'>Title:</span> <?form_input_('title', $content, 'class="admin_input"')?>
+
+                <p>
+                        <span class='admin_field'>Body:</span>
+                        <br />
+                        <?form_textarea_('body', $content, 'class="jquery_ckeditor" cols="80" rows="10"')?>
+                </p>
+                <p>
+                    <?form_button_('btnSave', 'Salvar', 'onclick="save( )"');?> <span id='out_save'></span>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+    //<![CDATA[
+            function save() {
+                $('#out_save').html('');
+                buttonClick($("#btnSave"), "Aguarde, salvando...", function () {
+                    $.post('<?=$action?>', $('#frmEditor').serialize(),function (resp){
+                        $('#out_save').html(resp.content.text);
+                        $('#content_id').val(resp.content.content_id);
+                    },'json');
+                });
+            }
+
+            CKEDITOR.basePath='<?url_asset_('/ckeditor/')?>';
+            $(function()
+            {
+                var config = {
+                    baseHref: '<?url_asset_('/ckeditor/')?>',
+                    filebrowserUploadUrl : '<?url_to_('/admin/content/upload')?>',
+                    skin: 'v2',
+                    contentsCss: '',
+                    customConfig : '',
+                    toolbar :
+                            [
+                                ['Font','FontSize','Format','Bold', 'Italic', 'TextColor','BGColor'],
+                                ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                                [ 'NumberedList', 'BulletedList','Table' ],
+                                ['Link', 'Image', 'Flash'],
+                                ['About']
+                            ]
+                };
+
+                // Initialize the editor.
+                // Callback function can be passed and executed after full instance creation.
+                $('.jquery_ckeditor').ckeditor(config, function(){
+                    $("#ckeditor_area").css('visibility', 'visible');
+                });
+            });
+
+
+
+    //]]>
+    </script>

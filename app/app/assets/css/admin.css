@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    color: #707b84;
+}
+
+#menu_bar {
+    background-color:#bfbfbf;
+    width:100%;
+    float:left;
+    height:34px;    /* height of background of menu bar*/
+    border: #999999 1px solid;
+}
+
+.form_area {
+    margin:10px;
+    font-size:1.2em;
+}
+
+.form_area .tabs  {
+    padding:5px;
+    border:#8a8a8a 1px solid;
+    float:left;
+    margin-right:5px;
+    font-size:1.2em;
+    font-weight:bold;
+    cursor:pointer;
+    background-color:#dbdbdb;    
+    color:white;
+
+    -moz-border-radius: 10px 0px 10px 0px;
+    border-radius: 10px 0px 10px 0px;
+    -webkit-border-radius: 10px 0px 10px 0px;
+}
+
+/* rounded area */
+#search_area, #editor_tab_area {
+    background-color:#bfbfbf;
+    color:black;
+    padding:10px;
+    border:#8a8a8a 1px solid;    
+    -moz-border-radius: 0px 10px 10px 10px;
+    border-radius: 0px 10px 10px 10px;
+    -webkit-border-radius: 0px 10px 10px 10px;
+}
+
+
+
+.clear {
+    clear:both;
+}
+
+.admin_field {
+}
+
+/* inputs */
+button, .admin_input {
+    font-size:1.2em;
+}
+.admin_input  {
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+}
+
+/* form search */
+.link_edit {
+    color:blue;
+}
+.link_delete {
+    color:red;
+}
+.rows:hover {
+    background-color: white;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    
+}
+

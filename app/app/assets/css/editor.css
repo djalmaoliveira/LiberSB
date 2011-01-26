@@ -1,0 +1,20 @@
+
+.editor_field_desc {
+    font-size:1.2em;
+    font-weight:bold;
+    color:white;
+}
+
+#title  {
+
+    width:500px;
+    border-style:none;
+    padding:3px;
+}
+
+#frmEditor #out_save {
+    color:#383838;
+}
+
+
+

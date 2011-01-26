@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title><?html_title_();?></title>
+
+	<script type="text/javascript" src="<? url_asset_('/js/jquery.js')?>"></script>
+	<script type="text/javascript" src="<?url_asset_('/js/main.js')?>"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css')?>">
+    <? html_header_(); ?>
+</head>
+<?$url=url_to_('/', true);?>
+<body>
+<div id="templatemo_header_wrapper">
+    <div id="templatemo_header" >
+        <div id="site_title">
+            <h1><a href="<?=$url?>" target="_parent"><span class='app_title'>Personal Blog</span></a></h1>
+        </div>
+        <span class='description'></span>
+    </div> <!-- end of templatemo_header -->
+</div> <!-- end of templatemo_menu_wrapper -->
+
+<div id="templatemo_menu_wrapper">
+
+    <div id="templatemo_menu">
+        <ul>
+            <li><a href="<?=$url?>" >Home</a></li>
+            <li><a href="<?=$url?>Quem-Somos" >Quem Somos</a></li>
+            <li><a href="<?=$url?>Eventos" >Eventos</a></li>
+            <li><a href="<?=$url?>Notícias" >Notícias</a></li>
+            <li><a href="<?=$url?>Dicas" >Dicas</a></li>
+            <li><a href="<?=$url?>contato">Contato</a></li>
+        </ul>
+
+    </div> <!-- end of templatemo_menu -->
+</div>
+
+
+<?=$content ?>
+
+<div id="templatemo_footer_wrapper">
+
+    <div id="templatemo_footer">
+
+        <ul class="footer_menu">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="http://www.templatemo.com" target="_parent">Templates</a></li>
+                    <li><a href="http://www.flashmo.com" target="_parent">Flash Files</a></li>
+                    <li><a href="http://www.koflash.com" target="_parent">Gallery</a></li>
+                    <li><a href="#">Members</a></li>
+                    <li class="last_menu"><a href="#">Contact Us</a></li>
+                </ul>
+
+                Copyright © 2048 <a href="#">Your Company Name</a> |
+                <a href="http://www.iwebsitetemplate.com" target="_parent">Website Templates</a> by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a></div>
+
+</div>
+
+
+</body>
+</html>

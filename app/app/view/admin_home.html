@@ -1,0 +1,53 @@
+<?
+html_header_('css', 'admin.css');
+html_header_('css', 'superfish.css');
+//html_header_('css', 'superfish-navbar.css');
+html_header_('js', 'hoverIntent.js');
+html_header_('js', 'superfish.js');
+html_header_('js', 'admin.js');
+html_header_('js', 'util.js');
+?>
+<script type="text/javascript">
+    // initialise plugins
+    $(document).ready(function(){
+        $("ul.sf-menu").superfish({
+            delay       : 10,
+            speed       : 10
+        });
+    });
+</script>
+<div id='menu_bar'>
+    <ul class="sf-menu">
+            <li class="current">
+                <a href="#content">Content</a>
+                <ul>
+                    <?  foreach($content_menu as $content_type_id => $menu) { ?>
+                        <?  if ( $menu['type'] == 1 ) {?>
+
+                            <li>
+                                <a href="javascript:loadPage('<?url_to_('/admin/content/edit?id='.$menu['content_id'])?>')"><?=$menu['description']?></a>
+                            </li>
+
+                        <?  } else { ?>
+                            <li class="current">
+                                <a href="javascript:void()"><?=$menu['description']?></a>
+                                <ul>
+                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/search?content_type_id='.$content_type_id)?>')">Procurar</a></li>
+                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">Adicionar</a></li>
+                                </ul>
+                            </li>
+                        <?  } ?>
+                    <?  } ?>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#">Configurações</a>
+            </li>
+            <li>
+                <a href="#">Sair</a>
+            </li>
+    </ul>
+</div>
+<br/>
+<span id='main_area' style='float:left'></span>
