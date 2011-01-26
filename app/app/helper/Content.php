@@ -14,7 +14,7 @@ function content_show_($aContent, $return=false) {
     $html = "
         <div class=\"content_box\">
 
-            <h2><a href='".url_to_('/content/'.url_clean_($aContent['title'], true).'.html', true)."'>".$aContent['title']."</a></h2>
+            <h2><a href='".url_to_('/content/'.rawurlencode($aContent['title']).'.html', true)."'>".$aContent['title']."</a></h2>
             ".date('m/d/Y',strtotime($aContent['datetime']))."
             <br/><br/>
             <p>".$aContent['body']."</p>

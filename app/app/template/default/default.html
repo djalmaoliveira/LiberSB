@@ -25,11 +25,11 @@
     <div id="templatemo_menu">
         <ul>
             <li><a href="<?=$url?>" >Home</a></li>
-            <li><a href="<?=$url?>Quem-Somos" >Quem Somos</a></li>
-            <li><a href="<?=$url?>Eventos" >Eventos</a></li>
-            <li><a href="<?=$url?>Notícias" >Notícias</a></li>
-            <li><a href="<?=$url?>Dicas" >Dicas</a></li>
-            <li><a href="<?=$url?>contato">Contato</a></li>
+            <li><a href="<?=$url.rawurlencode('Quem Somos')?>" >Quem Somos</a></li>
+            <li><a href="<?=$url.rawurlencode('Eventos')?>" >Eventos</a></li>
+            <li><a href="<?=$url.rawurlencode('Notícias')?>" >Notícias</a></li>
+            <li><a href="<?=$url.rawurlencode('Dicas')?>" >Dicas</a></li>
+            <li><a href="<?=$url.rawurlencode('contato')?>">Contato</a></li>
         </ul>
 
     </div> <!-- end of templatemo_menu -->

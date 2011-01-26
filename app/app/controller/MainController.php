@@ -34,7 +34,9 @@ class MainController extends Controller{
 
     function aa() {
         $o = Liber::loadClass('Fucky', true);
-        $o->clean( Liber::conf('ROOT_PATH').Liber::conf('CONTENT_PATH') );
+//echo Liber::conf('APP_ROOT');
+//print_r($_SERVER);
+        $o->clean( Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH') );
     }
 
     /* load contents page by content_type */

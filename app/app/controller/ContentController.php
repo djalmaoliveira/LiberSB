@@ -26,6 +26,8 @@ class ContentController extends Controller {
             $oContent->loadFrom( Input::post() );
             $oContent->field('datetime', date('Y-m-d H:i:s'));
             if ( $oContent->save() ) {
+                $oFucky = Liber::loadClass('Fucky', true);
+                $oFucky->clean(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$oContent->field('title').'.html');
                 die( jsonout('ok', Array('text'=>'Documento salvo às '.date('H:i:s'), 'content_id'=>$oContent->field('content_id'))) );
             } else {
                 Liber::log()->add('Context não foi salvo.','error');
