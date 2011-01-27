@@ -2,7 +2,7 @@
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title><?html_title_();?></title>
+	<title><?=html_title_();?></title>
 
 	<script type="text/javascript" src="<? url_asset_('/js/jquery.js')?>"></script>
 	<script type="text/javascript" src="<?url_asset_('/js/main.js')?>"></script>
@@ -25,11 +25,11 @@
     <div id="templatemo_menu">
         <ul>
             <li><a href="<?=$url?>" >Home</a></li>
-            <li><a href="<?=$url.rawurlencode('Quem Somos')?>" >Quem Somos</a></li>
-            <li><a href="<?=$url.rawurlencode('Eventos')?>" >Eventos</a></li>
-            <li><a href="<?=$url.rawurlencode('Notícias')?>" >Notícias</a></li>
-            <li><a href="<?=$url.rawurlencode('Dicas')?>" >Dicas</a></li>
-            <li><a href="<?=$url.rawurlencode('contato')?>">Contato</a></li>
+            <li><a href="<?=$url.rawurlencode('About')?>" >About</a></li>
+            <li><a href="<?=$url.rawurlencode('Events')?>" >Events</a></li>
+            <li><a href="<?=$url.rawurlencode('News')?>" >News</a></li>
+            <li><a href="<?=$url.rawurlencode('Tips')?>" >Tips</a></li>
+            <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
     </div> <!-- end of templatemo_menu -->
@@ -43,16 +43,23 @@
     <div id="templatemo_footer">
 
         <ul class="footer_menu">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="http://www.templatemo.com" target="_parent">Templates</a></li>
-                    <li><a href="http://www.flashmo.com" target="_parent">Flash Files</a></li>
-                    <li><a href="http://www.koflash.com" target="_parent">Gallery</a></li>
-                    <li><a href="#">Members</a></li>
-                    <li class="last_menu"><a href="#">Contact Us</a></li>
-                </ul>
+            <li><a href="<?=$url?>" >Home</a></li>
+            <li><a href="<?=$url.rawurlencode('About')?>" >About</a></li>
+            <li><a href="<?=$url.rawurlencode('Events')?>" >Events</a></li>
+            <li><a href="<?=$url.rawurlencode('News')?>" >News</a></li>
+            <li><a href="<?=$url.rawurlencode('Tips')?>" >Tips</a></li>
+            <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
+        </ul>
 
-                Copyright © 2048 <a href="#">Your Company Name</a> |
-                <a href="http://www.iwebsitetemplate.com" target="_parent">Website Templates</a> by <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a></div>
+        Copyright © 2011 Djalma Oliveira <a href="<?=$url?>"><?html_title_();?></a> |
+        Powered by: <a href='http://github.com/djalmaoliveira/Liber'>Liber Framework</a>
+        <br/>
+        Website Template
+        by
+        <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a> |
+        Pictures from: <a href="http://www.publicdomainpictures.net/">Public Domain Pictures</a>
+
+    </div>
 
 </div>
 

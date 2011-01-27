@@ -2,10 +2,9 @@
 
 class NotFoundController extends Controller{
 
-    function __construct($p=Array()) {
+    function __construct( $p=Array() ) {
         parent::__construct($p);
-        Liber::loadHelper(Array('Url', 'HTML'));
-
+        Liber::loadHelper( Array('Url', 'HTML') );
     }
 
 
@@ -13,15 +12,13 @@ class NotFoundController extends Controller{
 
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel('Content', true);
-        $file  = (pathinfo(url_current_(true), PATHINFO_FILENAME));
-        $title = rawurldecode($file);
+        $aUri     = $this->parse_uri(url_current_(true));
 
         // if match content by title
-        if ( $oContent->get( $title ) ) {
-            $oFunky = Liber::loadClass('Funky', true);
+        if ( $oContent->get( $aUri['title'] ) ) {
+            $oFunky      = Liber::loadClass('Funky', true);
             $funky_cache = $this->view()->template()->load('content_page.html', Array('content'=>$oContent->toArray()), true);
-            if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$title.'.html', $funky_cache ) ) {
-                //$url = Liber::conf('APP_URL').Liber::conf('CONTENT_PATH').rawurlencode($title).'.html';
+            if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$aUri['filename'], $funky_cache ) ) {
                 die($funky_cache);
             }
         }
@@ -29,6 +26,23 @@ class NotFoundController extends Controller{
         $this->show404();
     }
 
+    /* Detect type o cache from url and return its components */
+    protected function parse_uri($uri) {
+        $out  = Array(
+                'base'      =>'',
+                'filename'  =>'',
+                'title'     =>'',
+                'content_type_id'=>''
+                );
+        $aUrl            = pathinfo($uri); // yes, it is stored on file system
+        $out['base']     = basename($aUrl['dirname']);
+        $out['filename'] = rawurldecode(basename($uri));
+        if ( $out['base'] == 'content' ) {
+            $out['title'] = rawurldecode( substr( $aUrl['filename'], strpos($aUrl['filename'],'_')+1) );
+            $out['content_type_id'] = substr($aUrl['filename'], 0, strpos($aUrl['filename'],'_'));
+        }
+        return $out;
+    }
 
     protected function show404() {
         header('HTTP/1.0 404 Not Found');
