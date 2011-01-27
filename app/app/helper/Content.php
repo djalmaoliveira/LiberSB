@@ -4,6 +4,17 @@
 */
 
 /**
+*   Return a URL to content by $aContent specified.
+*   @param Array $aContent
+*   @return String
+*/
+function content_url_($aContent, $return=false) {
+    $url = url_to_('/content/'.$aContent['content_type_id'].'_'.rawurlencode($aContent['title']).'.html', true);
+    if ($return) return $url;
+    echo $url;
+}
+
+/**
 *   Return or print the content area filled.
 *   @param Array   $aContent
 *   @param boolean $return
@@ -14,7 +25,7 @@ function content_show_($aContent, $return=false) {
     $html = "
         <div class=\"content_box\">
 
-            <h2><a href='".url_to_('/content/'.$aContent['content_type_id'].'_'.rawurlencode($aContent['title']).'.html', true)."'>".$aContent['title']."</a></h2>
+            <h2><a href='".content_url_($aContent, true)."'>".$aContent['title']."</a></h2>
             ".date('m/d/Y',strtotime($aContent['datetime']))."
             <br/><br/>
             <p>".$aContent['body']."</p>
@@ -26,6 +37,7 @@ function content_show_($aContent, $return=false) {
     if ($return) return $html;
     echo $html;
 }
+
 
 
 ?>

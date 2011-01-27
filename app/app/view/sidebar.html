@@ -5,7 +5,7 @@
             <?  foreach($list as $content) {?>
 
                 <div class="news_box">
-                    <a href="#"><?=$content['title']?></a>
+                    <a href="<?=content_url_($content, true)?>"><?=$content['title']?></a>
                     <p class="post_info">Last update <span><?=dt_timesince_($content['datetime'])?> ago</span></p>
                 </div>
             <?  }?>

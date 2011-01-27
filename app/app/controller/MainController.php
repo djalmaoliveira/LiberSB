@@ -65,6 +65,7 @@ class MainController extends Controller{
 
     public function recents() {
         Liber::loadHelper('DT');
+        Liber::loadHelper('Content', 'APP');
         $oContent      = Liber::loadModel('Content', true);
         $aData['list'] = $oContent->lastContents();
         $this->view()->load('sidebar.html', $aData);
