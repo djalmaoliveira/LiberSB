@@ -33,6 +33,42 @@ class MainController extends Controller{
     }
 
 
+    public function contact() {
+        Liber::loadHelper('Form');
+        $oSec = Liber::loadClass('Security', true);
+        if ( Liber::requestedMethod() == 'post' ) {
+            Liber::loadHelper('Util', 'APP');
+            if ( $oSec->validToken(Input::post('token')) ) {
+
+                $oM = Liber::loadClass('Mailer', true);
+                $oM->to( Liber::conf('EMAIL') );
+                $oM->subject('Contact from '.Liber::conf('APP_URL'));
+                $oM->from( Input::post('email') );
+                $oM->body( Input::post('name')." <".Input::post('email').">\n\n".Input::post('text') );
+                if ( $oM->send() ) {
+                    die( jsonout('ok', "Your message was sent. ") );
+                } else {
+                    die( jsonout('error', "Your message wasn't send, please reload the page and try again. ") );
+                }
+
+            } else { // some problem with token
+                die( jsonout('error', "Your message wasn't send, please reload the page and try again. ") );
+            }
+        }
+
+        $aData['token']  = $oSec->token(true);
+        $aData['action'] = url_current_(true);
+        $this->oTPL->load('contact.html', $aData);
+    }
+
+    public function recents() {
+        Liber::loadHelper('DT');
+        $oContent      = Liber::loadModel('Content', true);
+        $aData['list'] = $oContent->lastContents();
+        $this->view()->load('sidebar.html', $aData);
+    }
+
+
     /* load contents page by content_type */
     protected function showContentHome($oContType) {
         Liber::loadHelper('Content', 'APP');
@@ -42,6 +78,9 @@ class MainController extends Controller{
         $aData['description'] = $oContType->field('description');
         $this->oTPL->load('content_home.html', $aData);
     }
+
+
+
 
     public function setup() {
         // setup application

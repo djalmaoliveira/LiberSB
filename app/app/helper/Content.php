@@ -5,7 +5,7 @@
 
 /**
 *   Return or print the content area filled.
-*   @param Array $aContent
+*   @param Array   $aContent
 *   @param boolean $return
 *   @return String
 */
@@ -21,13 +21,11 @@ function content_show_($aContent, $return=false) {
 
             <div class=\"cleaner\"></div>
         </div><div class=\"content_box_bottom\"></div>
-
     ";
 
     if ($return) return $html;
     echo $html;
 }
-
 
 
 ?>

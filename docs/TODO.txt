@@ -7,3 +7,6 @@
 - content_show_() shoud parse partial html
 - twitter, facebook links (configurations)
 - RSS
+- paging
+- layouting
+-

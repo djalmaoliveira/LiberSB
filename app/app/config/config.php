@@ -9,7 +9,8 @@ $aConfigs   = Array(
                     'APP_PATH'      => $project.'app/',
                     'BASE_PATH'     => $project.'Liber/',
                     'APP_MODE'      => 'DEV',
-                    'CONTENT_PATH'  => 'content/'
+                    'CONTENT_PATH'  => 'content/',
+                    'EMAIL'         => 'contact@localhost.localdomain'
 
                 ),
 

@@ -1,0 +1,51 @@
+<?
+html_title_('Contact');
+html_header_('js','contact.js');
+html_header_('js','util.js');
+?>
+<div id="templatemo_content_wrapper">
+
+    <div id="templatemo_sidebar">
+
+        <span id='sidebar'>
+                <div class="sidebar_box">
+
+                    <h2>Recents</h2>
+
+                        <div class="news_box">
+                           <p class="post_info"> Loading...</p>
+                        </div>
+
+
+                </div><div class="sidebar_box_bottom"></div>
+        </span>
+
+
+    </div> <!-- end of sidebar -->
+
+    <div id="templatemo_content">
+    <div id="location">You are seeing » Contact</div>
+        <div class="content_box">
+            <h2>Contact</h2>
+                <br/>
+
+                <form action='<?=$action?>' onsubmit='return btnSend();' id='frmContact'>
+                    <?form_hidden_('token', $token);?>
+                    <div class='fieldname'>Name:</div> <?form_input_('name')?>
+                    <br/>
+                    <div class='fieldname'>Email:</div> <?form_input_('email')?>
+                    <br/>
+                    <div class='fieldname'>Text:</div><?form_textarea_('text')?>
+                    <br/>
+                    <?form_button_('send', 'Send', 'onclick="btnSend($(\'#frmContact\'), this)"')?> <span id='out'></span>
+                </form>
+            <div class="cleaner"></div>
+        </div><div class="content_box_bottom"></div>
+
+    </div> <!-- end of content -->
+
+    <div class="cleaner"></div>
+
+</div>
+
+

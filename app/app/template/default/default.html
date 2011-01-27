@@ -1,3 +1,4 @@
+<?$url=url_to_('/', true);?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
 <head>
@@ -8,8 +9,14 @@
 	<script type="text/javascript" src="<?url_asset_('/js/main.js')?>"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css')?>">
     <? html_header_(); ?>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#sidebar").load("<?=$url?>recents");
+        });
+    </script>
 </head>
-<?$url=url_to_('/', true);?>
+
 <body>
 <div id="templatemo_header_wrapper">
     <div id="templatemo_header" >

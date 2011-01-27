@@ -12,6 +12,7 @@ function showMessage(elem, msg, type) {
 
 var _buttonRun = {};
 function buttonRun() {
+    $.ajaxSetup({async:false});
     _buttonRun.func();
     var elem = _buttonRun.elem;
     var originalText = _buttonRun.originalText;
@@ -22,6 +23,7 @@ function buttonRun() {
         $(elem).html(originalText);
     }
     $(elem).attr('disabled', '');
+    $.ajaxSetup({async:true});
 }
 function buttonClick(elem, waitText, func) {
     var originalText = '';
@@ -41,5 +43,6 @@ function buttonClick(elem, waitText, func) {
     _buttonRun.elem = elem;
     _buttonRun.originalText = originalText;
     setTimeout('buttonRun()', 200);
+
 }
 

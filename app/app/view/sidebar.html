@@ -1,0 +1,13 @@
+        <div class="sidebar_box">
+
+            <h2>Recents</h2>
+
+            <?  foreach($list as $content) {?>
+
+                <div class="news_box">
+                    <a href="#"><?=$content['title']?></a>
+                    <p class="post_info">Last update <span><?=dt_timesince_($content['datetime'])?> ago</span></p>
+                </div>
+            <?  }?>
+
+        </div><div class="sidebar_box_bottom"></div>

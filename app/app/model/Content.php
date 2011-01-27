@@ -78,6 +78,13 @@ class Content extends TableModel {
     }
 
 
+    /**
+    *   Return lasts contents by type.
+    *   @param integer $content_type_id
+    *   @param integer $count
+    *   @param integer $sizeText
+    *   @return Array
+    */
     function lastContentsByType($content_type_id, $count=10, $sizeText=200) {
         $sql = "
             select
@@ -100,6 +107,32 @@ class Content extends TableModel {
                                 ':sizeText' =>  $sizeText,
                                 ':content_type_id' =>   $content_type_id )
                             );
+        if ( !$ret ) { return Array();}
+        return $this->returnKeys($q);
+    }
+
+
+    /**
+    *   Return titles of lasts contents.
+    *   @param integer $count
+    *   @return Array
+    */
+    function lastContents($count=5) {
+        $sql = "
+            select
+                content_id,
+                content_type_id,
+                title,
+                datetime
+            from
+                $this->table
+            order by
+                content_id desc
+            limit $count
+        ";
+
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute();
         if ( !$ret ) { return Array();}
         return $this->returnKeys($q);
     }

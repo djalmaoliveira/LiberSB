@@ -347,3 +347,23 @@ h3 {
 }
 
 /* end of footer */
+
+
+
+
+/* fields and inputs*/
+input[type='text'], textarea {
+    border: #969696 1px solid;
+
+}
+input[type='text']:focus, textarea:focus {
+    background:#f7f7f7;
+}
+.inputerror {
+    background:#ffc0cb;
+}
+.fieldname {
+    float:left;
+    width:50px;
+}
+
