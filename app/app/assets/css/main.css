@@ -263,6 +263,12 @@ h3 {
     width: 590px;
 }
 
+#location {
+    color:white;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
 .content_box {
     clear: both;
     width: 530px;

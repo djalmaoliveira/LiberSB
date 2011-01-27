@@ -32,19 +32,14 @@ class MainController extends Controller{
         }
     }
 
-    function aa() {
-        $o = Liber::loadClass('Fucky', true);
-//echo Liber::conf('APP_ROOT');
-//print_r($_SERVER);
-        $o->clean( Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH') );
-    }
 
     /* load contents page by content_type */
     protected function showContentHome($oContType) {
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel( 'Content', true );
 
-        $aData['contents'] = $oContent->lastContentsByType($oContType->field('content_type_id'));
+        $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
+        $aData['description'] = $oContType->field('description');
         $this->oTPL->load('content_home.html', $aData);
     }
 
@@ -56,10 +51,6 @@ class MainController extends Controller{
 
         }
 
-    }
-
-    public function c() {
-        print_r($this->params());
     }
 
 }

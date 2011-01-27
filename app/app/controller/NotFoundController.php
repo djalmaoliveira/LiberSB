@@ -14,13 +14,16 @@ class NotFoundController extends Controller{
     public function index() {
 
         Liber::loadHelper('Content', 'APP');
-        $oContent = Liber::loadModel('Content', true);
+        list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
         $aUri     = $this->parse_uri(url_current_(true));
 
         // if match content by title
         if ( $oContent->get( $aUri['title'] ) ) {
             $oFunky      = Liber::loadClass('Funky', true);
-            $funky_cache = $this->oTPL->load('content_page.html', Array('content'=>$oContent->toArray()), true);
+            $oContType->get($oContent->field('content_type_id'));
+            $aData['content'] = $oContent->toArray();
+            $aData['description'] = $oContType->field('description');
+            $funky_cache = $this->oTPL->load('content_page.html', $aData, true);
             if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$aUri['filename'], $funky_cache ) ) {
                 die($funky_cache);
             }
