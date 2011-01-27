@@ -40,6 +40,8 @@ class MainController extends Controller{
             Liber::loadHelper('Util', 'APP');
             if ( $oSec->validToken(Input::post('token')) ) {
 
+                if ( !Input::post('email') or !Input::post('text') ) { die( jsonout('error', "Please fill the form fields.") ); }
+
                 $oM = Liber::loadClass('Mailer', true);
                 $oM->to( Liber::conf('EMAIL') );
                 $oM->subject('Contact from '.Liber::conf('APP_URL'));
@@ -48,11 +50,11 @@ class MainController extends Controller{
                 if ( $oM->send() ) {
                     die( jsonout('ok', "Your message was sent. ") );
                 } else {
-                    die( jsonout('error', "Your message wasn't send, please reload the page and try again. ") );
+                    die( jsonout('error', "Your message wasn't sent, please try again.") );
                 }
 
             } else { // some problem with token
-                die( jsonout('error', "Your message wasn't send, please reload the page and try again. ") );
+                die( jsonout('error', "Your message wasn't sent, please reload the page and try again. ") );
             }
         }
 

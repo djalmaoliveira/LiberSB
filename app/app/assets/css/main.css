@@ -349,6 +349,15 @@ h3 {
 /* end of footer */
 
 
+/* message returning */
+.msg_error {
+    color:#f10202;
+    font-weight:bold;    
+}
+.msg_ok {
+    color:#0f0fa5;
+    font-weight:bold;
+}
 
 
 /* fields and inputs*/
