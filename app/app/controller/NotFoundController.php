@@ -2,9 +2,12 @@
 
 class NotFoundController extends Controller{
 
+    var $oTPL;
+
     function __construct( $p=Array() ) {
         parent::__construct($p);
         Liber::loadHelper( Array('Url', 'HTML') );
+        $this->oTPL = $this->view()->template();
     }
 
 
@@ -17,7 +20,7 @@ class NotFoundController extends Controller{
         // if match content by title
         if ( $oContent->get( $aUri['title'] ) ) {
             $oFunky      = Liber::loadClass('Funky', true);
-            $funky_cache = $this->view()->template()->load('content_page.html', Array('content'=>$oContent->toArray()), true);
+            $funky_cache = $this->oTPL->load('content_page.html', Array('content'=>$oContent->toArray()), true);
             if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$aUri['filename'], $funky_cache ) ) {
                 die($funky_cache);
             }
@@ -47,16 +50,7 @@ class NotFoundController extends Controller{
     protected function show404() {
         header('HTTP/1.0 404 Not Found');
 
-        echo '
-            <h1>ERROR 404 not found</h1>
-            Trying to access: '.$_SERVER['REQUEST_URI'].'
-            <p>This is handler by an internal Route as defined in "APP_PATH/config/config.php"  $config[\'PAGE_NOT_FOUND\']</p>
-
-                <p>Your error document needs to be more than 512 bytes in length. If not IE will display its default error page.</p>
-
-                <p>Give some helpful comments other than 404 :(
-                Also check out the links page for a list of URLs available.</p>';
-
+        $this->oTPL->load('notfound.html', Array('url'=>url_current_(true)));
     }
 
 }
