@@ -26,7 +26,7 @@ class MainController extends Controller{
         list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'), true );
 
         if ( $oContType->get(str_replace('-', ' ', rawurldecode($action))) ) {
-            $this->showContentHome($oContType);
+            $this->showContentType($oContType);
         } else {
             parent::__call($action, $args);
         }
@@ -37,8 +37,8 @@ class MainController extends Controller{
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel('Content', true);
         $aData['contents'] = $oContent->search(Input::post('search'), Array('fields'=>Array('title'),'limit'=>5));
-
-        $this->oTPL->load('search.html', $aData);
+        $aData['pageName'] = Array('Search results');
+        $this->oTPL->load('list.html', $aData);
     }
 
     public function contact() {
@@ -81,13 +81,13 @@ class MainController extends Controller{
 
 
     /* load contents page by content_type */
-    protected function showContentHome($oContType) {
+    protected function showContentType($oContType) {
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel( 'Content', true );
 
         $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
-        $aData['description'] = $oContType->field('description');
-        $this->oTPL->load('content_home.html', $aData);
+        $aData['pageName']    = Array($oContType->field('description'));
+        $this->oTPL->load('list.html', $aData);
     }
 
 

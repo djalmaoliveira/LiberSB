@@ -1,4 +1,4 @@
-<?html_title_('Personal Blog')?>
+<?html_title_( implode(' » ', $pageName) )?>
 <div id="templatemo_content_wrapper">
 
     <div id="templatemo_sidebar">
@@ -20,7 +20,7 @@
     </div> <!-- end of sidebar -->
 
     <div id="templatemo_content">
-    <div id="location">You are seeing » <?=$description?></div>
+    <div id="location">You are seeing » <?=implode(' » ',$pageName)?></div>
     <?
         foreach ($contents as $content) {
             content_show_($content);

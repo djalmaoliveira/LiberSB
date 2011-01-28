@@ -21,9 +21,9 @@ class NotFoundController extends Controller{
         if ( $oContent->get( $aUri['title'] ) ) {
             $oFunky      = Liber::loadClass('Funky', true);
             $oContType->get($oContent->field('content_type_id'));
-            $aData['content'] = $oContent->toArray();
-            $aData['description'] = $oContType->field('description');
-            $funky_cache = $this->oTPL->load('content_page.html', $aData, true);
+            $aData['contents'] = Array($oContent->toArray());
+            $aData['pageName'] = Array($oContType->field('description'), $oContent->field('title'));
+            $funky_cache = $this->oTPL->load('list.html', $aData, true);
             if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$aUri['filename'], $funky_cache ) ) {
                 die($funky_cache);
             }
