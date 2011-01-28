@@ -33,6 +33,14 @@ class MainController extends Controller{
     }
 
 
+    public function search() {
+        Liber::loadHelper('Content', 'APP');
+        $oContent = Liber::loadModel('Content', true);
+        $aData['contents'] = $oContent->search(Input::post('search'), Array('fields'=>Array('title'),'limit'=>5));
+
+        $this->oTPL->load('search.html', $aData);
+    }
+
     public function contact() {
         Liber::loadHelper('Form');
         $oSec = Liber::loadClass('Security', true);
