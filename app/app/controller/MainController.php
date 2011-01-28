@@ -26,7 +26,10 @@ class MainController extends Controller{
         list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'), true );
 
         if ( $oContType->get(str_replace('-', ' ', rawurldecode($action))) ) {
-            $this->showContentType($oContType);
+            Liber::loadHelper('Content', 'APP');
+            $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
+            $aData['pageName']    = Array($oContType->field('description'));
+            $this->oTPL->load('list.html', $aData);
         } else {
             parent::__call($action, $args);
         }
@@ -78,18 +81,6 @@ class MainController extends Controller{
         $aData['list'] = $oContent->lastContents();
         $this->view()->load('sidebar.html', $aData);
     }
-
-
-    /* load contents page by content_type */
-    protected function showContentType($oContType) {
-        Liber::loadHelper('Content', 'APP');
-        $oContent = Liber::loadModel( 'Content', true );
-
-        $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
-        $aData['pageName']    = Array($oContType->field('description'));
-        $this->oTPL->load('list.html', $aData);
-    }
-
 
 
 

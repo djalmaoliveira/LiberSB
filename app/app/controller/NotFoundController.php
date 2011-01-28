@@ -13,41 +13,13 @@ class NotFoundController extends Controller{
 
     public function index() {
 
-        Liber::loadHelper('Content', 'APP');
-        list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
-        $aUri     = $this->parse_uri(url_current_(true));
-
-        // if match content by title
-        if ( $oContent->get( $aUri['title'] ) ) {
-            $oFunky      = Liber::loadClass('Funky', true);
-            $oContType->get($oContent->field('content_type_id'));
-            $aData['contents'] = Array($oContent->toArray());
-            $aData['pageName'] = Array($oContType->field('description'), $oContent->field('title'));
-            $funky_cache = $this->oTPL->load('list.html', $aData, true);
-            if ( $oFunky->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$aUri['filename'], $funky_cache ) ) {
-                die($funky_cache);
-            }
+        $oCache = Liber::loadClass('ContentCache', 'APP', true);
+        $page = $oCache->create(url_current_(true));
+        if ($page) {
+            die($page);
         }
 
         $this->show404();
-    }
-
-    /* Detect type o cache from url and return its components */
-    protected function parse_uri($uri) {
-        $out  = Array(
-                'base'      =>'',
-                'filename'  =>'',
-                'title'     =>'',
-                'content_type_id'=>''
-                );
-        $aUrl            = pathinfo($uri); // yes, it is stored on file system
-        $out['base']     = basename($aUrl['dirname']);
-        $out['filename'] = rawurldecode(basename($uri));
-        if ( $out['base'] == 'content' ) {
-            $out['title'] = rawurldecode( substr( $aUrl['filename'], strpos($aUrl['filename'],'_')+1) );
-            $out['content_type_id'] = substr($aUrl['filename'], 0, strpos($aUrl['filename'],'_'));
-        }
-        return $out;
     }
 
     protected function show404() {

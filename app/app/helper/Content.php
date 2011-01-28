@@ -9,7 +9,7 @@
 *   @return String
 */
 function content_url_($aContent, $return=false) {
-    $url = url_to_('/content/'.$aContent['content_type_id'].'_'.rawurlencode($aContent['title']).'.html', true);
+    $url = Liber::loadClass('ContentCache', 'APP',true)->url($aContent);
     if ($return) return $url;
     echo $url;
 }
