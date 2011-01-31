@@ -89,10 +89,16 @@ h3 {
     line-height: 26px;
 }
 
+#search_form {
+    float:right;
+    margin-right:10px;    
+}
 #search {
     font-size:1.5em;
     color:#969696;
+    font-weight:bold;
 }
+
 
 #templatemo_header #site_title {
     float: left;
