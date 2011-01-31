@@ -1,0 +1,82 @@
+﻿<br/>
+<div class='form_area'>
+
+    <div class='tabs'><?=$context?></div>
+
+    <div class='clear'></div>
+
+        <div id='search_area'>
+            <form action="" method="post" id='frmSearch' onsubmit='return doSearch();'>
+                <span title='write some words and click in Search'><?form_input_('search', $search, 'class="admin_input"')?><?form_button_('btnSearch', 'Search', 'onclick="doSearch()"');?></span>
+                <p>
+                    <table>
+						<thead>
+                        <tr>
+                            <th>Name/Email</th>
+                            <th>Content</th>
+							<th>Date/Time</th>
+                            <th>Actions</th>
+                        </tr>
+						</thead>
+                        <?  foreach ( $list as $comment ) { ?>
+                            <tr id="c_<?=$comment['comment_id']?>" class='rows'>
+                                <td><?=$comment['name']?><br/><em><?=$comment['email']?></em></td>
+                                <td><?=$comment['description']?><br/><?=$comment['title']?></td>
+                                <td title='<?=date($comment['datetime'])?>'><?=dt_timesince_($comment['datetime'])?> ago </td>
+                                <td align='center'>
+									<?	if ( $comment['status'] != 'A' ) {?>
+										<a href='javascript:changeStatus("<?=$comment['comment_id']?>", "approve", this)' class='link_edit'>Approve</a>
+									<?  } else {?>
+										<a href='javascript:changeStatus("<?=$comment['comment_id']?>", "suspend", this)' class='link_edit'>Suspend</a>
+									<?	}?>
+									|
+									<a href='javascript:loadPage("<?=$url_operation."delete?id={$comment['comment_id']}"?>")' class='link_delete'>Delete</a>
+                                </td>
+                            </tr>
+                        <?  }?>
+                    </table>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        $("#search").focus();
+
+        function doSearch() {
+            loadPage('<?=$action?>', $('#frmSearch').serialize(), 'post');
+            return false;
+        }
+
+        function changeStatus( id, method, elem ) {
+            if ( confirm("This action  will "+method+" the comment, would you like to continue ?") ) {
+
+                $.post('<?=$url_operation?>'+method, 'id='+id+'&token='+'<?=$token?>', function(resp) {
+                    if ( resp.status == 'ok' ) {
+                        $(elem).css('display', 'none');
+                    } else {
+						alert(resp.content.txt);
+					}
+                },'json');
+
+            }
+        }
+
+        function deleteContent( content_id, elem ) {
+            if ( confirm("O conteúdo será apagado, deseja continuar ?") ) {
+
+                $.post('<?=$url_operation?>/delete', 'content_id='+content_id, function(resp) {
+                    if ( resp.status == 'ok' ) {
+                        $(elem).css('display', 'none');
+                    }
+                },'json');
+
+            }
+        }
+
+
+    //]]>
+    </script>
+

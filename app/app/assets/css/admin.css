@@ -10,7 +10,7 @@ body {
     background-color:#bfbfbf;
     width:100%;
     float:left;
-    height:34px;    /* height of background of menu bar*/
+    height:31px;    /* height of background of menu bar*/
     border: #999999 1px solid;
 }
 
@@ -77,6 +77,9 @@ button, .admin_input {
     -moz-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
-    
+}
+
+.rows {
+    padding:5px;
 }
 

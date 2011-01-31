@@ -1,8 +1,6 @@
 - CSRF (where update data)
 - Module UserManager
 - upload images
-- search field header
-- comments
 - tags
 - content_show_() shoud parse partial html
 - twitter, facebook links (configurations)

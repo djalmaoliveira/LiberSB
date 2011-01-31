@@ -55,5 +55,16 @@ class ContentCache extends Funky {
         $url = url_to_('/'.Liber::conf('FUNKY_PATH').'content/'.$aContent['content_type_id'].'/'.rawurlencode($aContent['title']).'.html', true);
         return $url;
     }
+
+	/**
+	*	Clean cached files by $aContent.	
+	*	@param Array $aContent
+	*	@return boolean
+	*/
+	function cleanCache($aContent) {
+		$url = $this->url($aContent);
+		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($url)) );
+	}
+
 }
 ?>

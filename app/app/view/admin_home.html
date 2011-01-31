@@ -1,4 +1,4 @@
-<?
+﻿<?
 html_header_('css', 'admin.css');
 html_header_('css', 'superfish.css');
 //html_header_('css', 'superfish-navbar.css');
@@ -32,15 +32,24 @@ html_header_('js', 'util.js');
                             <li class="current">
                                 <a href="javascript:void()"><?=$menu['description']?></a>
                                 <ul>
-                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/search?content_type_id='.$content_type_id)?>')">Procurar</a></li>
-                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">Adicionar</a></li>
+                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/search?content_type_id='.$content_type_id)?>')">Search</a></li>
+                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">New</a></li>
                                 </ul>
                             </li>
                         <?  } ?>
                     <?  } ?>
-
                 </ul>
             </li>
+            <li>
+                <a href="#">Comments</a>
+				<ul>
+					<li >
+						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/search')?>')">Search</a></li>
+						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/waiting')?>')">Waiting</a></li>
+					</li>
+				</ul>
+            </li>
+
             <li>
                 <a href="#">Configurações</a>
             </li>

@@ -60,5 +60,14 @@ class CommentCache extends Funky {
         $url = url_to_('/'.Liber::conf('FUNKY_PATH').'comments/'.$aContent['content_id']."/{$page}_".rawurlencode($aContent['title']).'.html', true);
         return $url;
     }
+
+	/**
+	*	Clean cached files by $aComment.	
+	*	@param Array $aComment
+	*	@return boolean
+	*/
+	function cleanCache($aComment) {
+		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $this->urlPattern).$aComment['content_id'].'/' );
+	}
 }
 ?>

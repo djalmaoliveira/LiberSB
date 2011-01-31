@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $project    = realpath((dirname(__FILE__)).'/../../').'/';
 $aConfigs   = Array(
@@ -36,5 +36,5 @@ $route['/comment']['*']          = Array('CommentController', 'comment');
 
 $route['/admin']['*']            = Array('AdminController', '*');
 $route['/admin/content']['*']    = Array('ContentController', '*');
-
+$route['/admin/comment']['*']    = Array('AdminCommentController', '*');
 ?>

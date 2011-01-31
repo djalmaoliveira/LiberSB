@@ -31,8 +31,7 @@ class CommentController extends Controller {
 				$oComment->field('status', "W");
 				$oComment->field('netinfo', $_SERVER['REMOTE_ADDR']);	
 				if ( $oComment->save() ) {
-					$oCache = Liber::loadClass('CommentCache', "APP", true);
-					$oCache->clean(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').'comments/'.Input::post('content_id').'/');
+					$oCache = Liber::loadClass('CommentCache', "APP", true)->cleanCache($oComment->toArray());
 					die(jsonout('ok', 'Comment sent successfully.'));
 				} else {
 					$errors = $oComment->buildFriendlyErrorMsg();
