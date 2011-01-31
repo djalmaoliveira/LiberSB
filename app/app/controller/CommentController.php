@@ -25,13 +25,12 @@ class CommentController extends Controller {
         if ( Liber::requestedMethod() == 'post' ) {
 			Liber::loadHelper("Util", 'APP');
 			if ( $oSec->validToken(Input::post('token')) ) {
-				$oComment = Liber::loadModel('Comment', true);	
+				$oComment = Liber::loadModel('Comment', true);
 				$oComment->loadFrom( Input::post() );
 				$oComment->field('datetime', date('Y-m-d H:i:s'));
 				$oComment->field('status', "W");
-				$oComment->field('netinfo', $_SERVER['REMOTE_ADDR']);	
+				$oComment->field('netinfo', $_SERVER['REMOTE_ADDR']);
 				if ( $oComment->save() ) {
-					$oCache = Liber::loadClass('CommentCache', "APP", true)->cleanCache($oComment->toArray());
 					die(jsonout('ok', 'Comment sent successfully.'));
 				} else {
 					$errors = $oComment->buildFriendlyErrorMsg();
@@ -41,15 +40,12 @@ class CommentController extends Controller {
 				die(jsonout('error', 'Please, you have to reload this page before send this comment.'));
 			}
         }
-		
+
 		$aData['token']		 = $oSec->token(true);
 		$aData['content_id'] = Input::get('content_id');
         $aData['action']     = url_to_('/comment', true);
         $this->view()->load('comment_form.html', $aData);
     }
-
-
-
 }
 
 ?>

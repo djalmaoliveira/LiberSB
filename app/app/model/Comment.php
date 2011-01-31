@@ -1,9 +1,8 @@
-﻿<?php
+<?php
 Liber::loadModel('TableModel');
 /**
 *   @package Content
 */
-
 
 
 /**

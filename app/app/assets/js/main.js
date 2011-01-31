@@ -7,12 +7,13 @@ function leaveComment(url, elem) {
 		});
 	} else {
 		$("#comment_form_area").remove();
-			
 	}
 }
+
 function sendComment(frm, btn) {
 	buttonClick(btn, "Sending...", function(){
-        $.post($(frm).attr('action'), $(frm).serialize(), function(resp) {
+
+        $.post( $(frm).attr('action'), $(frm).serialize(), function(resp) {
             if (resp.status=='ok') {
                 $('#out').html(resp.content.text);
                 $(btn).css('display', 'none');
@@ -25,4 +26,3 @@ function sendComment(frm, btn) {
         }, 'json');
     });
 }
-
