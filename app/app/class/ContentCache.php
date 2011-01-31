@@ -11,12 +11,19 @@ Liber::loadClass('Funky');
 class ContentCache extends Funky {
 
 
+    function __construct() {
+        $this->urlPattern = Liber::conf('APP_URL').Liber::conf('FUNKY_PATH').'content/';
+    }
+
     /**
     *   Create Content cached file from $url specified.
     *   @param String $url
     *   @return String
     */
     function create($url) {
+
+        if ( !$this->matchUrl($url) ) { return ; }
+
         Liber::loadHelper('Content', 'APP');
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
         $urlPattern = '/'.str_replace(Liber::conf('APP_URL'), '', $url);
@@ -31,8 +38,9 @@ class ContentCache extends Funky {
             $oContType->get($oContent->field('content_type_id'));
             $aData['contents'] = Array($oContent->toArray());
             $aData['pageName'] = Array($oContType->field('description'), $oContent->field('title'));
+
             $funky_cache = Liber::controller()->view()->template()->load('list.html', $aData, true);
-            if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('CONTENT_PATH').$content_type_id.'/'.$filename.'.'.$aUrl['extension'], $funky_cache ) ) {
+            if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').'content/'.$content_type_id.'/'.$filename.'.'.$aUrl['extension'], $funky_cache ) ) {
                 return $funky_cache;
             }
         }
@@ -44,7 +52,7 @@ class ContentCache extends Funky {
     *   @return String
     */
     function url($aContent) {
-        $url = url_to_('/content/'.$aContent['content_type_id'].'/'.rawurlencode($aContent['title']).'.html', true);
+        $url = url_to_('/'.Liber::conf('FUNKY_PATH').'content/'.$aContent['content_type_id'].'/'.rawurlencode($aContent['title']).'.html', true);
         return $url;
     }
 }

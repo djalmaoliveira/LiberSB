@@ -13,11 +13,13 @@ class NotFoundController extends Controller{
 
     public function index() {
 
-        $oCache = Liber::loadClass('ContentCache', 'APP', true);
-        $page = $oCache->create(url_current_(true));
-        if ($page) {
-            die($page);
-        }
+        $page = Liber::loadClass('ContentCache', 'APP', true)->create(url_current_(true));
+
+        if ($page) { die($page); }
+
+        $page = Liber::loadClass('CommentCache', 'APP', true)->create(url_current_(true));
+
+        if ($page) { die($page); }
 
         $this->show404();
     }
@@ -25,7 +27,7 @@ class NotFoundController extends Controller{
     protected function show404() {
         header('HTTP/1.0 404 Not Found');
 
-        $this->oTPL->load('notfound.html', Array('url'=>url_current_(true)));
+        $this->oTPL->load('notfound.html', Array('url'=>rawurldecode(url_current_(true))));
     }
 
 }

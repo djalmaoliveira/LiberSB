@@ -1,3 +1,4 @@
 app/app/log/*
 app/app/cache/*
-app/www/content/*
+app/www/c/*
+app/www/static/*

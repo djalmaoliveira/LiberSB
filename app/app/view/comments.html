@@ -24,9 +24,21 @@ html_header_('js', 'util.js');
 
     <div id="templatemo_content">
     <div id="location">You are seeing » <?=implode(' » ',$pageName)?></div>
+
+        <div class="content_box">
+            <h2><a href="<?content_url_($content)?>"><?=$content['title']?></a></h2>
+            <div class="cleaner"></div>
+			<br/>
+            <div id="comment_nav">
+                <a href='javascript:void(0)' onclick='leaveComment("<?url_to_('/comment')?>?content_id=<?=$content['content_id']?>", this)'>Leave a comment</a>
+            </div>
+        </div>
+        <div class="content_box_bottom" >
+        </div>
+
     <?
-        foreach ($contents as $content) {
-            content_show_($content);
+        foreach ($comments as $comment) {
+            content_comment_show_($comment);
         }
     ?>
 

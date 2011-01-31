@@ -287,6 +287,23 @@ h3 {
     margin-bottom: 20px;
     background: url(../image/templatemo_content_bottom.jpg) no-repeat;
 }
+.content_box #comment_nav{
+    text-align:right;
+}
+#comment_nav a {
+    margin-left:10px;
+}
+#comment_form {
+    text-align:center;
+    margin-top:20px;
+}
+#comment_form #comment{
+    width:410px;
+}
+#comment_form hr{
+    border-style:dashed;
+    border-width:1px;
+}
 
 .content_box .image_fl {
     float: left;
