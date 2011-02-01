@@ -36,7 +36,7 @@ class CommentCache extends Funky {
         $title           = substr(rawurldecode( $filename ), $divider+1);
 		$page 		 	 = substr(rawurldecode( $filename ), 0, $divider);
 
-		$comments = $oComment->lastCommentsByContent( $content_id );  
+		$comments = $oComment->lastCommentsByContent( $content_id );
 			Liber::loadHelper('DT');
 			$oContent->get($content_id);
             $aData['comments'] = &$comments;
@@ -47,7 +47,7 @@ class CommentCache extends Funky {
 			if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').'comments/'.$content_id.'/'.$filename.'.'.$aUrl['extension'], $funky_cache ) ) {
                 return $funky_cache;
             }
-        
+
     }
 
     /**
@@ -62,7 +62,7 @@ class CommentCache extends Funky {
     }
 
 	/**
-	*	Clean cached files by $aComment.	
+	*	Clean cached files by $aComment.
 	*	@param Array $aComment
 	*	@return boolean
 	*/

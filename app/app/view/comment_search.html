@@ -30,7 +30,7 @@
 										<a href='javascript:changeStatus("<?=$comment['comment_id']?>", "suspend", this)' class='link_edit'>Suspend</a>
 									<?	}?>
 									|
-									<a href='javascript:loadPage("<?=$url_operation."delete?id={$comment['comment_id']}"?>")' class='link_delete'>Delete</a>
+									<a href='javascript:deleteComment("<?=$comment['comment_id']?>",  this)' class='link_delete'>Delete</a>
                                 </td>
                             </tr>
                         <?  }?>
@@ -64,13 +64,15 @@
             }
         }
 
-        function deleteContent( content_id, elem ) {
-            if ( confirm("O conteúdo será apagado, deseja continuar ?") ) {
+        function deleteComment( id, elem ) {
+            if ( confirm("This action will delete the comment, would like to continue ?") ) {
 
-                $.post('<?=$url_operation?>/delete', 'content_id='+content_id, function(resp) {
+                $.post('<?=$url_operation?>delete', 'id='+id+'&token='+'<?=$token?>', function(resp) {
                     if ( resp.status == 'ok' ) {
                         $(elem).css('display', 'none');
-                    }
+                    } else {
+						alert(resp.content.txt);
+					}
                 },'json');
 
             }

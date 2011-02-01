@@ -44,7 +44,21 @@ class AdminCommentController extends Controller {
 	}
 
 	public function delete() {
+		Liber::loadHelper('Util', 'APP');
+		$oComment = Liber::loadModel('Comment', true );
 		$oSec = Liber::loadClass('Security', true);
+		if ( $oSec->validToken(Input::post('token')) ) {
+			if ( $oComment->get( Input::post('id') ) ) {
+				$aComment = $oComment->toArray();
+				if ( $oComment->delete() ) {
+					Liber::loadClass('CommentCache', 'APP', true)->cleanCache( $aComment );
+					die( jsonout('ok', 'Comment deleted.') );
+				} else {
+					die( jsonout('error', 'Ocurred a problem, try it later.') );
+				}
+			}
+		}
+		die( jsonout('error', 'Please reaload search page.') );
 	}
 
 
