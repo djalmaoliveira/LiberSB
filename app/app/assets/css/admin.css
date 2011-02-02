@@ -36,7 +36,7 @@ body {
 }
 
 /* rounded area */
-#search_area, #editor_tab_area {
+#search_area, #editor_tab_area, #login_area {
     background-color:#bfbfbf;
     color:black;
     padding:10px;
@@ -46,7 +46,12 @@ body {
     -webkit-border-radius: 0px 10px 10px 10px;
 }
 
-
+/* login */
+#login_area {
+    width:300px;
+    margin: 50px auto;
+    padding:10px 0px 10px 90px;
+}
 
 .clear {
     clear:both;
@@ -83,3 +88,12 @@ button, .admin_input {
     padding:5px;
 }
 
+/* message returning */
+.msg_error {
+    color:#f10202;
+    font-weight:bold;    
+}
+.msg_ok {
+    color:#0f0fa5;
+    font-weight:bold;
+}

@@ -57,7 +57,7 @@ class ContentCache extends Funky {
     }
 
 	/**
-	*	Clean cached files by $aContent.	
+	*	Clean cached files by $aContent.
 	*	@param Array $aContent
 	*	@return boolean
 	*/

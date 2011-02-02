@@ -10,11 +10,17 @@ class AdminController extends Controller{
 
     function __construct($p) {
         parent::__construct($p);
+		session_cache_expire (30);
 
+		Liber::loadModel('User');
         Liber::loadHelper(Array('Url', 'HTML'));
-
         $this->oTPL = $this->view()->template();
         $this->oTPL->model('admin.html');
+
+		if ( !User::logged() ) {
+			$this->login();
+			exit;
+		}
     }
 
 
@@ -45,10 +51,34 @@ class AdminController extends Controller{
         }
 
         $aData['content_menu'] = &$aMenu;
-		$this->oTPL->load('admin_home.html', $aData);
+		$this->oTPL->load('admin/admin_home.html', $aData);
     }
 
+	function login() {
+		Liber::loadModel('User');
+		Liber::loadHelper( Array('Form', 'Url') );
+		Liber::loadHelper('Util', 'APP');
 
+
+		if ( Liber::requestedMethod() == 'post' ) {
+			if ( User::login(Input::post('login'), Input::post('hash')) ) {
+				die( jsonout('ok', url_to_('/admin', true) ) );
+			} else {
+				die( jsonout('error', 'Login/Password invalid, try again.') );
+			}
+		}
+
+
+		$aData['action']= url_to_('/admin/login', true );
+		$aData['token'] = User::token(true);
+		$this->oTPL->load('admin/login.html', $aData);
+	}
+
+	function logout() {
+		Liber::loadModel('User');
+		User::logout();
+		Liber::redirect('/admin');
+	}
 }
 
 ?>

@@ -1,5 +1,4 @@
 <?
-html_header_('css', 'admin.css');
 html_header_('css', 'superfish.css');
 //html_header_('css', 'superfish-navbar.css');
 html_header_('js', 'hoverIntent.js');
@@ -54,7 +53,7 @@ html_header_('js', 'util.js');
                 <a href="#">Configurações</a>
             </li>
             <li>
-                <a href="#">Sair</a>
+                <a href="<?url_to_('/admin/logout')?>">Logout</a>
             </li>
     </ul>
 </div>

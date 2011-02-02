@@ -1,0 +1,49 @@
+<?
+html_title_('Login');
+html_header_('js','sha1.js');
+html_header_('js','util.js');
+?>
+
+<div id='login_area'>
+	<h2>User identification</h2>
+	<form action='<?=$action?>' onsubmit='return btnLogin();' id='frmLogin'>
+		<?form_hidden_('token', $token);?>
+		<p><div class='fieldname'>Login:</div> <?form_input_('login','','class="admin_input"')?></p>
+		<p><div class='fieldname'>Password:</div> <?form_password_('hash','','class="admin_input"')?></p>
+		<p><?form_button_('send', 'Login', 'onclick="btnLogin($(\'#frmLogin\'), this)"')?></p>
+	</form>
+		<br/>
+		<span id='out'></span>
+
+</div>
+<script type="text/javascript">
+
+	function btnLogin(frm, btn) {
+		var token  = '<?=$token?>';
+		var sha1   = new jsSHA($('#hash').val(), "ASCII").getHash('HEX');
+		var shaObj = new jsSHA($('#login').val(), "ASCII");
+		var hash_send = shaObj.getHMAC(sha1+token, 'ASCII',  'HEX');
+		$("#hash").val(hash_send);
+
+		$('#out').html('');
+		buttonClick(btn, "Processing...", function(){
+			$.post($(frm).attr('action'), $(frm).serialize(), function(resp) {
+				if (resp.status=='ok') {
+					$('#out').addClass('msg_ok');
+					$('#out').html('Loading...');
+					$(btn).css('visibility','hidden');
+					document.location = resp.content.text;
+
+				} else {
+					$('#out').html(resp.content.text);
+					$('#out').addClass('msg_error');
+					$("#hash").val('');
+				}
+
+			}, 'json');
+		});
+
+	}
+
+
+</script>
