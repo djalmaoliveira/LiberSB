@@ -25,18 +25,22 @@ class AdminContentController extends Controller {
     /* Show Content Editor */
     public function edit() {
         Liber::loadHelper('Util', 'APP');
-
+		$oSec = Liber::loadClass('Security', true);
         $oContent = Liber::loadModel('Content', true);
+
         if ( Liber::requestedMethod() == 'post' ) {
-            $oContent->loadFrom( Input::post() );
-            $oContent->field('datetime', date('Y-m-d H:i:s'));
-            if ( $oContent->save() ) {
-                $oCache = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache($oContent->toArray());
-                die( jsonout('ok', Array('text'=>'Documento salvo às '.date('H:i:s'), 'content_id'=>$oContent->field('content_id'))) );
-            } else {
-                Liber::log()->add('Context não foi salvo.','error');
-                die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
-            }
+			if ( $oSec->validToken(Input::post('token')) ) {
+				$oContent->loadFrom( Input::post() );
+				$oContent->field('datetime', date('Y-m-d H:i:s'));
+				if ( $oContent->save() ) {
+					$oCache = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache($oContent->toArray());
+					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content_id'=>$oContent->field('content_id'))) );
+				} else {
+					Liber::log()->add('Document can\'t be saved.','error');
+					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
+				}
+			}
+			die( jsonout('error', 'Please reload this page.' ) ) ;
         }
 
         // new content
@@ -49,6 +53,7 @@ class AdminContentController extends Controller {
 
         $aData['content'] = $oContent->toArray();
         $aData['action']  = url_to_('/admin/content/edit', true);
+		$aData['token']   = $oSec->token();
         $this->view()->load('admin/content_editor.html', $aData);
     }
 
@@ -58,7 +63,7 @@ class AdminContentController extends Controller {
         if ( Liber::requestedMethod() == 'post' ) {
             $oContent = Liber::loadModel('Content', true);
             if ( $oContent->delete( Input::post('content_id') ) ) {
-                die( jsonout('ok', 'Conteúdo apagado com sucesso.' ) ) ;
+                die( jsonout('ok', 'Document deleted successfully.' ) ) ;
             } else {
                 die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
             }
