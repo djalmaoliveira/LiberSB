@@ -9,7 +9,7 @@ $aConfigs   = Array(
                     'APP_PATH'      => $project.'app/',
                     'BASE_PATH'     => $project.'Liber/',
                     'APP_MODE'      => 'DEV',
-                    'FUNKY_PATH'    => 'c/',
+                    'FUNKY_PATH'    => 'static/',
                     'EMAIL'         => 'contact@localhost.localdomain'
 
                 ),
@@ -35,6 +35,6 @@ $route['/notfound']['*']         = Array('NotFoundController', 'index');
 $route['/comment']['*']          = Array('CommentController', 'comment');
 
 $route['/admin']['*']            = Array('AdminController', '*');
-$route['/admin/content']['*']    = Array('ContentController', '*');
+$route['/admin/content']['*']    = Array('AdminContentController', '*');
 $route['/admin/comment']['*']    = Array('AdminCommentController', '*');
 ?>

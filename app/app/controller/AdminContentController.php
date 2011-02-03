@@ -4,12 +4,17 @@
  *
  *
  */
-class ContentController extends Controller {
+class AdminContentController extends Controller {
 
     function __construct($p=Array()) {
         parent::__construct($p);
 
         Liber::loadHelper(Array('Url', 'HTML', 'Form'));
+		Liber::loadModel('User');
+		if ( !User::logged() ) {
+			Liber::redirect( url_to_('/admin', true) );
+			exit;
+		}
     }
 
 
@@ -44,7 +49,7 @@ class ContentController extends Controller {
 
         $aData['content'] = $oContent->toArray();
         $aData['action']  = url_to_('/admin/content/edit', true);
-        $this->view()->load('content_editor.html', $aData);
+        $this->view()->load('admin/content_editor.html', $aData);
     }
 
     /* delete a content, only by POST method */
@@ -79,7 +84,7 @@ class ContentController extends Controller {
         $aData['search']       = Input::post('search');
         $aData['action']       = url_to_('/admin/content/search', true);
         $aData['url_operation']= url_to_('/admin/content', true);
-        $this->view()->load('content_search.html', $aData);
+        $this->view()->load('admin/content_search.html', $aData);
     }
 
 }

@@ -12,11 +12,11 @@ class AdminController extends Controller{
         parent::__construct($p);
 		session_cache_expire (30);
 
-		Liber::loadModel('User');
         Liber::loadHelper(Array('Url', 'HTML'));
         $this->oTPL = $this->view()->template();
         $this->oTPL->model('admin.html');
 
+		Liber::loadModel('User');
 		if ( !User::logged() ) {
 			$this->login();
 			exit;

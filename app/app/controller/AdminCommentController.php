@@ -10,6 +10,12 @@ class AdminCommentController extends Controller {
         parent::__construct($p);
 
         Liber::loadHelper(Array('Url', 'HTML', 'Form'));
+		Liber::loadModel('User');
+		if ( !User::logged() ) {
+			Liber::redirect( url_to_('/admin', true) );
+			exit;
+		}
+
     }
 
 
@@ -27,7 +33,7 @@ class AdminCommentController extends Controller {
 		$aData['context']	   = "Comment Search";
         $aData['url_operation']= url_to_('/admin/comment/', true);
 		$aData['token']		   = $oSec->token(true);
-        $this->view()->load('comment_search.html', $aData);
+        $this->view()->load('admin/comment_search.html', $aData);
 	}
 
 	public function waiting() {
@@ -40,7 +46,7 @@ class AdminCommentController extends Controller {
 		$aData['context']	   = "Comments Waiting";
         $aData['url_operation']= url_to_('/admin/comment/', true);
 		$aData['token']		   = $oSec->token(true);
-        $this->view()->load('comment_search.html', $aData);
+        $this->view()->load('admin/comment_search.html', $aData);
 	}
 
 	public function delete() {

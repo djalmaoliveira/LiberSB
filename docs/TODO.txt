@@ -1,5 +1,4 @@
 - CSRF (where update data)
-- Module UserManager
 - upload images
 - tags
 - content_show_() shoud parse partial html
