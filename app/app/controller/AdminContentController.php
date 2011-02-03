@@ -15,6 +15,8 @@ class AdminContentController extends Controller {
 			Liber::redirect( url_to_('/admin', true) );
 			exit;
 		}
+
+
     }
 
 

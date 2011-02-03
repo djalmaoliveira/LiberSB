@@ -11,11 +11,14 @@ class AdminConfigController extends Controller {
 
         Liber::loadHelper(Array('Url', 'HTML', 'Form'));
 		Liber::loadModel('User');
-		if ( !User::logged() ) {
+		if ( !User::logged()  ) {
 			Liber::redirect( url_to_('/admin', true) );
 			exit;
 		}
 
+		if ( (User::token() != Input::get('t')) ) {
+			exit;
+		}
     }
 
 
@@ -44,6 +47,8 @@ class AdminConfigController extends Controller {
 		}
 		die( jsonout('error','Please reload this page.') );
 	}
+
+
 
 }
 ?>

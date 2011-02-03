@@ -93,6 +93,7 @@ class User extends TableModel {
 		}
 		return $oSession->val('token');
 	}
+
 }
 
 ?>

@@ -51,6 +51,7 @@ class AdminController extends Controller{
         }
 
         $aData['content_menu'] = &$aMenu;
+		$aData['token'] = User::token();
 		$this->oTPL->load('admin/admin_home.html', $aData);
     }
 
@@ -76,8 +77,12 @@ class AdminController extends Controller{
 
 	function logout() {
 		Liber::loadModel('User');
-		User::logout();
-		Liber::redirect('/admin');
+
+		if ( Input::get('t') == User::token() ) {
+			User::logout();
+			Liber::redirect('/admin');
+		}
+
 	}
 }
 

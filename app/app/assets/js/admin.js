@@ -32,6 +32,5 @@ function loadPage(page, query, method) {
             $(text).remove();
         });
     }
-
 }
 

@@ -50,10 +50,10 @@ html_header_('js', 'util.js');
             </li>
 
             <li>
-                <a href="javascript:loadPage('<?url_to_('/admin/config')?>')">Configurations</a>
+                <a href="javascript:loadPage('<?url_to_('/admin/config')?>?t=<?=$token?>')">Configurations</a>
             </li>
             <li>
-                <a href="<?url_to_('/admin/logout')?>">Logout</a>
+                <a href="<?url_to_('/admin/logout')?>?t=<?=$token?>">Logout</a>
             </li>
     </ul>
 </div>
