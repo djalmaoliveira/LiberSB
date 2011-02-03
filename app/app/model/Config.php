@@ -25,7 +25,7 @@ class Config extends TableModel {
         );
     }
 
-	function get( $aFields ) {
+	function data( $aFields ) {
 		if ( !is_array($aFields) ) {
 			$aFields = Array( $aFields );
 		}
@@ -34,7 +34,8 @@ class Config extends TableModel {
 			select ".implode(',', $aFields)."
 			from
 				$this->table
-			limit 1
+			where
+				id=1
 		";
 
         $q   = $this->db()->prepare($sql);

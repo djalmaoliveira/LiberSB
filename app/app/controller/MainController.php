@@ -19,7 +19,7 @@ class MainController extends Controller{
     public function index() {
         Liber::loadHelper('Content', 'APP');
 		$oConfig = new Config;
-		$aConfig = $oConfig->get( Array('site_name', 'facebook_url', 'twitter_url') );
+		$aConfig = $oConfig->data( Array('site_name', 'facebook_url', 'twitter_url') );
 		html_title_($aConfig['site_name']);
 		$aData['config'] = &$aConfig;
 		$this->oTPL->load('home.html', $aData);
