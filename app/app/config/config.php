@@ -35,6 +35,7 @@ $route['/notfound']['*']         = Array('NotFoundController', 'index');
 $route['/comment']['*']          = Array('CommentController', 'comment');
 
 $route['/admin']['*']            = Array('AdminController', '*');
+$route['/admin/config']['*']     = Array('AdminConfigController', '*');
 $route['/admin/content']['*']    = Array('AdminContentController', '*');
 $route['/admin/comment']['*']    = Array('AdminCommentController', '*');
 ?>

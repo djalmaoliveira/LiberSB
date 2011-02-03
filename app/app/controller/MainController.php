@@ -11,14 +11,18 @@ class MainController extends Controller{
     function __construct($p) {
         parent::__construct($p);
         Liber::loadHelper(Array('Url', 'HTML'));
+		Liber::loadModel('Config');
         $this->oTPL = $this->view()->template();
     }
 
 
     public function index() {
         Liber::loadHelper('Content', 'APP');
-
-		$this->oTPL->load('home.html');
+		$oConfig = new Config;
+		$aConfig = $oConfig->get( Array('site_name', 'facebook_url', 'twitter_url') );
+		html_title_($aConfig['site_name']);
+		$aData['config'] = &$aConfig;
+		$this->oTPL->load('home.html', $aData);
     }
 
     /* missing action */

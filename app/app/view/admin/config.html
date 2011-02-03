@@ -1,0 +1,28 @@
+<br/>
+<div class='form_area'>
+    <div class='tabs'>General</div>
+    <div class='clear'></div>
+        <div id='content_area'>
+            <form action="" method="post" id='frmConfig' onsubmit='return false;'>
+				<?form_hidden_('token', $token)?>
+				<p>Site Name: <?form_input_('site_name', $config, 'class="admin_input"')?></p>
+				<p>Contact Email: <?form_input_('contact_email', $config)?></p>
+				<p>Facebook Site: <?form_input_('facebook_url', $config)?></p>
+				<p>Twitter Site: <?form_input_('twitter_url', $config)?></p>
+            </form>
+			<p><?form_button_('btnSave', 'Save', 'onclick="saveConfig()"')?><span id='out'></span></p>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+    //<![CDATA[
+		function saveConfig() {
+			buttonClick($('#btnSave'), "Saving...", function(){
+				$.post('<?=$action?>/save', $('#frmConfig').serialize(), function(resp) {
+					$('#out').addClass('msg_'+resp.status);
+					$('#out').html(resp.content.text);
+				},'json');
+			});
+		}
+    //]]>
+    </script>

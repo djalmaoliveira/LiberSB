@@ -1,4 +1,7 @@
-<?$url=url_to_('/', true);?>
+<?
+$url=url_to_('/', true);
+$config = Liber::loadModel('Config', true)->get( Array('site_name', 'facebook_url', 'twitter_url') );
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
 <head>
@@ -32,7 +35,17 @@
             <h1><a href="<?=$url?>" target="_parent"><span class='app_title'>Personal Blog</span></a></h1>
         </div>
         <br/>
-        <div id='search_form' ><form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form></div>
+        <div id='search_form' style='text-align:right'>
+			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
+			<? 	if ( $config['facebook_url'] ) {?>
+				<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" /></a>
+			<?	}?>
+			<? 	if ( $config['twitter_url'] ) {?>
+				<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" /></a>
+			<?	}?>
+
+		</div>
+
         <span class='description'></span>
     </div> <!-- end of templatemo_header -->
 </div> <!-- end of templatemo_menu_wrapper -->
