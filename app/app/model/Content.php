@@ -137,6 +137,34 @@ class Content extends TableModel {
         return $this->returnKeys($q);
     }
 
+
+    /**
+    *   Return lasts contents ordered by date used to feed.
+    *   @param integer $count
+    *   @param integer $sizeText
+    *   @return Array
+    */
+    function lastContentsFeed($count=5,  $sizeText=200) {
+        $sql = "
+            select
+                content_id,
+                content_type_id,
+                title,
+				substring(body, 1,:sizeText) as body,
+                datetime
+            from
+                $this->table
+            order by
+                datetime desc
+            limit $count
+        ";
+
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute( Array(':sizeText'=>$sizeText) );
+        if ( !$ret ) { return Array();}
+        return $this->returnKeys($q);
+    }
+
 }
 
 ?>

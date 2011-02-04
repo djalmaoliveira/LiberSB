@@ -1,6 +1,7 @@
 <?
 $url	= url_to_('/', true);
 $config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_url', 'twitter_url') );
+$url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
@@ -11,6 +12,7 @@ $config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_u
 	<script type="text/javascript" src="<? url_asset_('/js/jquery.js')?>"></script>
 	<script type="text/javascript" src="<?url_asset_('/js/main.js')?>"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css')?>">
+	<link rel="alternate" type="application/rss+xml" title="<?=html_title_();?>" href="<?=$url_rss?>" />
     <? html_header_(); ?>
 
     <script type="text/javascript">
@@ -43,7 +45,7 @@ $config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_u
 			<? 	if ( $config['twitter_url'] ) {?>
 				<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" /></a>
 			<?	}?>
-
+			<a href='<?=$url_rss?>' title='Go to Twitter page'><img src="<?url_asset_('/image/rss.png')?>" /></a>
 		</div>
 
         <span class='description'></span>

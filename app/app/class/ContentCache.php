@@ -64,6 +64,7 @@ class ContentCache extends Funky {
 	function cleanCache($aContent) {
 		$url = $this->url($aContent);
 		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($url)) );
+		Liber::loadClass('FeedCache', 'APP', true)->cleanCache();
 	}
 
 }

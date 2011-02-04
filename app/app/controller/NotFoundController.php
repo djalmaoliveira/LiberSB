@@ -21,6 +21,11 @@ class NotFoundController extends Controller{
 
         if ($page) { die($page); }
 
+        $page = Liber::loadClass('FeedCache', 'APP', true)->create(url_current_(true));
+
+        if ($page) { header("Content-type: text/xml"); die($page); }
+
+
         $this->show404();
     }
 
