@@ -60,13 +60,18 @@ class AdminContentController extends Controller {
     /* delete a content, only by POST method */
     public function delete() {
         Liber::loadHelper('Util', 'APP');
+		$oSec = Liber::loadClass('Security', true);
         if ( Liber::requestedMethod() == 'post' ) {
-            $oContent = Liber::loadModel('Content', true);
-            if ( $oContent->delete( Input::post('content_id') ) ) {
-                die( jsonout('ok', 'Document deleted successfully.' ) ) ;
-            } else {
-                die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
-            }
+			if ( $oSec->validToken( Input::post('token') ) ) {
+				$oContent = Liber::loadModel('Content', true);
+				if ( $oContent->delete( Input::post('content_id') ) ) {
+					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
+				} else {
+					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
+				}
+			} else {
+				die( jsonout('error', 'Please reload search page.' ) ) ;
+			}
         }
 
     }
@@ -74,6 +79,7 @@ class AdminContentController extends Controller {
     /* Search or Show form search. */
     public function search() {
         Liber::loadHelper('DT');
+		$oSec = Liber::loadClass('Security', true);
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
 
         $oContType->get( Input::get('content_type_id')?Input::get('content_type_id'):Input::post('content_type_id') );
@@ -89,6 +95,7 @@ class AdminContentController extends Controller {
         $aData['search']       = Input::post('search');
         $aData['action']       = url_to_('/admin/content/search', true);
         $aData['url_operation']= url_to_('/admin/content', true);
+		$aData['token']		   = $oSec->token();
         $this->view()->load('admin/content_search.html', $aData);
     }
 

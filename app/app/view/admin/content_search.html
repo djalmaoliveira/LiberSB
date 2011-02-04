@@ -49,7 +49,7 @@
         function deleteContent( content_id, elem ) {
             if ( confirm("O conteúdo será apagado, deseja continuar ?") ) {
 
-                $.post('<?=$url_operation?>/delete', 'content_id='+content_id, function(resp) {
+                $.post('<?=$url_operation?>/delete', 'content_id='+content_id+'&token=<?=$token?>', function(resp) {
                     if ( resp.status == 'ok' ) {
                         $(elem).css('display', 'none');
                     }
