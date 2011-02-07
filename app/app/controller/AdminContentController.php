@@ -26,7 +26,7 @@ class AdminContentController extends Controller {
     public function edit() {
         Liber::loadHelper('Util', 'APP');
 		$oSec = Liber::loadClass('Security', true);
-        $oContent = Liber::loadModel('Content', true);
+        list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
 
         if ( Liber::requestedMethod() == 'post' ) {
 			if ( $oSec->validToken(Input::post('token')) ) {
@@ -46,8 +46,11 @@ class AdminContentController extends Controller {
         // new content
         if ( Input::get('content_type_id') ) {
             $aData['content_type_id'] = Input::get('content_type_id');
+			$aData['tag'] = 'New';
         } else {
             $oContent->get( Input::get('id') );
+			$oContType->get( $oContent->field('content_type_id') );
+			$aData['tab'] = 'Editing '.$oContType->field('description');
             $aData['content_type_id'] = $oContent->field('content_type_id');
         }
 

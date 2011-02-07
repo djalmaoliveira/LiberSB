@@ -9,6 +9,10 @@ body {
 /* menu  */
 #menu_bar, #menu_bar .sf-menu li, #menu_bar .sf-menu li li {
    background-color:#add8e6;
+
+}
+#menu_bar .sf-menu a{
+       height:100%;
 }
 /* selected menu */
 #menu_bar .sf-menu li:hover {
@@ -22,10 +26,9 @@ body {
 #menu_bar {
     width:100%;
     float:left;
-    height:32px;    /* height of background of menu bar*/
+    height:34px;    /* height of background of menu bar*/
     border: #999999 1px solid;
 }
-
 
 .form_area {
     margin:10px;
