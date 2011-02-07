@@ -2,6 +2,7 @@
 $url	= url_to_('/', true);
 $config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_url', 'twitter_url') );
 $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
+$types = Liber::loadModel('ContentType', true)->search('');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
@@ -57,10 +58,9 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
     <div id="css_menu">
         <ul>
             <li><a href="<?=$url?>" >Home</a></li>
-            <li><a href="<?=$url.rawurlencode('About')?>" >About</a></li>
-            <li><a href="<?=$url.rawurlencode('Events')?>" >Events</a></li>
-            <li><a href="<?=$url.rawurlencode('News')?>" >News</a></li>
-            <li><a href="<?=$url.rawurlencode('Tips')?>" >Tips</a></li>
+			<?  foreach($types as $aContType) {?>
+				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
+			<?	}?>
             <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
@@ -76,10 +76,9 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 
         <ul class="footer_menu">
             <li><a href="<?=$url?>" >Home</a></li>
-            <li><a href="<?=$url.rawurlencode('About')?>" >About</a></li>
-            <li><a href="<?=$url.rawurlencode('Events')?>" >Events</a></li>
-            <li><a href="<?=$url.rawurlencode('News')?>" >News</a></li>
-            <li><a href="<?=$url.rawurlencode('Tips')?>" >Tips</a></li>
+			<?  foreach($types as $aContType) {?>
+				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
+			<?	}?>
             <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
@@ -89,12 +88,7 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
         Website Template
         by
         <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
-
-
     </div>
-
 </div>
-
-
 </body>
 </html>
