@@ -1,9 +1,7 @@
 - CSRF (where update data)
+- paging
+- content_show_() shoud parse partial html
 - upload images
 - tags
-- content_show_() shoud parse partial html
-- twitter, facebook links (configurations)
-- RSS
-- paging
 - layouting
 -
