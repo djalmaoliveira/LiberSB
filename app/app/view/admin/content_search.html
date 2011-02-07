@@ -12,12 +12,13 @@
 
                 <p>
                     <table>
+						<thead>
                         <tr>
-                            <td>Title</td>
-                            <td>Date</td>
-                            <td>Operations</td>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Operations</th>
                         </tr>
-
+						</thead>
                         <?  foreach ( $list as $content ) { ?>
 
                             <tr id="c_<?=$content['content_id']?>" class='rows'>

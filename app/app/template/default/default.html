@@ -31,8 +31,8 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 </head>
 
 <body>
-<div id="templatemo_header_wrapper">
-    <div id="templatemo_header" >
+<div id="css_header_wrapper">
+    <div id="css_header" >
         <div id="site_title">
             <h1><a href="<?=$url?>" target="_parent"><span class='app_title'>Personal Blog</span></a></h1>
         </div>
@@ -49,12 +49,12 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 		</div>
 
         <span class='description'></span>
-    </div> <!-- end of templatemo_header -->
-</div> <!-- end of templatemo_menu_wrapper -->
+    </div>
+</div>
 
-<div id="templatemo_menu_wrapper">
+<div id="css_menu_wrapper">
 
-    <div id="templatemo_menu">
+    <div id="css_menu">
         <ul>
             <li><a href="<?=$url?>" >Home</a></li>
             <li><a href="<?=$url.rawurlencode('About')?>" >About</a></li>
@@ -64,15 +64,15 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
             <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
-    </div> <!-- end of templatemo_menu -->
+    </div> <!-- end of css_menu -->
 </div>
 
 
 <?=$content ?>
 
-<div id="templatemo_footer_wrapper">
+<div id="css_footer_wrapper">
 
-    <div id="templatemo_footer">
+    <div id="css_footer">
 
         <ul class="footer_menu">
             <li><a href="<?=$url?>" >Home</a></li>
@@ -88,8 +88,8 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
         <br/>
         Website Template
         by
-        <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a> |
-        Pictures from: <a href="http://www.publicdomainpictures.net/">Public Domain Pictures</a>
+        <a href="http://www.templatemo.com" target="_parent">Free CSS Templates</a>
+
 
     </div>
 

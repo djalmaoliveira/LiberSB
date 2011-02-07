@@ -1,4 +1,4 @@
-﻿<br/>
+<br/>
 <div class='form_area'>
 
     <div class='tabs'><?=$context?></div>
@@ -56,9 +56,11 @@
                 $.post('<?=$url_operation?>'+method, 'id='+id+'&token='+'<?=$token?>', function(resp) {
                     if ( resp.status == 'ok' ) {
                         $(elem).css('display', 'none');
+						doSearch();
                     } else {
 						alert(resp.content.txt);
 					}
+
                 },'json');
 
             }
@@ -70,6 +72,7 @@
                 $.post('<?=$url_operation?>delete', 'id='+id+'&token='+'<?=$token?>', function(resp) {
                     if ( resp.status == 'ok' ) {
                         $(elem).css('display', 'none');
+						doSearch();
                     } else {
 						alert(resp.content.txt);
 					}

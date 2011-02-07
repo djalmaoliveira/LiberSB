@@ -1,14 +1,16 @@
-
-.editor_field_desc {
-    font-size:1.2em;
-    font-weight:bold;
-    color:white;
-}
-
-#title  {
-
-    width:500px;
+#editor_tab_area #cke_bottom_body, 
+#editor_tab_area #cke_top_body {
+    background:transparent;
     border-style:none;
-    padding:3px;
+}
+#editor_tab_area .cke_resizer {
+    display:none;
+}
+#editor_tab_area .cke_toolbox_collapser, #editor_tab_area .cke_toolbar_start {
+    display:none;
 }
 
+ #editor_tab_area .cke_button a,   #editor_tab_area .cke_label{
+    background:transparent; 
+
+ }

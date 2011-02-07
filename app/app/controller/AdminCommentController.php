@@ -1,8 +1,7 @@
-﻿<?php
+<?php
 
 /**
- *
- *
+ *	Controller of Comments in Admin
  */
 class AdminCommentController extends Controller {
 

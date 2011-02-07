@@ -2,9 +2,9 @@
 html_title_( implode(' » ', $pageName) );
 html_header_('js', 'util.js');
 ?>
-<div id="templatemo_content_wrapper">
+<div id="css_content_wrapper">
 
-    <div id="templatemo_sidebar">
+    <div id="css_sidebar">
 
         <span id='sidebar'>
                 <div class="sidebar_box">
@@ -22,15 +22,28 @@ html_header_('js', 'util.js');
 
     </div> <!-- end of sidebar -->
 
-    <div id="templatemo_content">
+    <div id="css_content">
     <div id="location">You are seeing » <?=implode(' » ',$pageName)?></div>
     <?
-        foreach ($contents as $content) {
-            content_show_($content);
-        }
+		if ( count($contents) != 0 ) {
+			foreach ($contents as $content) {
+				content_show_($content);
+			}
+		} else {
     ?>
+        <div class="content_box">
 
 
+            <h2>Terms searched not found.</h2>
+            <div class="cleaner"></div>
+
+        </div>
+        <div class="content_box_bottom" >
+        </div>
+
+
+
+	<?	}?>
     </div> <!-- end of content -->
 
     <div class="cleaner"></div>

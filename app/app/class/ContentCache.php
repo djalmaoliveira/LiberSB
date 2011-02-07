@@ -50,7 +50,7 @@ class ContentCache extends Funky {
         Liber::loadHelper('Content', 'APP');
 
 		$aData['contents'] = Array( &$parts['content'] );
-		$aData['pageName'] = Array($parts['contentType']['description'], $parts['content']['title']);
+		$aData['pageName'] = Array(&$parts['contentType']['description'], &$parts['content']['title']);
 		$funky_cache = Liber::controller()->view()->template()->load('list.html', $aData, true);
 
 		if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').$parts['contentType']['description'].'/'.$parts['content']['title'].'.html', $funky_cache ) ) {
