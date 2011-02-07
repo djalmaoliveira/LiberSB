@@ -10,7 +10,11 @@
     display:none;
 }
 
- #editor_tab_area .cke_button a,   #editor_tab_area .cke_label{
+#editor_tab_area .cke_button a,   #editor_tab_area .cke_label{
     background:transparent; 
 
  }
+ 
+#editor_tab_area .cke_dialog_ui_button {
+    background:red;
+}
