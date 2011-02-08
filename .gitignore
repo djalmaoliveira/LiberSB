@@ -2,3 +2,4 @@ app/app/log/*
 app/app/cache/*
 app/www/static/*
 app/www/feeds/*
+app/www/assets/*
