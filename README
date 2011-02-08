@@ -1,0 +1,14 @@
+LiberSB - Liber Simple Blog
+=====================================
+
+This is a simple blog system using Liber Framework as a core system.
+
+Features
+-------------------------------------
+- Very simple manipulation content;
+- Uses Funky cache concept to maximize page load speed;
+- Can be changed to your personal project;
+- Uses Liber Framework as a application core;
+
+How to install
+-------------------------------------
