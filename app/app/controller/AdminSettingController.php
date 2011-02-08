@@ -1,10 +1,10 @@
 <?php
 
 /**
- *
+ *	Admin controller for application settings.
  *
  */
-class AdminConfigController extends Controller {
+class AdminSettingController extends Controller {
 
     function __construct($p=Array()) {
         parent::__construct($p);
@@ -15,20 +15,20 @@ class AdminConfigController extends Controller {
 			Liber::redirect( url_to_('/admin', true) );
 			exit;
 		}
-
-		if ( (User::token() != Input::get('t')) ) {
-			exit;
-		}
     }
 
 
     public function index() {
+
+		// avoid CSRF access settings data
+		if ( (User::token() != Input::get('t')) ) {	exit;}
+
 		$oConfig = Liber::loadModel('Config', true);
 		$oSec    = Liber::loadClass('Security', true);
-		$aData['action'] = url_current_(true);
+		$aData['action'] = url_to_('/admin/setting', true);
 		$aData['config'] = $oConfig->data( Array('site_name', 'contact_email', 'facebook_url', 'twitter_url') );
 		$aData['token']  = $oSec->token();
-		$this->view()->load('admin/config.html', $aData);
+		$this->view()->load('admin/settings.html', $aData);
     }
 
 
