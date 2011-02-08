@@ -8,7 +8,7 @@ $aConfigs   = Array(
                     //
                     'APP_PATH'      => $project.'app/',
                     'BASE_PATH'     => $project.'Liber/',
-                    'APP_MODE'      => 'DEV',
+                    'APP_MODE'      => 'PROD',
                     'FUNKY_PATH'    => 'static/',
 					'LAYOUT'		=> '',
                     'EMAIL'         => 'contact@localhost.localdomain'
@@ -18,8 +18,8 @@ $aConfigs   = Array(
                 'routes'=>Array(),
 
                 'dbconfig'=>Array(
-                    'DEV'  => Array('localhost','liber_blog','root','root', 'mysql'),
-                    'PROD' => Array('localhost','liber_blog','root','root', 'mysql')
+                    'DEV'  => Array('localhost','libersb','root','root', 'mysql'),
+                    'PROD' => Array('localhost','libersb','root','root', 'mysql')
                 )
 
 
