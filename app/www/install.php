@@ -336,19 +336,24 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 					if ( $oUser->save() ) {
 						// login user
 						$token = $oUser->token();
-						$hash = hash_hmac('sha1', $oUser->field('login'), $oUser->field('password').$token);
+						$hash  = hash_hmac('sha1', $oUser->field('login'), $oUser->field('password').$token);
 						$oUser->login($oUser->field('login'), $hash);
 						$aData['db'] = $oSession->val('database');
 
 						// put config file
-						file_put_contents(Liber::conf('APP_PATH').'config/config.php', config_php($aData));
+						if ( file_put_contents(Liber::conf('APP_PATH').'config/config.php', config_php($aData)) ) {
 
-						// try to create a assets dir
-						$oSetup = Liber::loadClass('Setup', true);
-						$oSetup->publishAsset();
+							// try to create a assets dir
+							$oSetup = Liber::loadClass('Setup', true);
+							if ( $oSetup->publishAsset() ) {
+								// replace index.php (install)
+								if ( file_put_contents(Liber::conf('APP_ROOT').'index.php', index_php(Array())) ) {
+								}
+							}
+						}
 
-						// replace index.php (install)
-						file_put_contents(Liber::conf('APP_ROOT').'index.php', index_php(Array()));
+
+
 
 						?>
 						<div class='form_area'>
