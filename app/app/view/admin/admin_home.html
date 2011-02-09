@@ -30,13 +30,6 @@ html_header_('js', 'util.js');
                 <a href="#content">Content</a>
                 <ul>
                     <?  foreach($content_menu as $content_type_id => $menu) { ?>
-                        <?  if ( $menu['type'] == 1 ) {?>
-
-                            <li>
-                                <a href="javascript:loadPage('<?url_to_("/admin/content/edit?id={$menu['content_id']}&content_type_id=$content_type_id")?>')"><?=$menu['description']?></a>
-                            </li>
-
-                        <?  } else { ?>
                             <li class="current">
                                 <a href="javascript:void()"><?=$menu['description']?></a>
                                 <ul>
@@ -44,7 +37,7 @@ html_header_('js', 'util.js');
                                     <li><a href="javascript:loadPage('<?url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">New</a></li>
                                 </ul>
                             </li>
-                        <?  } ?>
+
                     <?  } ?>
                 </ul>
             </li>
