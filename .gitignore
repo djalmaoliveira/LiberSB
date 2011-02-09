@@ -3,3 +3,4 @@ app/app/cache/*
 app/www/static/*
 app/www/feeds/*
 app/www/assets/*
+app/app/temp/*

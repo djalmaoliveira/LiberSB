@@ -32,7 +32,8 @@ class AdminTopicController extends Controller {
 			if ( $oSec->validToken(Input::post('token')) ) {
 				$oContType->loadFrom( Input::post() );
 				if ( $oContType->save() ) {
-					//$oCache = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache($oContent->toArray());
+					cleancache();
+
 					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content_type_id'=>$oContType->field('content_type_id'))) );
 				} else {
 					Liber::log()->add('Document can\'t be saved.','error');
