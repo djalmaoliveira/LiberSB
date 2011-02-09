@@ -44,9 +44,10 @@ class AdminContentController extends Controller {
         }
 
         // new content
-        if ( Input::get('content_type_id') ) {
+        if ( !Input::get('id') ) {
+			$oContType->get( Input::get('content_type_id') );
             $aData['content_type_id'] = Input::get('content_type_id');
-			$aData['tag'] = 'New';
+			$aData['tab'] = 'New '.$oContType->field('description');
         } else {
             $oContent->get( Input::get('id') );
 			$oContType->get( $oContent->field('content_type_id') );

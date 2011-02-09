@@ -33,7 +33,7 @@
     //<![CDATA[
             function save() {
                 $('#out_save').html('');
-                buttonClick($("#btnSave"), "Aguarde, salvando...", function () {
+                buttonClick($("#btnSave"), "Wait, saving...", function () {
                     $.post('<?=$action?>', $('#frmEditor').serialize(),function (resp){
                         $('#out_save').html(resp.content.text);
                         $('#content_id').val(resp.content.content_id);

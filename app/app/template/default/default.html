@@ -2,7 +2,8 @@
 $url	= url_to_('/', true);
 $config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_url', 'twitter_url') );
 $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
-$types = Liber::loadModel('ContentType', true)->search('');
+$topics = Liber::loadModel('ContentType', true)->listByStatus('A');
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
@@ -40,13 +41,15 @@ $types = Liber::loadModel('ContentType', true)->search('');
         <br/>
         <div id='search_form' style='text-align:right'>
 			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
-			<? 	if ( $config['facebook_url'] ) {?>
-				<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" /></a>
-			<?	}?>
-			<? 	if ( $config['twitter_url'] ) {?>
-				<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" /></a>
-			<?	}?>
-			<a href='<?=$url_rss?>' title='Lasts Contents'><img src="<?url_asset_('/image/rss.png')?>" /></a>
+			<div id='nav_social'>
+				<? 	if ( $config['facebook_url'] ) {?>
+					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" /></a>
+				<?	}?>
+				<? 	if ( $config['twitter_url'] ) {?>
+					<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" /></a>
+				<?	}?>
+				<a href='<?=$url_rss?>' title='Lasts Contents'><img src="<?url_asset_('/image/rss.png')?>" /></a>
+			</div>
 		</div>
 
         <span class='description'></span>
@@ -54,15 +57,16 @@ $types = Liber::loadModel('ContentType', true)->search('');
 </div>
 
 <div id="css_menu_wrapper">
-
     <div id="css_menu">
-        <ul>
+
+        <ul class="nav_menu">
             <li><a href="<?=$url?>" >Home</a></li>
-			<?  foreach($types as $aContType) {?>
+			<?  foreach($topics as $aContType) {?>
 				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
 			<?	}?>
             <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
+
 
     </div> <!-- end of css_menu -->
 </div>
@@ -76,10 +80,10 @@ $types = Liber::loadModel('ContentType', true)->search('');
 
         <ul class="footer_menu">
             <li><a href="<?=$url?>" >Home</a></li>
-			<?  foreach($types as $aContType) {?>
+			<?  foreach($topics as $aContType) {?>
 				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
 			<?	}?>
-            <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
+            <li class="last_menu"><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
         Copyright © 2011 Djalma Oliveira <a href="<?=$url?>"><?html_title_();?></a> |

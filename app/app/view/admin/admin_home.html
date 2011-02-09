@@ -17,6 +17,15 @@ html_header_('js', 'util.js');
 </script>
 <div id='menu_bar'>
     <ul class="sf-menu">
+            <li>
+                <a href="#topics">Topics</a>
+				<ul>
+					<li><a href="javascript:loadPage('<?url_to_('/admin/topic/search')?>')">Search</a></li>
+					<li><a href="javascript:loadPage('<?url_to_('/admin/topic/edit')?>')">New</a></li>
+				</ul>
+
+            </li>
+
             <li class="current">
                 <a href="#content">Content</a>
                 <ul>
@@ -42,10 +51,10 @@ html_header_('js', 'util.js');
             <li class="current">
                 <a href="#">Comments</a>
 				<ul>
-					<li >
+
 						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/search')?>')">Search</a></li>
 						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/waiting')?>')">Waiting</a></li>
-					</li>
+
 				</ul>
             </li>
 
@@ -55,6 +64,7 @@ html_header_('js', 'util.js');
             <li>
                 <a href="<?url_to_('/admin/logout')?>?t=<?=$token?>">Logout</a>
             </li>
+
     </ul>
 </div>
 <br/>

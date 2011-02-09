@@ -1,0 +1,37 @@
+<br/>
+<div class='form_area'>
+
+    <div class='tabs'><?=$tab?></div>
+
+    <div class='clear'></div>
+    <div id="editor_tab_area">
+
+            <form action="" method="post" id='frm'>
+                <?form_hidden_('content_type_id', $topic)?>
+                <?form_hidden_('token', $token)?>
+                <span class='admin_field'>Description:</span><?form_input_('description', $topic, 'class="admin_input"')?>
+                <p>
+                <span class='admin_field'>Status:</span><?form_select_('status', $status, Array($topic['status']))?>
+                </p>
+                <p>
+                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out_save'></span>
+                </p>
+            </form>
+
+    </div>
+</div>
+
+    <script type="text/javascript">
+    //<![CDATA[
+            function save() {
+                $('#out_save').html('');
+                buttonClick($("#btnSave"), "Wait, saving...", function () {
+                    $.post('<?=$action?>', $('#frm').serialize(),function (resp){
+                        $('#out_save').html(resp.content.text);
+                        $('#content_type_id').val(resp.content.content_type_id);
+						$('#out_save').addClass('msg_'+resp.status);
+                    },'json');
+                });
+            }
+    //]]>
+    </script>

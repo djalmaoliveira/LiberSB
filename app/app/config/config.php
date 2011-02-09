@@ -39,5 +39,6 @@ $route['/comment']['*']          = Array('CommentController', 'comment');
 $route['/admin']['*']            = Array('AdminController', '*');
 $route['/admin/setting']['*']    = Array('AdminSettingController', '*');
 $route['/admin/content']['*']    = Array('AdminContentController', '*');
+$route['/admin/topic']['*']      = Array('AdminTopicController', '*');
 $route['/admin/comment']['*']    = Array('AdminCommentController', '*');
 ?>

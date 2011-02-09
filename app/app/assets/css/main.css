@@ -142,44 +142,35 @@ h3 {
     height: 50px;
     margin-bottom: 25px;
     background: url(../image/css_menu.jpg) repeat-x;
+    padding:1px 0 0 0; 
+}
+
+#css_menu .nav_menu {
+    margin: 0 0 1px 0;
+    padding: 15px 0 20px 0;
+    list-style: none;
+}
+.nav_menu li {
+    margin: 0px;
+    padding: 0 30px;
+    display: inline;
 }
 
 #css_menu {
     width: 920px;
-    height: 90px;
-    margin: 0 auto;
-    padding: 0 30px;
-
-}
-
-#css_menu ul {
-    float: left;
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-}
-
-#css_menu ul li {
-    padding: 0px;
-    margin: 0px;
+    text-align: center;
     display: inline;
 }
 
-#css_menu ul li a {
-    position: relative;
-    float: left;
-    width: 152px;
-    display: block;
-    height: 30px;
-    padding: 18px 0 0 0;
-    text-align: center;
-    font-size: 1.3em;
+#css_menu  a {
+    height: 10px;
+    font-size: 1.7em;
     text-decoration: none;
     color: #333333;
-    font-weight: bold;
-    outline: none;
 }
-
+#css_menu  a:hover {
+    color:#1e90ff;
+}
 
 /* end of menu */
 
@@ -362,7 +353,7 @@ h3 {
     margin: 0px;
     padding: 0 20px;
     display: inline;
-    border-right: 1px solid #333333;
+    border-right: #787878 1px solid;   
 }
 
 .footer_menu .last_menu {
@@ -384,8 +375,11 @@ h3 {
 
 
 /* fields and inputs*/
+input[type='text'] {
+    width:200px;
+}
 input[type='text'], textarea {
-    border: #969696 1px solid;
+    border: #ADADAD 1px solid;
 
 }
 input[type='text']:focus, textarea:focus {
@@ -399,3 +393,6 @@ input[type='text']:focus, textarea:focus {
     width:50px;
 }
 
+#nav_social {
+    padding:3px;
+}
