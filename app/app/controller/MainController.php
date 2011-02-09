@@ -53,12 +53,13 @@ class MainController extends Controller{
         $oSec = Liber::loadClass('Security', true);
         if ( Liber::requestedMethod() == 'post' ) {
             Liber::loadHelper('Util', 'APP');
+			$oConfig = Liber::loadModel('Config', true);
             if ( $oSec->validToken(Input::post('token')) ) {
 
                 if ( !Input::post('email') or !Input::post('text') ) { die( jsonout('error', "Please fill the form fields.") ); }
 
                 $oM = Liber::loadClass('Mailer', true);
-                $oM->to( Liber::conf('EMAIL') );
+                $oM->to( $oConfig->data('contact_email') );
                 $oM->subject('Contact from '.Liber::conf('APP_URL'));
                 $oM->from( Input::post('email') );
                 $oM->body( Input::post('name')." <".Input::post('email').">\n\n".Input::post('text') );

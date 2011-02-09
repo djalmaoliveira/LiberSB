@@ -11,7 +11,7 @@ $aConfigs   = Array(
                     'APP_MODE'      => 'PROD',
                     'FUNKY_PATH'    => 'static/',
 					'LAYOUT'		=> '',
-                    'EMAIL'         => 'contact@localhost.localdomain'
+                    'VERSION'       => '1.0'
 
                 ),
 

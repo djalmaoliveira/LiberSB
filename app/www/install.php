@@ -2,13 +2,26 @@
 include '../Liber/Liber.php';
 Liber::setup();
 Liber::conf('BASE_PATH', realpath('../Liber/').'/');
+Liber::conf('APP_PATH', realpath('../app/').'/');
 Liber::conf('APP_MODE', 'PROD');
+
+Liber::loadHelper(Array('Form', 'Url'));
+$oSession = Liber::loadClass('Session', true);
+$action = basename($_SERVER['SCRIPT_NAME']);
 
 if ( !isset($_REQUEST['step']) ) {
 	$_REQUEST['step'] = 1;
 }
-Liber::loadHelper(Array('Form', 'Url'));
-$oSession = Liber::loadClass('Session', true);
+if ( ($_REQUEST['step'])==2 and $_POST) {
+	$oSession->val('database', $_POST);
+}
+if ( ($_REQUEST['step'])==3 and $_POST) {
+	$oSession->val('app', $_POST);
+}
+
+if ( ($aDbConfig = $oSession->val('database')) ) {
+	Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
+}
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -38,7 +51,7 @@ $oSession = Liber::loadClass('Session', true);
 			case 4:
 				$nav = ' » <a href="?step=4">Step 4</a>';
 			case 3:
-				$nav = ' » <a href="?step=3">Step 3</a>'.$nav;
+				$nav = ' » <a href="?step=3">Finished</a>'.$nav;
 			case 2:
 				$nav = ' » <a href="?step=2">Step 2</a>'.$nav;
 			case 1:
@@ -56,7 +69,7 @@ $oSession = Liber::loadClass('Session', true);
 			<div id='content_area'>
 				<h3>Step <?=$_REQUEST['step']?>: MySQL database settings</h3>
 				<p>Please fill correct informations about your database connection.</p>
-				<form method='post' action='' id='frm' onsubmit='return false;'>
+				<form method='post' action='<?=$action?>' id='frm' onsubmit='return false;'>
 					<?form_hidden_('step', '2')?>
 					<p>
 						<div class='field_name'>Server name:</div><?form_input_('server',$oSession->val('database'),"title='IP or Hostname of mysql server'")?>
@@ -88,10 +101,8 @@ $oSession = Liber::loadClass('Session', true);
 
 	<?
 		if ( $_REQUEST['step'] == 2 ) {
-			$oSession->val('database', $_POST);
-			Liber::$aDbConfig = Array('PROD'=>Array($_POST['server'],$_POST['database'],$_POST['user'],$_POST['password'], 'mysql'));
 			if ( !Liber::db('PROD') ) {
-				Liber::redirect(url_current_(true).'?error=true&step=1');
+				Liber::redirect(url_to_('/'.$action, true).'?error=true&step=1');
 			}
 	?>
 
@@ -102,16 +113,16 @@ $oSession = Liber::loadClass('Session', true);
 				<form method='post' action='' id='frm' onsubmit='return false;'>
 					<?form_hidden_('step', '3')?>
 					<p>
-						<div class='field_name'>Site Name:</div><?form_input_('site',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
+						<div class='field_name'>Site Name:</div><?form_input_('site_name',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
 					</p>
 					<p>
-						<div class='field_name'>Contact Email:</div><?form_input_('email',$oSession->val('app'), "title='Put a default email address to receive messages.'")?>
+						<div class='field_name'>Contact Email:</div><?form_input_('contact_email',$oSession->val('app'), "title='Put a default email address to receive messages.'")?>
 					</p>
 					<p>
-						<div class='field_name'>Facebook URL:</div><?form_input_('facebook',$oSession->val('app'), "title='If you have a Facebook account, put here your URL.'")?> (optional)
+						<div class='field_name'>Facebook URL:</div><?form_input_('facebook_url',$oSession->val('app'), "title='If you have a Facebook account, put here your URL.'")?> (optional)
 					</p>
 					<p>
-						<div class='field_name'>Twitter URL:</div><?form_input_('twitter',$oSession->val('app'), "title='If you have a Twitter account, put here your URL.'")?> (optional)
+						<div class='field_name'>Twitter URL:</div><?form_input_('twitter_url',$oSession->val('app'), "title='If you have a Twitter account, put here your URL.'")?> (optional)
 					</p>
 					<p>
 						<div class='field_name'>User:</div><?form_input_('user',$oSession->val('app'), "title='Administrator User to allow access administration area.'")?>
@@ -132,16 +143,115 @@ $oSession = Liber::loadClass('Session', true);
 				<?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
 			</div>
 		</div>
-	<?	} ?>
+	<?	}
 
-	<?
 		if ( $_REQUEST['step'] == 3 ) {
-			$oSession->val('app', $_POST);
+
+
+			$schemes = Array();
+			$schemes[] = "SET NAMES utf8;";
+			$schemes[] = "SET foreign_key_checks = 0;";
+			$schemes[] = "SET time_zone = 'SYSTEM';";
+			$schemes[] = "SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';";
+
+			$schemes[] = "CREATE TABLE `comment` (
+				`comment_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				`content_id` bigint(20) unsigned NOT NULL,
+				`name` varchar(100) NOT NULL,
+				`email` varchar(255) NOT NULL,
+				`comment` text NOT NULL,
+				`datetime` datetime NOT NULL,
+				`status` char(1) NOT NULL,
+				`netinfo` varchar(255) NOT NULL,
+				PRIMARY KEY (`comment_id`),
+				KEY `status` (`status`)
+				) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+			";
+
+			$schemes[] = "CREATE TABLE `config` (
+				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+				`site_name` varchar(255) NOT NULL,
+				`contact_email` varchar(255) NOT NULL,
+				`twitter_url` varchar(255) NOT NULL,
+				`facebook_url` varchar(255) NOT NULL,
+				PRIMARY KEY (`id`)
+				) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+			";
+
+			$schemes[] = "CREATE TABLE `content` (
+				`content_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				`content_type_id` bigint(20) unsigned NOT NULL,
+				`title` varchar(255) NOT NULL,
+				`body` mediumtext NOT NULL,
+				`datetime` datetime NOT NULL,
+				PRIMARY KEY (`content_id`),
+				UNIQUE KEY `content_type_id` (`content_type_id`,`title`),
+				KEY `datetime` (`datetime`)
+				) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+			";
+
+			$schemes[] = "CREATE TABLE `content_type` (
+				`content_type_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+				`description` varchar(255) NOT NULL,
+				`status` char(2) NOT NULL,
+				PRIMARY KEY (`content_type_id`),
+				UNIQUE KEY `description` (`description`),
+				KEY `status` (`status`)
+				) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+			";
+
+			$schemes[] = "CREATE TABLE `user` (
+				`user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+				`name` varchar(255) NOT NULL,
+				`login` varchar(255) NOT NULL,
+				`email` varchar(255) NOT NULL,
+				`password` varchar(255) NOT NULL,
+				`status` char(2) NOT NULL,
+				PRIMARY KEY (`user_id`),
+				UNIQUE KEY `login` (`login`),
+				KEY `status` (`status`)
+				) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+			";
+			$schemes[] = "INSERT INTO `user` (`user_id`, `name`, `login`, `email`, `password`, `status`) VALUES
+				(1,	'admin',	'admin@localhost',	'admin@localhost',	'',	'A');
+			";
+			$schemes[] = "INSERT INTO `config` (`id`, `site_name`, `contact_email`, `twitter_url`, `facebook_url`) VALUES
+				(1,	'teste site name',	'email',	'twitter',	'facebook');
+			";
+			$db  = Liber::db();
+			$ret = true;
+			foreach($schemes as $sql) {
+				if ( $ret === false ) {break;}
+				$ret = $db->exec($sql);
+			}
+
+			if ( $ret ) {
+				$config = Liber::loadModel('Config', true);
+				$config->loadFrom($_POST);
+				if ( $config->save() ) {
+					$oUser = Liber::loadModel('User', true);
+					$oUser->field('user_id', 1);
+					$oUser->field('name', 'Administrator');
+					$oUser->field('login', $_POST['user']);
+					$oUser->field('password', sha1($_POST['password']));
+					if ( $oUser->save() ) {
+						?>
+						<div class='form_area'>
+							<div id='content_area'>
+							<h2>Congratulations, your blog is ready.</h2>
+							<h3><a href='<?url_to_('/')?>' target='_blank'>Go to Blog</a></h3>
+							<h3><a href='<?url_to_('/admin')?>' target='_blank'>Go to Administration</a></h3>
+							</div>
+						</div>
+						<?
+					}
+				}
+			} else {
+				print_r($db->errorInfo());
+			}
+
+		}
 	?>
-
-
-
-	<?	} ?>
 
 </body>
 </html>
