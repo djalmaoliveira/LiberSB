@@ -17,7 +17,7 @@ class ContentCache extends Funky {
 
 	/**
 	*	Override default match pattern and return parts of matched URL.
-	*	Match: FUNCKY_PATH/[content_type_description]/[content_title].html
+	*	Match: FUNKY_PATH/[content_type_description]/[content_title].html
 	*	@param String $url
 	*	@return Array
 	*/

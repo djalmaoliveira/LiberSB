@@ -12,8 +12,24 @@ class FeedCache extends Funky {
 
 
     function __construct() {
-        $this->urlPattern = Liber::conf('APP_URL').'feeds/';
+        $this->urlPattern = Liber::conf('APP_URL').Liber::conf('FUNKY_PATH');
     }
+
+	/**
+	*	Override default match pattern and return parts of matched URL.
+	*	Match: FUNKY_PATH/[file].xml
+	*	@param String $url
+	*	@return Array
+	*/
+    function matchUrl( $url ) {
+		$urlPattern = '/'.str_replace($this->urlPattern, '', $url);
+		$aUrl = pathinfo( str_replace($this->urlPattern, '', $urlPattern) );
+		if ( in_array($aUrl['filename'], Array('rss2', 'atom')) and $aUrl['extension'] == 'xml') {
+			return $aUrl;
+		}
+		return Array();
+    }
+
 
     /**
     *   Create Content cached file from $url specified.
@@ -22,12 +38,7 @@ class FeedCache extends Funky {
     */
     function create($url) {
 
-        if ( !$this->matchUrl($url) ) { return ; }
-
-        $urlPattern = '/'.str_replace(Liber::conf('APP_URL'), '', $url);
-
-        $aUrl            = pathinfo($urlPattern);
-        $filename        = rawurldecode($aUrl['filename']);
+        if ( !($aUrl = $this->matchUrl($url)) ) { return ; }
 
 		$oFeed 		= Liber::loadClass('Feed', true);
 		$oContent 	= Liber::loadModel('Content', true);
@@ -69,10 +80,19 @@ class FeedCache extends Funky {
 
 	/**
 	*	Clean cached files.
+	*	If empty $type it will clean all feed files.
+	*	@param String $type - Type of feed: rss2, atom
 	*	@return boolean
 	*/
-	function cleanCache() {
-		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($this->urlPattern)) );
+	function cleanCache($type=null) {
+		$path = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($this->urlPattern));
+		if ( $type ) {
+			return parent::clean( $path.$type.'.xml' );
+		} else {
+			foreach( Array('rss2', 'atom')  as $filename) {
+				parent::clean( $path.$filename.'.xml' );
+			}
+		}
 	}
 
 }
