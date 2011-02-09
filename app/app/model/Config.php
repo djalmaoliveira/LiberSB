@@ -19,9 +19,9 @@ class Config extends TableModel {
         $this->aFields = Array (
 			'id'        		=> Array('', 'ID', 0),
             'site_name'        	=> Array('', 'Site Name', 0),
-            'contact_email'    	=> Array('', 'Contact Email', 0),
-            'twitter_url'      	=> Array('', 'Twitter', 0),
-            'facebook_url'     	=> Array('', 'Facebook', 0)
+            'contact_email'    	=> Array('', 'Contact Email', Validation::EMAIL),
+            'twitter_url'      	=> Array('', 'Twitter', Validation::URL),
+            'facebook_url'     	=> Array('', 'Facebook', Validation::URL)
         );
     }
 

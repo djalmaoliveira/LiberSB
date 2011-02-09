@@ -8,20 +8,53 @@ Liber::conf('APP_MODE', 'PROD');
 Liber::loadHelper(Array('Form', 'Url'));
 $oSession = Liber::loadClass('Session', true);
 $action = basename($_SERVER['SCRIPT_NAME']);
+$error='';
+
+
 
 if ( !isset($_REQUEST['step']) ) {
 	$_REQUEST['step'] = 1;
 }
 if ( ($_REQUEST['step'])==2 and $_POST) {
 	$oSession->val('database', $_POST);
+	if ( ($aDbConfig = $oSession->val('database')) ) {
+		Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
+	}
+
+	if ( !Liber::db('PROD') ) {
+		$error = "Wrong database connection, please fill correct informations.";
+	}
+
+	if ( $error ) {
+		$_REQUEST['step'] = 1;
+	}
+} else {
+	if ( ($aDbConfig = $oSession->val('database')) ) {
+		Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
+	}
 }
 if ( ($_REQUEST['step'])==3 and $_POST) {
 	$oSession->val('app', $_POST);
+	$error='';
+	$oVal = Liber::loadClass('Validation', true);
+	if ( ($errors = $oVal->validate($_POST['contact_email'], Validation::EMAIL))  ) {
+		$error = "Contact Email: ".implode('', $errors)."<br/>";
+	}
+
+	if ( !empty($_POST['facebook_url']) and ($errors = $oVal->validate($_POST['facebook_url'], Validation::URL))  ) {
+		$error .= "Facebook Url: ".implode('', $errors)."<br/>";
+	}
+
+	if ( !empty($_POST['twitter_url']) and ($errors = $oVal->validate($_POST['twitter_url'], Validation::URL))  ) {
+		$error .= "Twitter Url: ".implode('', $errors)."<br/>";
+	}
+
+	if ( $error ) {
+		$_REQUEST['step'] = 2;
+	}
+
 }
 
-if ( ($aDbConfig = $oSession->val('database')) ) {
-	Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
-}
 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
@@ -81,7 +114,7 @@ if ( ($aDbConfig = $oSession->val('database')) ) {
 						<div class='field_name'>User:</div><?form_input_('user',$oSession->val('database'), "title='Database User name'")?>
 					</p>
 					<p>
-						<div class='field_name'>Password:</div><?form_password_('password', '', "title='Database Password'")?>
+						<div class='field_name'>Password:</div><?form_password_('password', $oSession->val('database'), "title='Database Password'")?>
 					</p>
 				</form>
 				<script>
@@ -89,8 +122,8 @@ if ( ($aDbConfig = $oSession->val('database')) ) {
 						$('#frm').submit();
 					}
 				</script>
-				<? 	if ( isset($_REQUEST['error']) ) {?>
-					<p class='msg_error'>Database settings wrong, please check information above and try again.</p>
+				<? 	if ( isset($error) ) {?>
+					<p class='msg_error'><?=$error?></p>
 				<?	}?>
 				<?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
 			</div>
@@ -101,16 +134,13 @@ if ( ($aDbConfig = $oSession->val('database')) ) {
 
 	<?
 		if ( $_REQUEST['step'] == 2 ) {
-			if ( !Liber::db('PROD') ) {
-				Liber::redirect(url_to_('/'.$action, true).'?error=true&step=1');
-			}
 	?>
 
 		<div class='form_area'>
 			<div id='content_area'>
 				<h3>Step <?=$_REQUEST['step']?>: Application settings</h3>
 				<p>Please fill correct informations about your application.</p>
-				<form method='post' action='' id='frm' onsubmit='return false;'>
+				<form method='post' action='<?=$action?>' id='frm' onsubmit='return false;'>
 					<?form_hidden_('step', '3')?>
 					<p>
 						<div class='field_name'>Site Name:</div><?form_input_('site_name',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
@@ -137,8 +167,8 @@ if ( ($aDbConfig = $oSession->val('database')) ) {
 						$('#frm').submit();
 					}
 				</script>
-				<? 	if ( isset($_REQUEST['error']) ) {?>
-					<p class='msg_error'>Database settings wrong, please check information above and try again.</p>
+				<? 	if ( isset($error) ) {?>
+					<p class='msg_error'><?=$error?></p>
 				<?	}?>
 				<?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
 			</div>

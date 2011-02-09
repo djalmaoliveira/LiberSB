@@ -42,7 +42,7 @@ class AdminSettingController extends Controller {
 			if ( $oConfig->save() ) {
 				die( jsonout('ok','Configurations saved successfully.') );
 			} else {
-				die( jsonout('error',"Sorry, these informations can't be save.") );
+				die( jsonout('error',implode($oConfig->buildFriendlyErrorMsg())) );
 			}
 		}
 		die( jsonout('error','Please reload this page.') );
