@@ -19,7 +19,7 @@
 		function saveConfig() {
 			buttonClick($('#btnSave'), "Saving...", function(){
 				$.post('<?=$action?>/save', $('#frmConfig').serialize(), function(resp) {
-					$('#out').addClass('msg_'+resp.status);
+					$('#out').attr('class','msg_'+resp.status);
 					$('#out').html(resp.content.text);
 				},'json');
 			});

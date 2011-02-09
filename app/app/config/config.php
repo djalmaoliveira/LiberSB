@@ -2,7 +2,7 @@
 
 $project    = realpath((dirname(__FILE__)).'/../../').'/';
 $aConfigs   = Array(
-                'configs'=>Array(
+                'configs' => Array(
                     //
                     // Configurations
                     //
@@ -12,7 +12,6 @@ $aConfigs   = Array(
                     'FUNKY_PATH'    => 'static/',
 					'LAYOUT'		=> '',
                     'VERSION'       => '1.0'
-
                 ),
 
                 'routes'=>Array(),
@@ -27,9 +26,6 @@ $aConfigs   = Array(
 
 $route      = &$aConfigs['routes'];
 
-/*
-    $route[URI][METHOD] = Array()
-*/
 
 $route['/']['*']                 = Array('MainController', '*');
 $route['/notfound']['*']         = Array('NotFoundController', 'index');

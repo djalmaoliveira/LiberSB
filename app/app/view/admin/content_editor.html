@@ -22,7 +22,7 @@
                         <?form_textarea_('body', $content, 'class="jquery_ckeditor" cols="80" rows="10"')?>
                 </p>
                 <p>
-                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out_save'></span>
+                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out'></span>
                 </p>
             </form>
         </div>
@@ -32,12 +32,12 @@
     <script type="text/javascript">
     //<![CDATA[
             function save() {
-                $('#out_save').html('');
+                $('#out').html('');
                 buttonClick($("#btnSave"), "Wait, saving...", function () {
                     $.post('<?=$action?>', $('#frmEditor').serialize(),function (resp){
-                        $('#out_save').html(resp.content.text);
+                        $('#out').html(resp.content.text);
                         $('#content_id').val(resp.content.content_id);
-						$('#out_save').addClass('msg_'+resp.status);
+						$('#out').attr('class','msg_'+resp.status);
                     },'json');
                 });
             }

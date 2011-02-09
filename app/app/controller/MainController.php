@@ -94,9 +94,7 @@ class MainController extends Controller{
         if ( !file_exists(Liber::conf('APP_ROOT').Liber::conf('ASSETS_DIR').'app') ) {
             $oSetup = Liber::loadClass('Setup', true);
             $oSetup->publishAsset();
-
         }
-
     }
 
 }

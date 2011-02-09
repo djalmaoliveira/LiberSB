@@ -14,7 +14,7 @@
                 <span class='admin_field'>Status:</span><?form_select_('status', $status, Array($topic['status']))?>
                 </p>
                 <p>
-                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out_save'></span>
+                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out'></span>
                 </p>
             </form>
 
@@ -24,12 +24,12 @@
     <script type="text/javascript">
     //<![CDATA[
             function save() {
-                $('#out_save').html('');
+                $('#out').html('');
                 buttonClick($("#btnSave"), "Wait, saving...", function () {
                     $.post('<?=$action?>', $('#frm').serialize(),function (resp){
-                        $('#out_save').html(resp.content.text);
+                        $('#out').html(resp.content.text);
                         $('#content_type_id').val(resp.content.content_type_id);
-						$('#out_save').addClass('msg_'+resp.status);
+						$('#out').attr('class','msg_'+resp.status);
                     },'json');
                 });
             }

@@ -5,26 +5,88 @@ Liber::conf('BASE_PATH', realpath('../Liber/').'/');
 Liber::conf('APP_PATH', realpath('../app/').'/');
 Liber::conf('APP_MODE', 'PROD');
 
+/* content of config file */
+function config_php($aData) {
+	$file = '
+<?php
+
+$project    = realpath((dirname(__FILE__))."/../../")."/";
+$aConfigs   = Array(
+                "configs" => Array(
+                    "APP_PATH"      => $project."app/",
+                    "BASE_PATH"     => $project."Liber/",
+                    "APP_MODE"      => "PROD",
+                    "FUNKY_PATH"    => "static/",
+					"LAYOUT"		=> "",
+                    "VERSION"       => "1.0"
+                ),
+
+                "routes"=>Array(),
+
+                "dbconfig"=>Array(
+                    "DEV"  => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql"),
+                    "PROD" => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql")
+                )
+            );
+
+$route      = &$aConfigs["routes"];
+
+$route["/"]["*"]                 = Array("MainController", "*");
+$route["/notfound"]["*"]         = Array("NotFoundController", "index");
+$route["/comment"]["*"]          = Array("CommentController", "comment");
+$route["/admin"]["*"]            = Array("AdminController", "*");
+$route["/admin/setting"]["*"]    = Array("AdminSettingController", "*");
+$route["/admin/content"]["*"]    = Array("AdminContentController", "*");
+$route["/admin/topic"]["*"]      = Array("AdminTopicController", "*");
+$route["/admin/comment"]["*"]    = Array("AdminCommentController", "*");
+?>
+';
+	return trim($file);
+}
+
+// return the content of index.php
+function index_php($aData) {
+	$file = '
+<?php
+include "../app/config/config.php";
+include $aConfigs["configs"]["BASE_PATH"]."Liber.php";
+Liber::loadConfig($aConfigs);
+Liber::run();
+
+?>
+';
+
+	return trim($file);
+}
+
+
+/* =====================================================================================   */
 Liber::loadHelper(Array('Form', 'Url'));
 $oSession = Liber::loadClass('Session', true);
-$action = basename($_SERVER['SCRIPT_NAME']);
-$error='';
-
-
+$action   = basename($_SERVER['SCRIPT_NAME']);
+$error    = '';
 
 if ( !isset($_REQUEST['step']) ) {
 	$_REQUEST['step'] = 1;
 }
+
+// validations for step 2
 if ( ($_REQUEST['step'])==2 and $_POST) {
 	$oSession->val('database', $_POST);
 	if ( ($aDbConfig = $oSession->val('database')) ) {
 		Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
 	}
 
-	if ( !Liber::db('PROD') ) {
+	$db = Liber::db('PROD');
+	if ( !$db ) {
 		$error = "Wrong database connection, please fill correct informations.";
 	}
 
+	if ( $db and $db->query('show tables')->rowCount() > 0 ) {
+		$error = 'There are some tables in database, please verify if it is a correct database name. ';
+	}
+
+	// return to previous step
 	if ( $error ) {
 		$_REQUEST['step'] = 1;
 	}
@@ -33,6 +95,8 @@ if ( ($_REQUEST['step'])==2 and $_POST) {
 		Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
 	}
 }
+
+// validations for step 3
 if ( ($_REQUEST['step'])==3 and $_POST) {
 	$oSession->val('app', $_POST);
 	$error='';
@@ -41,18 +105,22 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 		$error = "Contact Email: ".implode('', $errors)."<br/>";
 	}
 
-	if ( !empty($_POST['facebook_url']) and ($errors = $oVal->validate($_POST['facebook_url'], Validation::URL))  ) {
+	if ( ($errors = $oVal->validate($_POST['facebook_url'], Validation::URL))  ) {
 		$error .= "Facebook Url: ".implode('', $errors)."<br/>";
 	}
 
-	if ( !empty($_POST['twitter_url']) and ($errors = $oVal->validate($_POST['twitter_url'], Validation::URL))  ) {
+	if ( ($errors = $oVal->validate($_POST['twitter_url'], Validation::URL))  ) {
 		$error .= "Twitter Url: ".implode('', $errors)."<br/>";
 	}
 
+	if ( ($errors = $oVal->validate($_POST['login'], Validation::EMAIL))  ) {
+		$error = "Login: ".implode('', $errors)."<br/>";
+	}
+
+	// return to previous step
 	if ( $error ) {
 		$_REQUEST['step'] = 2;
 	}
-
 }
 
 
@@ -84,9 +152,9 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 			case 4:
 				$nav = ' » <a href="?step=4">Step 4</a>';
 			case 3:
-				$nav = ' » <a href="?step=3">Finished</a>'.$nav;
+				$nav = ' » Finished'.$nav;
 			case 2:
-				$nav = ' » <a href="?step=2">Step 2</a>'.$nav;
+				$nav = ' » Step 2'.$nav;
 			case 1:
 				$nav = '<a href="?step=1">Step 1</a>'.$nav;
 		}
@@ -155,7 +223,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 						<div class='field_name'>Twitter URL:</div><?form_input_('twitter_url',$oSession->val('app'), "title='If you have a Twitter account, put here your URL.'")?> (optional)
 					</p>
 					<p>
-						<div class='field_name'>User:</div><?form_input_('user',$oSession->val('app'), "title='Administrator User to allow access administration area.'")?>
+						<div class='field_name'>Login:</div><?form_input_('login',$oSession->val('app'), "title='Administrator User to allow access administration area.'")?>
 					</p>
 					<p>
 						<div class='field_name'>Password:</div><?form_password_('password',$oSession->val('app'), "title='Administrator Password'")?>
@@ -175,7 +243,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 		</div>
 	<?	}
 
-		if ( $_REQUEST['step'] == 3 ) {
+		if ( $_REQUEST['step'] == 3 and $_POST) {
 
 
 			$schemes = Array();
@@ -262,9 +330,26 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 					$oUser = Liber::loadModel('User', true);
 					$oUser->field('user_id', 1);
 					$oUser->field('name', 'Administrator');
-					$oUser->field('login', $_POST['user']);
+					$oUser->field('login', $_POST['login']);
+					$oUser->field('email', $_POST['login']);
 					$oUser->field('password', sha1($_POST['password']));
 					if ( $oUser->save() ) {
+						// login user
+						$token = $oUser->token();
+						$hash = hash_hmac('sha1', $oUser->field('login'), $oUser->field('password').$token);
+						$oUser->login($oUser->field('login'), $hash);
+						$aData['db'] = $oSession->val('database');
+
+						// put config file
+						file_put_contents(Liber::conf('APP_PATH').'config/config.php', config_php($aData));
+
+						// try to create a assets dir
+						$oSetup = Liber::loadClass('Setup', true);
+						$oSetup->publishAsset();
+
+						// replace index.php (install)
+						file_put_contents(Liber::conf('APP_ROOT').'index.php', index_php(Array()));
+
 						?>
 						<div class='form_area'>
 							<div id='content_area'>
