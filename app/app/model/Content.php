@@ -79,7 +79,7 @@ class Content extends TableModel {
 
 
     /**
-    *   Return lasts contents by type.
+    *   Return lasts active contents by type.
     *   @param integer $content_type_id
     *   @param integer $count
     *   @param integer $sizeText
@@ -88,17 +88,19 @@ class Content extends TableModel {
     function lastContentsByType($content_type_id, $count=10, $sizeText=200) {
         $sql = "
             select
-                content_id,
-                content_type_id,
-                title,
-                substring(body, 1,:sizeText) as body,
-                datetime
+                c.content_id,
+                c.content_type_id,
+                c.title,
+                substring(c.body, 1,:sizeText) as body,
+                c.datetime
             from
-                $this->table
+                $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
             where
-                content_type_id=:content_type_id
+                c.content_type_id=:content_type_id
+				and
+				ct.status = 'A'
             order by
-                content_id desc
+                c.content_id desc
             limit $count
         ";
 
@@ -113,21 +115,23 @@ class Content extends TableModel {
 
 
     /**
-    *   Return titles of lasts contents.
+    *   Return titles of lasts active contents.
     *   @param integer $count
     *   @return Array
     */
     function lastContents($count=5) {
         $sql = "
             select
-                content_id,
-                content_type_id,
-                title,
-                datetime
+                c.content_id,
+                c.content_type_id,
+                c.title,
+                c.datetime
             from
-                $this->table
+                $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
+			where
+				ct.status='A'
             order by
-                content_id desc
+                c.content_id desc
             limit $count
         ";
 
@@ -139,7 +143,7 @@ class Content extends TableModel {
 
 
     /**
-    *   Return lasts contents ordered by date used to feed.
+    *   Return lasts active contents ordered by date used to feed.
     *   @param integer $count
     *   @param integer $sizeText
     *   @return Array
@@ -147,15 +151,17 @@ class Content extends TableModel {
     function lastContentsFeed($count=5,  $sizeText=200) {
         $sql = "
             select
-                content_id,
-                content_type_id,
-                title,
-				substring(body, 1,:sizeText) as body,
-                datetime
+                c.content_id,
+                c.content_type_id,
+                c.title,
+				substring(c.body, 1,:sizeText) as body,
+                c.datetime
             from
-                $this->table
+                $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
+			where
+				ct.status='A'
             order by
-                datetime desc
+                c.datetime desc
             limit $count
         ";
 

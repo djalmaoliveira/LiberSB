@@ -33,7 +33,7 @@ html_header_('js', 'util.js');
                         <?  if ( $menu['type'] == 1 ) {?>
 
                             <li>
-                                <a href="javascript:loadPage('<?url_to_('/admin/content/edit?id='.$menu['content_id'])?>')"><?=$menu['description']?></a>
+                                <a href="javascript:loadPage('<?url_to_("/admin/content/edit?id={$menu['content_id']}&content_type_id=$content_type_id")?>')"><?=$menu['description']?></a>
                             </li>
 
                         <?  } else { ?>

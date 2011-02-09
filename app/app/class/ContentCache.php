@@ -27,7 +27,7 @@ class ContentCache extends Funky {
 		$aUrl = pathinfo( str_replace($this->urlPattern, '', $url) );
 		if ( $oContent->get( rawurldecode($aUrl['filename']) ) ) {
 			$oContType->get( $oContent->field('content_type_id') );
-			if ( $oContType->field('description') == rawurldecode($aUrl['dirname']) ) {
+			if ($oContType->field('status') == 'A' and $oContType->field('description') == rawurldecode($aUrl['dirname']) ) {
 				return Array(
 							'content'		=> $oContent->toArray(),
 							'contentType'	=> $oContType->toArray()

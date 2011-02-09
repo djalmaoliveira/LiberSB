@@ -27,7 +27,7 @@ class CommentCache extends Funky {
 		list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'),  true );
 		if ( $oContent->get( $aUrl[1] ) ) {
 			$oContType->get( $oContent->field('content_type_id') );
-			if ( $oContType->field('description') == $aUrl[0] ) {
+			if ($oContType->field('status') == 'A' and $oContType->field('description') == $aUrl[0] ) {
 
 				return Array(
 						'content'		=>	$oContent->toArray(),
