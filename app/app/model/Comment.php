@@ -27,7 +27,6 @@ class Comment extends TableModel {
         );
     }
 
-
     /**
     *   Return lasts comments by content_id and status.
 	*	@param integer $content_id
