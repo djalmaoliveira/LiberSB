@@ -271,8 +271,13 @@ h3 {
     width: 530px;
     padding: 20px 30px;
     background: #fff;
+    color: #4d4d4d;
 }
 
+.comment_box  .content_box {
+    border:  dashed 1px #7f7f7f;
+    background:#faf8f8;
+}
 .content_box_bottom {
     width: 590px;
     height: 36px;

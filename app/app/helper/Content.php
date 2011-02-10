@@ -61,13 +61,15 @@ function content_comment_show_($aComment, $return=false) {
     if ( !$aComment ) { return; }
 
     $html = "
-        <div class=\"content_box\">
-            <h2>".$aComment['name']."</h2>
-            ".dt_timesince_($aComment['datetime'])." ago
-            <br/><br/>
-            <p>".$aComment['comment']."</p>
-            <div class=\"cleaner\"></div>
-        </div>
+		<div class='comment_box'>
+			<div class=\"content_box\">
+				<h2>".$aComment['name']."</h2>
+				".dt_timesince_($aComment['datetime'])." ago
+				<br/><br/>
+				<p>".$aComment['comment']."</p>
+				<div class=\"cleaner\"></div>
+			</div>
+		</div>
 		<br/>
     ";
 

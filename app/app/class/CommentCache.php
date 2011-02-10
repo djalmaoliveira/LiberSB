@@ -83,7 +83,13 @@ class CommentCache extends Funky {
 	*	@return boolean
 	*/
 	function cleanCache($aComment) {
-		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $this->urlPattern).$aComment['content_id'].'/' );
+		list($oContent, $oContType) = Liber::loadModel(Array('Content','ContentType'), true);
+		$oContent->get($aComment['content_id']);
+		$oContType->get( $oContent->field('content_type_id') );
+		$path = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $this->urlPattern).$oContType->field('description').'/'.$oContent->field('title').'/';
+		if ( file_exists($path) ) {
+			rename($path, Liber::conf('APP_PATH').'temp/_'.$oContent->field('title').date('YmdHis'));
+		}
 	}
 }
 ?>
