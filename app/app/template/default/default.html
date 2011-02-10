@@ -36,7 +36,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 <div id="css_header_wrapper">
     <div id="css_header" >
         <div id="site_title">
-            <h1><a href="<?=$url?>" target="_parent"><span class='app_title'>Personal Blog</span></a></h1>
+            <h1><a href="<?=$url?>" target="_parent"><span class='app_title'><?=$config['site_name']?></span></a></h1>
         </div>
         <br/>
         <div id='search_form' style='text-align:right'>
@@ -86,7 +86,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
             <li class="last_menu"><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
-        Copyright © 2011 Djalma Oliveira <a href="<?=$url?>"><?html_title_();?></a> |
+        Copyright © 2011 <?=$config['site_name']?> <a href="<?=$url?>"><?html_title_();?></a> |
         Powered by: <a href='http://github.com/djalmaoliveira/Liber'>Liber Framework</a>
         <br/>
         Website Template

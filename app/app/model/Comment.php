@@ -60,33 +60,34 @@ class Comment extends TableModel {
 
 	/**
 	*	Customized search comments.
-	*
+	*	@param String $terms
+	*	@param Array $aOptions
 	*/
 	function search($terms, $aOptions=Array() ) {
 
 		$sql = "
 			select
-				cm.comment_id,
-				cm.datetime,
-				cm.name,
-				cm.email,
-				cm.status,
+				comment.comment_id,
+				comment.datetime,
+				comment.name,
+				comment.email,
+				comment.status,
 				cn.title,
 				cn.content_type_id,
 				ct.description
 			from
-				comment cm left join content cn on (cn.content_id=cm.content_id)
+				comment  left join content cn on (cn.content_id=comment.content_id)
 				left join content_type ct on (cn.content_type_id=ct.content_type_id)
 			where
-				(cm.name like :name
+				(comment.name like :name
 				or
-				cm.email like :email
+				comment.email like :email
 				or
 				cn.title like :title
 				or
 				ct.description like :description)
 				".(isset($aOptions['where'])?$aOptions['where']:'')."
-			order by cm.comment_id desc
+			order by comment.comment_id desc
 
 			limit ".(isset($aOptions['limit'])?$aOptions['limit']:'10')." offset ".(isset($aOptions['start'])?$aOptions['start']:'0')."
 		";
@@ -103,6 +104,34 @@ class Comment extends TableModel {
         if ( !$ret ) { return Array(); }
         return $this->returnKeys($q);
 	}
+
+	/**
+	*	Return lasts 5 content  most commented.
+	*	@return Array
+	*/
+	function mostCommented() {
+		$sql = "
+			select
+				content_id,
+				content_type_id,
+				title,
+				count(content_id) total
+			from
+				comment left join content using (content_id)
+			where
+				status = 'A'
+			group by
+				comment.content_id
+			order by
+				total desc
+			limit 5
+			";
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute();
+        if ( !$ret ) { return Array(); }
+		return $q->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 
 }
 

@@ -113,6 +113,34 @@ class Content extends TableModel {
         return $this->returnKeys($q);
     }
 
+    /**
+    *   Return  last active content.
+    *   @return Array
+    */
+    function lastContent() {
+        $sql = "
+            select
+                c.content_id,
+                c.content_type_id,
+                c.title,
+				c.body,
+                c.datetime,
+				ct.description
+            from
+                $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
+			where
+				ct.status='A'
+            order by
+                c.content_id desc
+            limit 1
+        ";
+
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute();
+        if ( !$ret ) { return Array();}
+        return $q->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     /**
     *   Return titles of lasts active contents.

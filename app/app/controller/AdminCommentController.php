@@ -39,7 +39,7 @@ class AdminCommentController extends Controller {
         Liber::loadHelper('DT');
 		$oSec = Liber::loadClass('Security', true);
 		$oComment = Liber::loadModel('Comment', true);
-		$aData['list']		   = $oComment->search(Input::post('search'), Array('limit'=>'10','where'=>' and status="W"', 'order'=>'comment_id desc'));
+		$aData['list']		   = $oComment->search(Input::post('search'), Array('limit'=>'10','where'=>' and comment.status="W"', 'order'=>'comment_id desc'));
         $aData['search']       = Input::post('search');
         $aData['action']       = url_current_(true);
 		$aData['context']	   = "Comments Waiting";

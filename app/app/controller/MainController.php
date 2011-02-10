@@ -2,7 +2,6 @@
 
 /**
  * MainController
- *
  */
 class MainController extends Controller{
 
@@ -19,9 +18,9 @@ class MainController extends Controller{
     public function index() {
         Liber::loadHelper('Content', 'APP');
 		$oConfig = new Config;
-		$aConfig = $oConfig->data( Array('site_name', 'facebook_url', 'twitter_url') );
-		html_title_($aConfig['site_name']);
-		$aData['config'] = &$aConfig;
+		html_title_($oConfig->data( 'site_name' ));
+		$aData['content']	= Liber::loadModel('Content', true)->lastContent();
+		$aData['commented'] = Liber::loadModel('Comment', true)->mostCommented();
 		$this->oTPL->load('home.html', $aData);
     }
 

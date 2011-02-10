@@ -263,7 +263,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				`netinfo` varchar(255) NOT NULL,
 				PRIMARY KEY (`comment_id`),
 				KEY `status` (`status`)
-				) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 			";
 
 			$schemes[] = "CREATE TABLE `config` (
@@ -273,7 +273,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				`twitter_url` varchar(255) NOT NULL,
 				`facebook_url` varchar(255) NOT NULL,
 				PRIMARY KEY (`id`)
-				) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			";
 
 			$schemes[] = "CREATE TABLE `content` (
@@ -285,7 +285,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				PRIMARY KEY (`content_id`),
 				UNIQUE KEY `content_type_id` (`content_type_id`,`title`),
 				KEY `datetime` (`datetime`)
-				) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 			";
 
 			$schemes[] = "CREATE TABLE `content_type` (
@@ -295,7 +295,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				PRIMARY KEY (`content_type_id`),
 				UNIQUE KEY `description` (`description`),
 				KEY `status` (`status`)
-				) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			";
 
 			$schemes[] = "CREATE TABLE `user` (
@@ -308,7 +308,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				PRIMARY KEY (`user_id`),
 				UNIQUE KEY `login` (`login`),
 				KEY `status` (`status`)
-				) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 			";
 			$schemes[] = "INSERT INTO `user` (`user_id`, `name`, `login`, `email`, `password`, `status`) VALUES
 				(1,	'admin',	'admin@localhost',	'admin@localhost',	'',	'A');
@@ -316,6 +316,16 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 			$schemes[] = "INSERT INTO `config` (`id`, `site_name`, `contact_email`, `twitter_url`, `facebook_url`) VALUES
 				(1,	'teste site name',	'email',	'twitter',	'facebook');
 			";
+			$schemes[] = "INSERT INTO `content` (`content_id`, `content_type_id`, `title`, `body`, `datetime`) VALUES
+				(1,	1,	'Welcome to Liber Simple Blog',	'<p>\n	&nbsp;</p>\n\n<p style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n	This is a simple LiberBlog example that you can change.</p>\n<p style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n	This application has some features like:</p>\n<div class=\"cleaner_h20\" style=\"clear: both; width: 530px; height: 20px; \">\n	&nbsp;</div>\n<ul class=\"list_01\" style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 20px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; list-style-type: decimal-leading-zero; list-style-position: initial; list-style-image: initial; \">\n	<li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n		Very simple manipulation content;</li>\n	<li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n		Uses Funky cache concept to maximize page load speed;</li>\n	<li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n		Can be changed to your personal project;</li>\n	<li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n		Uses Liber Framework as a application core;</li>\n</ul>\n<p style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n	&nbsp;</p>\n',	'2011-02-09 19:01:22');
+			";
+			$schemes[] = "INSERT INTO `content_type` (`content_type_id`, `description`, `status`) VALUES
+				(1,	'Posts',	'A');
+			";
+			$schemes[] = "alter table comment add CONSTRAINT FOREIGN KEY (`content_id`) REFERENCES `content` (`content_id`) ON DELETE CASCADE ON UPDATE CASCADE";
+
+			$schemes[] = "alter table content add CONSTRAINT FOREIGN KEY (`content_type_id`) REFERENCES `content_type` (`content_type_id`) ON DELETE CASCADE ON UPDATE CASCADE";
+
 			$db  = Liber::db();
 			$ret = true;
 			foreach($schemes as $sql) {

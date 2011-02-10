@@ -1,4 +1,4 @@
-
+<?html_header_('js','util.js')?>
 
 <div id="css_content_wrapper">
 
@@ -22,45 +22,16 @@
     <div id="css_content">
 
 
+		<?content_show_($content)?>
 
 
         <div class="content_box">
 
-            <h2>Welcome to LiberBlog</h2>
+            <h2>Most Commented</h2>
 
-            <p> This is a simple LiberBlog example that you can change.</p>
-
-			<p> This application has some features like:</p>
-			<div class="cleaner_h20"></div>
-			<p>
-                <ul class="list_01">
-                      <li>Very simple manipulation content;</li>
-                      <li>Uses Funky cache concept to maximize page load speed;</li>
-                      <li>Can be changed to your personal project;</li>
-                      <li>Uses Liber Framework as a application core;</li>
-				</ul>
-			</p>
-
-
-            <div class="cleaner"></div>
-        </div><div class="content_box_bottom"></div>
-
-        <div class="content_box">
-
-            <h2>Testimonial</h2>
-
-            <div class="section_w250 float_l">
-                <h3>Praesent sollicitudin</h3>
-                <p>Nullam faucibus volutpat sapien sit amet tristique. Suspendisse venenatis, urna nec rhoncus suscipit, turpis turpis auctor nisi.</p>
-
-            </div>
-
-            <div class="section_w250 float_r">
-                <h3>Quisque blandit</h3>
-                <p>Morbi blandit ipsum sed purus vestibulum bibendum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec nibh sed tellus.</p>
-
-            </div>
-
+			<?	foreach($commented as $content) {?>
+				<p><a href='<?content_url_($content)?>'><?=$content['title']?></a></p>
+			<?	}?>
 
             <div class="cleaner"></div>
         </div><div class="content_box_bottom"></div>
