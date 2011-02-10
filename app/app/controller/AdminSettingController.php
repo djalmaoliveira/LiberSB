@@ -40,6 +40,7 @@ class AdminSettingController extends Controller {
 		if ( $oSec->validToken(Input::post('token')) ) {
 			$oConfig->loadFrom( Input::post() );
 			if ( $oConfig->save() ) {
+				cleancache();
 				die( jsonout('ok','Configurations saved successfully.') );
 			} else {
 				die( jsonout('error',implode($oConfig->buildFriendlyErrorMsg())) );
