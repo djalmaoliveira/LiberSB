@@ -25,7 +25,7 @@ function content_show_($aContent, $return=false) {
 
     $html = "
         <div class=\"content_box\">
-            <h2><a href='".content_url_($aContent, true)."'>".$aContent['title']."</a></h2>
+            <h3><a href='".content_url_($aContent, true)."'>".$aContent['title']."</a></h3>
             ".date('m/d/Y',strtotime($aContent['datetime']))."
             <br/><br/>
             <div class='content_body'>".$aContent['body']."</div>
@@ -63,7 +63,7 @@ function content_comment_show_($aComment, $return=false) {
     $html = "
 		<div class='comment_box'>
 			<div class=\"content_box\">
-				<h3>".$aComment['name']."</h3>
+				<h4>".$aComment['name']."</h4>
 				".dt_timesince_($aComment['datetime'])." ago
 				<br/><br/>
 				<div class='comment_comment'>".nl2br($aComment['comment'])."</div>

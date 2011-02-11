@@ -21,7 +21,7 @@
                         <?  foreach ( $list as $comment ) { ?>
                             <tr id="c_<?=$comment['comment_id']?>" class='rows'>
                                 <td><?=$comment['name']?><br/><em><?=$comment['email']?></em></td>
-                                <td><?=$comment['description']?><br/><?=$comment['title']?></td>
+                                <td title="<?=$comment['comment']?>"><?=$comment['description']?><br/><?=$comment['title']?></td>
                                 <td title='<?=date($comment['datetime'])?>'><?=dt_timesince_($comment['datetime'])?> ago </td>
                                 <td align='center'>
 									<?	if ( $comment['status'] != 'A' ) {?>

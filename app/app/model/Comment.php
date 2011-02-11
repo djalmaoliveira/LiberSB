@@ -71,9 +71,11 @@ class Comment extends TableModel {
 				comment.name,
 				comment.email,
 				comment.status,
+				comment.comment,
 				cn.title,
 				cn.content_type_id,
 				ct.description
+
 			from
 				comment  left join content cn on (cn.content_id=comment.content_id)
 				left join content_type ct on (cn.content_type_id=ct.content_type_id)

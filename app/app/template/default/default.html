@@ -60,11 +60,11 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
     <div id="css_menu">
 
         <ul class="nav_menu">
-            <li><a href="<?=$url?>" >Home</a></li>
+            <li><h2><a href="<?=$url?>" >Home</a></h2></li>
 			<?  foreach($topics as $aContType) {?>
-				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
+				<li><h2><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></h2></li>
 			<?	}?>
-            <li><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
+            <li><h2><a href="<?=$url.rawurlencode('contact')?>">Contact</a></h2></li>
         </ul>
 
 
