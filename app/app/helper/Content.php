@@ -28,7 +28,7 @@ function content_show_($aContent, $return=false) {
             <h2><a href='".content_url_($aContent, true)."'>".$aContent['title']."</a></h2>
             ".date('m/d/Y',strtotime($aContent['datetime']))."
             <br/><br/>
-            <p>".$aContent['body']."</p>
+            <div class='content_body'>".$aContent['body']."</div>
             <div class=\"cleaner\"></div>
             <div id=\"comment_nav\">
                 <a href='javascript:void(0)' onclick=\"leaveComment('".url_to_('/comment', true)."?content_id=".$aContent['content_id']."', this)\">Leave a comment</a>
@@ -63,10 +63,10 @@ function content_comment_show_($aComment, $return=false) {
     $html = "
 		<div class='comment_box'>
 			<div class=\"content_box\">
-				<h2>".$aComment['name']."</h2>
+				<h3>".$aComment['name']."</h3>
 				".dt_timesince_($aComment['datetime'])." ago
 				<br/><br/>
-				<p>".nl2br($aComment['comment'])."</p>
+				<div class='comment_comment'>".nl2br($aComment['comment'])."</div>
 				<div class=\"cleaner\"></div>
 			</div>
 		</div>

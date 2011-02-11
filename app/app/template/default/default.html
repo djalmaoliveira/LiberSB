@@ -5,15 +5,15 @@ $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html xml:lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title><?=html_title_();?></title>
 
 	<script type="text/javascript" src="<? url_asset_('/js/jquery.js')?>"></script>
 	<script type="text/javascript" src="<?url_asset_('/js/main.js')?>"></script>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css')?>">
+	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css')?>"/>
 	<link rel="alternate" type="application/rss+xml" title="<?=html_title_();?>" href="<?=$url_rss?>" />
     <? html_header_(); ?>
 
@@ -43,12 +43,12 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
 			<div id='nav_social'>
 				<? 	if ( $config['facebook_url'] ) {?>
-					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" /></a>
+					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>
 				<?	}?>
 				<? 	if ( $config['twitter_url'] ) {?>
-					<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" /></a>
+					<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" alt="Twitter"/></a>
 				<?	}?>
-				<a href='<?=$url_rss?>' title='Lasts Contents'><img src="<?url_asset_('/image/rss.png')?>" /></a>
+				<a href='<?=$url_rss?>' title='Lasts Contents'><img src="<?url_asset_('/image/rss.png')?>" alt="Feed"/></a>
 			</div>
 		</div>
 

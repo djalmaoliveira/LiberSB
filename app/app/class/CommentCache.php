@@ -57,7 +57,8 @@ class CommentCache extends Funky {
 		$aData['pageName'] = Array("Comments", $parts['content']['title']);
 		$aData['content']  = &$parts['content'];
 		$funky_cache = Liber::controller()->view()->template()->load('comments.html', $aData, true);
-
+		Liber::loadClass('Minify');
+		$funky_cache = Minify::html($funky_cache);
 		if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').$parts['contentType']['description'].'/'.$parts['content']['title']."/comments_page{$parts['page']}.html", $funky_cache ) ) {
 			return $funky_cache;
 		}

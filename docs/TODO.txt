@@ -4,4 +4,6 @@
 - upload images
 - tags
 - layouting
--
+- join js/css and minify
+- admin: message "loading..."
+- uid analytics

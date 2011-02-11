@@ -53,6 +53,11 @@ h3 {
     font-weight: bold;
     color: #3e464d;
 }
+.comment_box h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #0b5b99;
+}
 
 #css_wrapper {
     width: 980px;
