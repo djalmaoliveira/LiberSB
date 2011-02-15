@@ -362,7 +362,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 
 							// try to create a assets dir
 							$oSetup = Liber::loadClass('Setup', true);
-							if ( $oSetup->publishAsset() ) {
+							if ( count($oSetup->publishAsset()) == 0 ) {
 								// replace index.php (install)
 								if ( file_put_contents(Liber::conf('APP_ROOT').'index.php', index_php(Array())) ) {
 								}
