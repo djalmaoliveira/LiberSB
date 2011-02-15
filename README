@@ -5,10 +5,17 @@ This is a simple blog system using Liber Framework as a core system.
 
 Features
 -------------------------------------
-- Very simple manipulation content;
+- Simple manipulation content;
 - Uses Funky cache concept to maximize page load speed;
 - Can be changed to your personal project;
-- Uses Liber Framework as a application core;
+- Uses Liber Framework as application core;
+- Login form uses hmac protection;
 
 How to install
 -------------------------------------
+
+- Download from http://github.com/djalmaoliveira/LiberSB/tarball/master;
+- Extract to a folder that you like and put it inside a 'public_html' directory on your web server;
+- Open your browser to http://yourdomain/folder_your_chose/
+- And you should see a Install Wizard;
+- After install go to http://yourdomain/folder_your_chose/admin, to start to fill your blog content;
