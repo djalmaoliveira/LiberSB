@@ -5,4 +5,8 @@
 - tags
 - layouting
 - join js/css and minify
-- uid analytics
+- apache .html files cache directives should be only conditional request
+- sub content_type
+- content_type description
+- datetime creation and update of content
+- receive mail on each comment sent.
