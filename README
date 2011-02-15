@@ -15,7 +15,8 @@ How to install
 -------------------------------------
 
 - Download from http://github.com/djalmaoliveira/LiberSB/tarball/master;
-- Extract to a folder that you like and put it inside a 'public_html' directory on your web server;
-- Open your browser to http://yourdomain/folder_your_chose/
+- Extract to a folder;
+- Copy the folder 'app/' (this can be renamed to what you want) to your 'public_html' on web server;
+- Open your browser to http://yourdomain/app/
 - And you should see a Install Wizard;
-- After install go to http://yourdomain/folder_your_chose/admin, to start to fill your blog content;
+- After install go to http://yourdomain/app/admin, to start to fill your blog content;
