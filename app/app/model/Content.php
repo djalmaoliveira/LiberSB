@@ -32,7 +32,7 @@ class Content extends TableModel {
         foreach ( $this->aFields as $field => $arr ) {
             if ( $field == 'body'  ) {
                 // allowed tags
-                $allow_tags = "<a><strong><em><ul><li><ol><span><p><br><img><table><tr><td><hr><object><embed><div>";
+                $allow_tags = "<h1><h2><h3><h4><h5><h6><a><strong><em><ul><li><ol><span><p><br><img><table><tr><td><hr><object><embed><div>";
                 $this->aFields[$field][0] = strip_tags($arr[0], $allow_tags);
 
             } else {
