@@ -85,8 +85,14 @@ class GlobalTemplate {
         $viewFile = $this->_view->path($fileName);
 		$template_path = $this->contextPath.$this->templateFolderName.'/'.$this->modelName;
 		// detect if exists layout template file
-		if ( Liber::conf('LAYOUT') ) {
-			$layout_template_path = Liber::conf('APP_PATH').'layout/'.Liber::conf('LAYOUT').'/template/'.$this->templateFolderName.'/'.$this->modelName;
+		$layout = Liber::conf('LAYOUT');
+		if ( $layout ) {
+			// detect if hsa a absolute path
+			if ( $layout[0] != '/' ) {
+				$layout = Liber::conf('APP_PATH').'layout/'.Liber::conf('LAYOUT');
+			}
+
+			$layout_template_path = $layout.'/template/'.$this->templateFolderName.'/'.$this->modelName;
 			if ( file_exists($layout_template_path) ) {
 				$template_path = &$layout_template_path;
 			}
