@@ -31,6 +31,15 @@ class CommentController extends Controller {
 				$oComment->field('status', "W");
 				$oComment->field('netinfo', $_SERVER['REMOTE_ADDR']);
 				if ( $oComment->save() ) {
+					//send message about comment
+					$oConfig = Liber::loadModel('Config', true);
+					$oMail = Liber::loadClass("Mailer",true);
+					$oMail->to($oConfig->data('contact_email'));
+					$oMail->from($oConfig->data('contact_email'));
+					$oMail->subject("New comment from ".Liber::conf('APP_URL'));
+					$oMail->body("From: ".$oComment->field('name').' <'.$oComment->field('email').'>'."\n\n".$oComment->field('comment'));
+					$oMail->send();
+
 					die(jsonout('ok', 'Comment sent successfully.'));
 				} else {
 					$errors = $oComment->buildFriendlyErrorMsg();
