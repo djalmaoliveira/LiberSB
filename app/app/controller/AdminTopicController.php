@@ -68,6 +68,7 @@ class AdminTopicController extends Controller {
 			if ( $oSec->validToken( Input::post('token') ) ) {
 				$oContType = Liber::loadModel('ContentType', true);
 				if ( $oContType->delete( Input::post('content_type_id') ) ) {
+					Liber::loadClass('SiteMapCache', 'APP', true)->cleanCache();
 					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
 				} else {
 					die( jsonout('error', implode($oContType->buildFriendlyErrorMsg()) ) ) ;

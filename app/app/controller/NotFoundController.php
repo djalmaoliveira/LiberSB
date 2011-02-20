@@ -25,6 +25,9 @@ class NotFoundController extends Controller{
 
         if ($page) { header("Content-type: text/xml"); die($page); }
 
+		$page = Liber::loadClass('SiteMapCache', 'APP', true)->create(url_current_(true));
+
+        if ($page) { header("Content-type: text/xml"); die($page); }
 
         $this->show404();
     }

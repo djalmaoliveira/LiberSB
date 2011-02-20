@@ -32,6 +32,9 @@ function cleancache() {
 	if ( file_exists($cache_path) ) {
 		return rename( $cache_path,  $temp_path.'_'.date('Ymdhis'));
 	}
+
+	Liber::loadClass('SiteMapCache', 'APP', true)->cleanCache();
+
 	return false;
 }
 ?>
