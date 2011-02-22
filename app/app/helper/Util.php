@@ -29,7 +29,9 @@ function cleancache() {
 		mkdir($temp_path, 0770, true);
 	}
 	$cache_path = Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH');
-	if ( file_exists($cache_path) ) {
+
+
+	if ( (basename(Liber::conf('FUNKY_PATH'))) and file_exists($cache_path) ) {
 		return rename( $cache_path,  $temp_path.'_'.date('Ymdhis'));
 	}
 
