@@ -18,6 +18,7 @@
     //<![CDATA[
 		function saveConfig() {
 			buttonClick($('#btnSave'), "Saving...", function(){
+				$('#out').html('');
 				$.post('<?=$action?>/save', $('#frmConfig').serialize(), function(resp) {
 					$('#out').attr('class','msg_'+resp.status);
 					$('#out').html(resp.content.text);
