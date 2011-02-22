@@ -58,7 +58,7 @@ class SiteMapCache extends Funky {
 		$list = $oContType->listByStatus("A");
 		foreach ($list as $ctype) {
 			$oSMap->url(Array(
-				'loc'	 	=> Liber::conf('APP_URL').$ctype['description'],
+				'loc'	 	=> Liber::conf('APP_URL').rawurlencode($ctype['description']),
 				'lastmod'	=> date('Y-m-d')
 			));
 		}

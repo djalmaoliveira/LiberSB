@@ -9,4 +9,3 @@
 - sub content_type
 - content_type description
 - datetime creation and update of content
-- receive mail on each comment sent.
