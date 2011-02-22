@@ -20,18 +20,18 @@ function content_url_($aContent, $return=false) {
 *   @param boolean $return
 *   @return String
 */
-function content_show_($aContent, $return=false) {
+function content_show_($aContent, $isSummary=true, $return=false) {
     if ( !$aContent ) { return; }
-
+	$url = content_url_($aContent, true);
     $html = "
         <div class=\"content_box\">
-            <h3><a href='".content_url_($aContent, true)."'>".$aContent['title']."</a></h3>
+            <h3><a href='".$url."'>".$aContent['title']."</a></h3>
             ".date('m/d/Y',strtotime($aContent['datetime']))."
             <br/><br/>
-            <div class='content_body'>".$aContent['body']."</div>
+            <div class='content_body'>".($isSummary?strip_tags($aContent['body'])."...<br/> <a href=\"$url\" title=\"see the entire content\"> read more...</a>":$aContent['body'])." </div>
             <div class=\"cleaner\"></div>
             <div id=\"comment_nav\">
-                <a href='javascript:void(0)' onclick=\"leaveComment('".url_to_('/comment', true)."?content_id=".$aContent['content_id']."', this)\">Leave a comment</a>
+                <a href='javascript:void(0)' onmouseover=\"leaveComment('".url_to_('/comment', true)."?content_id=".$aContent['content_id']."', this)\">Leave a comment</a>
                 <a href='".content_comment_url_($aContent)."'>See comments</a>
             </div>
 

@@ -85,7 +85,7 @@ class Content extends TableModel {
     *   @param integer $sizeText
     *   @return Array
     */
-    function lastContentsByType($content_type_id, $count=10, $sizeText=200) {
+    function lastContentsByType($content_type_id, $count=10, $sizeText=500) {
         $sql = "
             select
                 c.content_id,
@@ -176,7 +176,7 @@ class Content extends TableModel {
     *   @param integer $sizeText
     *   @return Array
     */
-    function lastContentsFeed($count=5,  $sizeText=200) {
+    function lastContentsFeed($count=5,  $sizeText=500) {
         $sql = "
             select
                 c.content_id,

@@ -23,7 +23,7 @@ html_header_('js', 'util.js');
     <?
 		if ( count($contents) != 0 ) {
 			foreach ($contents as $content) {
-				content_show_($content);
+				content_show_($content, $isSummary);
 			}
 		} else {
     ?>

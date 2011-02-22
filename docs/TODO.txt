@@ -1,11 +1,10 @@
 - CSRF (where update data)
 - paging
-- content_show_() shoud parse partial html
 - upload images
 - tags
 - layouting
 - join js/css and minify
-- apache .html files cache directives should be only conditional request
 - sub content_type
 - content_type description
-- datetime creation and update of content
+- datetime creation and update fields of content model
+- permalink field on content model

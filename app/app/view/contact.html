@@ -32,11 +32,12 @@ html_header_('js','util.js');
                 <form action='<?=$action?>' onsubmit='return btnSend();' id='frmContact'>
                     <?form_hidden_('token', $token);?>
                     <div class='fieldname'>Name:</div> <?form_input_('name')?>
-                    <br/>
+                    <div class='cleaner'></div>
                     <div class='fieldname'>Email:</div> <?form_input_('email')?>
-                    <br/>
+                    <div class='cleaner'></div>
                     <div class='fieldname'>Text:</div><?form_textarea_('text')?>
-                    <br/>
+                    <div class='cleaner'></div>
+					<br/>
                     <?form_button_('send', 'Send', 'onclick="btnSend($(\'#frmContact\'), this)"')?> <span id='out'></span>
                 </form>
             <div class="cleaner"></div>

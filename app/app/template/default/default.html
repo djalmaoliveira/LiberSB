@@ -10,11 +10,10 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title><?=html_title_();?></title>
-
-	<script type="text/javascript" src="<? url_asset_('/js/jquery.js?v=142')?>"></script>
-	<script type="text/javascript" src="<?url_asset_('/js/main.js?v=1')?>"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css?v=1')?>"/>
 	<link rel="alternate" type="application/rss+xml" title="<?=html_title_();?>" href="<?=$url_rss?>" />
+	<script type="text/javascript" src="<? url_asset_('/js/jquery.js?v=142')?>"></script>
+	<script type="text/javascript" src="<?url_asset_('/js/main.js?v=1')?>"></script>
     <? html_header_(); ?>
 
     <script type="text/javascript">

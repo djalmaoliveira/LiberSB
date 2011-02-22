@@ -19,6 +19,7 @@ class MainController extends Controller{
         Liber::loadHelper('Content', 'APP');
 		$oConfig = new Config;
 		html_title_($oConfig->data( 'site_name' ));
+		$aData['isSummary'] = false;
 		$aData['content']	= Liber::loadModel('Content', true)->lastContent();
 		$aData['commented'] = Liber::loadModel('Comment', true)->mostCommented();
 		$this->oTPL->load('home.html', $aData);
@@ -30,6 +31,7 @@ class MainController extends Controller{
 
         if ( $oContType->get(str_replace('-', ' ', rawurldecode($action))) ) {
             Liber::loadHelper('Content', 'APP');
+			$aData['isSummary']   = true;
             $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
             $aData['pageName']    = Array($oContType->field('description'));
             $this->oTPL->load('list.html', $aData);
