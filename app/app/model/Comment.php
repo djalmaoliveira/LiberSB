@@ -116,6 +116,7 @@ class Comment extends TableModel {
 				content_id,
 				content_type_id,
 				title,
+				permalink,
 				count(content_id) total
 			from
 				comment left join content using (content_id)

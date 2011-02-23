@@ -25,12 +25,13 @@ class ContentCache extends Funky {
 		list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'),  true );
 
 		$aUrl = pathinfo( str_replace($this->urlPattern, '', $url) );
-		if ( $oContent->get( rawurldecode($aUrl['filename']) ) ) {
-			$oContType->get( $oContent->field('content_type_id') );
-			if ($oContType->field('status') == 'A' and $oContType->field('description') == rawurldecode($aUrl['dirname']) ) {
+
+		$aContType = current($oContType->searchBy('description', rawurldecode(basename($aUrl['dirname']))));
+		if ( ($aContent = $oContent->getByPermalink($aContType['content_type_id'], ($aUrl['filename']) )) ) {
+			if ( $aContType['status'] == 'A' ) {
 				return Array(
-							'content'		=> $oContent->toArray(),
-							'contentType'	=> $oContType->toArray()
+							'content'		=> $aContent,
+							'contentType'	=> $aContType
 						);
 			}
 		}
@@ -55,7 +56,8 @@ class ContentCache extends Funky {
 		$funky_cache = Liber::controller()->view()->template()->load('list.html', $aData, true);
 		Liber::loadClass('Minify');
 		$funky_cache = Minify::html($funky_cache);
-		if ( $this->put(Liber::conf('APP_ROOT').Liber::conf('FUNKY_PATH').$parts['contentType']['description'].'/'.$parts['content']['title'].'.html', $funky_cache ) ) {
+		$file = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($this->url($parts['content'])));
+		if ( $this->put($file, $funky_cache ) ) {
 			return $funky_cache;
 		}
     }
@@ -68,7 +70,7 @@ class ContentCache extends Funky {
     function url($aContent) {
 		$oContType = Liber::loadModel('ContentType', true);
 		$oContType->get( $aContent['content_type_id'] );
-        $url = url_to_('/'.Liber::conf('FUNKY_PATH').rawurlencode($oContType->field('description')).'/'.rawurlencode($aContent['title']).'.html', true);
+        $url = url_to_('/'.Liber::conf('FUNKY_PATH').rawurlencode($oContType->field('description')).'/'.($aContent['permalink']).'.html', true);
         return $url;
     }
 

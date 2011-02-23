@@ -32,6 +32,9 @@ class AdminContentController extends Controller {
 			if ( $oSec->validToken(Input::post('token')) ) {
 				$oContent->loadFrom( Input::post() );
 				$oContent->field('datetime', date('Y-m-d H:i:s'));
+				if ( !$oContent->field('content_id') ){
+					$oContent->field('create_datetime', $oContent->field('datetime'));
+				}
 				if ( $oContent->save() ) {
 					$oCache = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache($oContent->toArray());
 					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content_id'=>$oContent->field('content_id'))) );
@@ -47,16 +50,26 @@ class AdminContentController extends Controller {
         if ( !Input::get('id') ) {
 			$oContType->get( Input::get('content_type_id') );
             $aData['content_type_id'] = Input::get('content_type_id');
-			$aData['tab'] = 'New '.$oContType->field('description');
+			$aData['tab'] = 'New Topic » '.$oContType->field('description');
         } else {
             $oContent->get( Input::get('id') );
 			$oContType->get( $oContent->field('content_type_id') );
-			$aData['tab'] = 'Editing '.$oContType->field('description');
+			$aData['tab'] = 'Editing Topic » '.$oContType->field('description');
             $aData['content_type_id'] = $oContent->field('content_type_id');
         }
 
         $aData['content'] = $oContent->toArray();
+
+		// permalink field
+		$permalink = rawurldecode(str_replace(
+							$aData['content']['permalink'],
+							' '.form_input_('permalink',rawurldecode($aData['content']['permalink']), '', true),
+							Liber::loadClass('ContentCache', 'APP', true)->url($aData['content'])
+					));
+
+
         $aData['action']  = url_to_('/admin/content/edit', true);
+		$aData['permalink'] = &$permalink;
 		$aData['token']   = $oSec->token();
         $this->view()->load('admin/content_editor.html', $aData);
     }

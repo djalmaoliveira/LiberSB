@@ -289,10 +289,13 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				`title` varchar(255) NOT NULL,
 				`body` mediumtext NOT NULL,
 				`datetime` datetime NOT NULL,
+				`create_datetime` datetime NOT NULL,
+				`permalink` varchar(255) NOT NULL,
 				PRIMARY KEY (`content_id`),
 				UNIQUE KEY `content_type_id` (`content_type_id`,`title`),
+				UNIQUE KEY `permalink` (`permalink`,`content_type_id`),
 				KEY `datetime` (`datetime`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 			";
 
 			$schemes[] = "CREATE TABLE `content_type` (

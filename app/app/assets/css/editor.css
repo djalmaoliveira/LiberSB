@@ -1,3 +1,6 @@
+#editor_tab_area {
+    float:left;
+}
 #editor_tab_area #cke_bottom_body, 
 #editor_tab_area #cke_top_body {
     background:transparent;
@@ -12,9 +15,28 @@
 
 #editor_tab_area .cke_button a,   #editor_tab_area .cke_label{
     background:transparent; 
-
- }
+}
  
 #editor_tab_area .cke_dialog_ui_button {
     background:red;
 }
+
+/* inputs */
+#editor_tab_area #title.admin_input {
+    width:300px;
+}
+#editor_tab_area #cke_contents_body.cke_contents {
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-style:none;
+}
+
+/* permalink */
+#editor_tab_area .permalink_area,  #editor_tab_area .permalink_area input{
+    font-size:0.9em;
+}
+#editor_tab_area .permalink_area input{
+    width:300px;
+}
+

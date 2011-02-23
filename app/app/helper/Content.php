@@ -26,7 +26,7 @@ function content_show_($aContent, $isSummary=true, $return=false) {
     $html = "
         <div class=\"content_box\">
             <h3><a href='".$url."'>".$aContent['title']."</a></h3>
-            ".date('m/d/Y',strtotime($aContent['datetime']))."
+            ".date('Y/m/d',strtotime($aContent['create_datetime']))."
             <br/><br/>
             <div class='content_body'>".($isSummary?strip_tags($aContent['body'])."...<br/> <a href=\"$url\" title=\"see the entire content\"> read more...</a>":$aContent['body'])." </div>
             <div class=\"cleaner\"></div>

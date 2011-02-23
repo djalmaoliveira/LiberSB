@@ -321,7 +321,11 @@ class TableModel {
         }
     }
 
-
+	/**
+	*	Return an Array of current fields model values or descriptions.
+	*	@param String $op - 'field' (default) - return field values; 'desc' - return description fields
+	*	@return Array
+	*/
     function toArray($op='field') {
         $a = Array();
         if ( $op == 'field' ) {
@@ -339,8 +343,8 @@ class TableModel {
 
     /**
     *   Search a specified $field by $value, returning entire records matched.
-    *   @param $field String
-    *   @param $value mixed
+    *   @param String $field
+    *   @param mixed $value
     *   @return Array
     */
     function searchBy($field, $value) {

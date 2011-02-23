@@ -21,7 +21,9 @@ class Content extends TableModel {
             'content_type_id'   => Array('', 'Type',    Validation::NOTNULL),
             'title'             => Array('', 'Title',   Validation::NOTNULL),
             'body'              => Array('', 'Body',    Validation::NOTNULL),
-            'datetime'          => Array('', 'Date/Time', Validation::NOTNULL),
+            'datetime'          => Array('', 'Date/Time Update', Validation::NOTNULL),
+			'create_datetime'   => Array('', 'Date/Time Creation', Validation::NOTNULL),
+			'permalink'         => Array('', 'Permanent link', Validation::NOTNULL)
         );
     }
 
@@ -30,14 +32,27 @@ class Content extends TableModel {
     */
     function fieldFilter() {
         foreach ( $this->aFields as $field => $arr ) {
-            if ( $field == 'body'  ) {
-                // allowed tags
-                $allow_tags = "<h1><h2><h3><h4><h5><h6><a><strong><em><ul><li><ol><span><p><br><img><table><tr><td><hr><object><embed><div>";
-                $this->aFields[$field][0] = strip_tags($arr[0], $allow_tags);
 
-            } else {
-                $this->aFields[$field][0] = strip_tags($arr[0]);
-            }
+			switch ($field) {
+				case 'body':
+					// allowed tags
+					$allow_tags = "<h1><h2><h3><h4><h5><h6><a><strong><em><ul><li><ol><span><p><br><img><table><tr><td><hr><object><embed><div><blockquote>";
+					$this->aFields[$field][0] = strip_tags($arr[0], $allow_tags);
+				break;
+
+				case 'permalink':
+					if ( empty($arr[0]) ) {
+						$this->field($field, rawurlencode( $this->aFields['title'][0] ));
+					} else {
+						$this->field($field, rawurlencode( strip_tags($arr[0]) ) ) ;
+					}
+				break;
+
+				default:
+					if ( empty($arr[0]) ) { continue; }
+					$this->aFields[$field][0] = strip_tags($arr[0]);
+			}
+
         }
     }
 
@@ -55,6 +70,30 @@ class Content extends TableModel {
             return parent::get($id);
         }
     }
+
+    /**
+    *   Get will retrieve by 'permalink'.
+    *   @param integer $content_type_id
+	*	@param String $permalink
+    *   @return boolean
+    */
+    function getByPermalink($content_type_id, $permalink) {
+        $sql = "
+            select
+                *
+            from
+                $this->table
+            where
+                content_type_id=:ci
+				and
+				permalink=:pl
+        ";
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute( Array(':ci'=>$content_type_id, ':pl'=>$permalink) );
+        if (!$ret) { return Array(); }
+        return $q->fetch(PDO::FETCH_ASSOC);
+    }
+
 
     /**
     *   Return the total of records by content_type_id.
@@ -92,7 +131,9 @@ class Content extends TableModel {
                 c.content_type_id,
                 c.title,
                 substring(c.body, 1,:sizeText) as body,
-                c.datetime
+                c.datetime,
+				c.create_datetime,
+				c.permalink
             from
                 $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
             where
@@ -125,6 +166,8 @@ class Content extends TableModel {
                 c.title,
 				c.body,
                 c.datetime,
+				c.create_datetime,
+				c.permalink,
 				ct.description
             from
                 $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
@@ -153,6 +196,8 @@ class Content extends TableModel {
                 c.content_id,
                 c.content_type_id,
                 c.title,
+				c.permalink,
+				c.create_datetime,
                 c.datetime
             from
                 $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
@@ -183,7 +228,9 @@ class Content extends TableModel {
                 c.content_type_id,
                 c.title,
 				substring(c.body, 1,:sizeText) as body,
-                c.datetime
+				c.create_datetime,
+                c.datetime,
+				c.permalink
             from
                 $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
 			where
