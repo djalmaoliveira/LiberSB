@@ -49,8 +49,7 @@ body {
     border-radius: 10px 10px 0px 0px;
     -webkit-border-radius: 10px 10px 0px 0px;
 }
-
-#content_area {
+#content_area, #editor_tab_area {
     float:left;
 }
 

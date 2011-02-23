@@ -1,64 +1,57 @@
 <br/>
 <div class='form_area'>
+	<div class='tabs'>Topics List</div>
+	<div class='clear'></div>
+	<div id='content_area'>
+		<form action="" method="post" id='frmSearch' onsubmit='return doSearch();'>
+            <span title='write some words and click in Search'><?form_input_('search', $search, 'class="admin_input"')?><?form_button_('btnSearch', 'Search', 'onclick="doSearch()"');?></span>
 
-    <div class='tabs'>Topics</div>
+			<table>
+				<thead>
+				<tr>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Operations</th>
+				</tr>
+				</thead>
+				<?  foreach ( $list as $topic ) { ?>
 
-    <div class='clear'></div>
+					<tr id="c_<?=$topic['content_type_id']?>" class='rows'>
+						<td><?=$topic['description']?></td>
+						<td><?=($status[$topic['status']])?></td>
+						<td>
+							<a href='javascript:loadPage("<?=$url_operation."/edit?id={$topic['content_type_id']}"?>")' class='link_edit'>Edit</a>
+							|
+							<a href='javascript:deleteContent(<?=$topic['content_type_id']?>,"#c_<?=$topic['content_type_id']?>")' class='link_delete'>Delete</a>
+						</td>
+					</tr>
+				<?  }?>
+			</table>
+		</form>
+	</div>
+<div>
 
-        <div id='content_area'>
-            <form action="" method="post" id='frmSearch' onsubmit='return doSearch();'>
+<script type="text/javascript">
+//<![CDATA[
+	$("#search").focus();
 
-                <span title='write some words and click in Search'><?form_input_('search', $search, 'class="admin_input"')?><?form_button_('btnSearch', 'Search', 'onclick="doSearch()"');?></span>
+	function doSearch() {
+		loadPage('<?=$action?>', $('#frmSearch').serialize(), 'post');
+		return false;
+	}
 
-                <p>
-                    <table>
-						<thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Operations</th>
-                        </tr>
-						</thead>
-                        <?  foreach ( $list as $topic ) { ?>
+	function deleteContent( id, elem ) {
+		if ( confirm("O conteúdo será apagado, deseja continuar ?") ) {
 
-                            <tr id="c_<?=$topic['content_type_id']?>" class='rows'>
-                                <td><?=$topic['description']?></td>
-                                <td><?=($status[$topic['status']])?></td>
-                                <td>
-                                    <a href='javascript:loadPage("<?=$url_operation."/edit?id={$topic['content_type_id']}"?>")' class='link_edit'>Edit</a>
-                                    |
-                                    <a href='javascript:deleteContent(<?=$topic['content_type_id']?>,"#c_<?=$topic['content_type_id']?>")' class='link_delete'>Delete</a>
-                                </td>
-                            </tr>
-                        <?  }?>
-                    </table>
-                </p>
-            </form>
-        </div>
-    </div>
-</div>
+			$.post('<?=$url_operation?>/delete', 'content_type_id='+id+'&token=<?=$token?>', function(resp) {
+				if ( resp.status == 'ok' ) {
+					$(elem).css('display', 'none');
+				}
+			},'json');
 
-    <script type="text/javascript">
-    //<![CDATA[
-        $("#search").focus();
-
-        function doSearch() {
-            loadPage('<?=$action?>', $('#frmSearch').serialize(), 'post');
-            return false;
-        }
-
-        function deleteContent( id, elem ) {
-            if ( confirm("O conteúdo será apagado, deseja continuar ?") ) {
-
-                $.post('<?=$url_operation?>/delete', 'content_type_id='+id+'&token=<?=$token?>', function(resp) {
-                    if ( resp.status == 'ok' ) {
-                        $(elem).css('display', 'none');
-                    }
-                },'json');
-
-            }
-        }
+		}
+	}
 
 
-    //]]>
-    </script>
+//]]>
+</script>
