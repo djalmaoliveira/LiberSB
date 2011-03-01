@@ -41,10 +41,11 @@ class Content extends TableModel {
 				break;
 
 				case 'permalink':
+					Liber::loadHelper('Url');
 					if ( empty($arr[0]) ) {
-						$this->field($field, rawurlencode( $this->aFields['title'][0] ));
+						$this->field($field, rawurlencode( url_clean_($this->aFields['title'][0], true) ));
 					} else {
-						$this->field($field, rawurlencode( strip_tags($arr[0]) ) ) ;
+						$this->field($field, rawurlencode( url_clean_(strip_tags($arr[0]),true) ) ) ;
 					}
 				break;
 

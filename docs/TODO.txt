@@ -6,5 +6,3 @@
 - join js/css and minify
 - sub content_type
 - content_type description
-- datetime creation and update fields of content model
-- permalink field on content model

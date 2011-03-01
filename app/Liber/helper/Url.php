@@ -111,6 +111,10 @@ function url_module_asset_($relative_url='', $return=false) {
 /**
 *   Return a clean specified URL.
 *   Change spaces and others charactes to $separator by default '-'.
+*	Usage: 	url_clean_('http://a b c'); // printcleaned url<br/>
+*			url_clean_('http://a b c', '_'); // print cleaned url with '_' separator<br/>
+*			url_clean_('http://a b c', true);// return cleaned url<br/>
+*			url_clean_('http://a b c', '_', true);// return cleaned url with '_' separator
 *   @param String $url
 *   @param String $separator
 *   @param boolean $return
