@@ -22,7 +22,7 @@ function content_url_($aContent, $return=false) {
 */
 function content_show_($aContent, $isSummary=true, $return=false) {
     if ( !$aContent ) { return; }
-//	html_header_('js', 'http://platform.twitter.com/widgets.js');
+	html_header_('js', 'http://platform.twitter.com/widgets.js');
 
 	$url = content_url_($aContent, true);
 	$url_encoded = rawurlencode(rawurldecode($url));
@@ -35,7 +35,6 @@ function content_show_($aContent, $isSummary=true, $return=false) {
 				})();
 	");
     $html = "
-<script src=\"http://platform.twitter.com/widgets.js\" type=\"text/javascript\"></script>
         <div class=\"content_box\">
             <h3><a href='".$url."'>".$aContent['title']."</a></h3>
             ".date('Y/m/d',strtotime($aContent['create_datetime']))."
@@ -49,7 +48,8 @@ function content_show_($aContent, $isSummary=true, $return=false) {
 				</span>
 				<span><a class=\"DiggThisButton DiggCompact\" href=\"http://digg.com/submit?style=no&url=$url_encoded\"></a></span>
 				<span>
-					<a href=\"http://twitter.com/share?url=$url_encoded\" class=\"twitter-share-button\">Tweet</a>
+					<iframe allowtransparency=\"true\" height=\"20px\" width=\"100px\" frameborder=\"0\" scrolling=\"no\"
+					src=\"http://platform.twitter.com/widgets/tweet_button.html?url=$url_encoded\"></iframe>
 				</span>
 			</div>
 
