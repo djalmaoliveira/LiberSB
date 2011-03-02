@@ -44,6 +44,7 @@ class MainController extends Controller{
     public function search() {
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel('Content', true);
+		$aData['isSummary']   = true;
         $aData['contents'] = $oContent->search(Input::post('search'), Array('fields'=>Array('title'),'limit'=>5));
         $aData['pageName'] = Array('Search results for "'.Input::post('search').'"');
         $this->oTPL->load('list.html', $aData);
