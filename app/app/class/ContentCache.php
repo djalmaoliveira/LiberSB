@@ -17,7 +17,7 @@ class ContentCache extends Funky {
 
 	/**
 	*	Override default match pattern and return parts of matched URL.
-	*	Match: FUNKY_PATH/[content_type_description]/[content_title].html
+	*	Match: FUNKY_PATH/[content_type_description]/[permalink].html
 	*	@param String $url
 	*	@return Array
 	*/
@@ -25,16 +25,24 @@ class ContentCache extends Funky {
 		list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'),  true );
 
 		$aUrl = pathinfo( str_replace($this->urlPattern, '', $url) );
+		$contents = $oContent->searchBy('permalink', $aUrl['filename']);
 
-		$aContType = current($oContType->searchBy('description', rawurldecode(basename($aUrl['dirname']))));
-		if ( ($aContent = $oContent->getByPermalink($aContType['content_type_id'], ($aUrl['filename']) )) ) {
-			if ( $aContType['status'] == 'A' ) {
-				return Array(
-							'content'		=> $aContent,
-							'contentType'	=> $aContType
-						);
+		// detect if has more than one content with the same permalink, but different content_type
+		foreach ($contents as $aContent) {
+			$oContType->get($aContent['content_type_id']);
+			if ( url_clean_($oContType->field('description'), true) == basename($aUrl['dirname'])) {
+				break;
 			}
 		}
+
+		$aContType = $oContType->toArray();
+		if ( $aContType['status'] == 'A' ) {
+			return Array(
+						'content'		=> $aContent,
+						'contentType'	=> $aContType
+					);
+		}
+
 		return Array();
     }
 
@@ -68,9 +76,10 @@ class ContentCache extends Funky {
     *   @return String
     */
     function url($aContent) {
+		Liber::loadHelper('Url');
 		$oContType = Liber::loadModel('ContentType', true);
 		$oContType->get( $aContent['content_type_id'] );
-        $url = url_to_('/'.Liber::conf('FUNKY_PATH').rawurlencode($oContType->field('description')).'/'.($aContent['permalink']).'.html', true);
+        $url = url_to_('/'.Liber::conf('FUNKY_PATH').url_clean_($oContType->field('description'),true).'/'.($aContent['permalink']).'.html', true);
         return $url;
     }
 
