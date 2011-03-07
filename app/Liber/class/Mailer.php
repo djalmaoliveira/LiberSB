@@ -219,10 +219,10 @@ class Mailer {
             }
         }
 
-        // detect suitable Return-Path field
-        $return_path = null;
-        if ( !empty($this->aMail['headers']['From']) ) {
-            $return_path = '-f '.$this->aMail['headers']['From'];
+        // detect Return-Path header
+		$return_path = NULL;
+        if ( !empty($this->aMail['headers']['Return-Path']) ) {
+            $return_path = '-f '.$this->aMail['headers']['Return-Path'];
         }
         return mail($to, $this->aMail['subject'], $this->aMail['body'], $headers, $return_path);
     }
