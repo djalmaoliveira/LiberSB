@@ -57,7 +57,7 @@ function content_show_($aContent, $isSummary=true, $return=false) {
 			<br/>
             <div id=\"comment_nav\">
                 <a href='javascript:void(0)' onmouseover=\"leaveComment('".url_to_('/comment', true)."?content_id=".$aContent['content_id']."', this)\">Leave a comment</a>
-                <a href='".content_comment_url_($aContent)."'>See comments</a>
+                <a href='".content_comment_url_($aContent,1,true)."'>See comments</a>
             </div>
 
         </div>
@@ -69,9 +69,18 @@ function content_show_($aContent, $isSummary=true, $return=false) {
     echo $html;
 }
 
-function content_comment_url_($aContent, $page=1) {
+/**
+*	Return or print url of comment.
+*	@param Array $aContent
+*	@param integer $page
+*	@param boolean $return
+*	@return String
+*/
+function content_comment_url_($aContent, $page=1, $return=false) {
     $oCache = Liber::loadClass('CommentCache', 'APP', true);
-    return $oCache->url($aContent, $page);
+	$url = $oCache->url($aContent, $page);
+	if ($return) return $url;
+    echo $url;
 }
 
 

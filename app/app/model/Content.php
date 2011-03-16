@@ -11,6 +11,8 @@ Liber::loadModel('TableModel');
 */
 class Content extends TableModel {
 
+	const SIZE_TEXT_SUMMARY = 500;
+
     function __construct () {
         parent::__construct();
         $this->table   = 'content';
@@ -122,10 +124,9 @@ class Content extends TableModel {
     *   Return lasts active contents by type.
     *   @param integer $content_type_id
     *   @param integer $count
-    *   @param integer $sizeText
     *   @return Array
     */
-    function lastContentsByType($content_type_id, $count=10, $sizeText=500) {
+    function lastContentsByType($content_type_id, $count=10) {
         $sql = "
             select
                 c.content_id,
@@ -148,7 +149,7 @@ class Content extends TableModel {
 
         $q   = $this->db()->prepare($sql);
         $ret = $q->execute( Array(
-                                ':sizeText' =>  $sizeText,
+                                ':sizeText' =>  self::SIZE_TEXT_SUMMARY,
                                 ':content_type_id' =>   $content_type_id )
                             );
         if ( !$ret ) { return Array();}
@@ -219,10 +220,9 @@ class Content extends TableModel {
     /**
     *   Return lasts active contents ordered by date used to feed.
     *   @param integer $count
-    *   @param integer $sizeText
     *   @return Array
     */
-    function lastContentsFeed($count=5,  $sizeText=500) {
+    function lastContentsFeed($count=5) {
         $sql = "
             select
                 c.content_id,
@@ -242,11 +242,44 @@ class Content extends TableModel {
         ";
 
         $q   = $this->db()->prepare($sql);
-        $ret = $q->execute( Array(':sizeText'=>$sizeText) );
+        $ret = $q->execute( Array(':sizeText'=>self::SIZE_TEXT_SUMMARY) );
         if ( !$ret ) { return Array();}
         return $this->returnKeys($q);
     }
 
+	/**
+	*	Search content from $terms.
+	*	@param String $terms
+	*	@param integer $count
+	*	@return Array
+	*/
+	function searchContent($terms, $count=5) {
+		$sql = "
+			select
+                c.content_id,
+                c.content_type_id,
+                c.title,
+				substring(c.body, 1,:sizeText) as body,
+				c.create_datetime,
+                c.datetime,
+				c.permalink
+            from
+                $this->table c left join content_type ct on (c.content_type_id=ct.content_type_id)
+			where
+				ct.status='A'
+				and
+				c.title like :terms
+            order by
+                c.datetime desc
+            limit $count
+		";
+		$terms = ' '.trim($terms).' ';
+        $q   = $this->db()->prepare($sql);
+        $ret = $q->execute( Array(':sizeText'=>self::SIZE_TEXT_SUMMARY, ':terms'=>str_replace(' ', '%', $terms)) );
+        if ( !$ret ) { return Array();}
+
+        return $this->returnKeys($q);
+	}
 }
 
 ?>

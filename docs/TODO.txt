@@ -6,4 +6,3 @@
 - join js/css and minify
 - sub content_type
 - content_type description
-- search field fetch entire body content. (refactoring searchBy())
