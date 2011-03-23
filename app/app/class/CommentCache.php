@@ -12,7 +12,7 @@ class CommentCache extends Funky {
 
 
     function __construct() {
-        $this->urlPattern = Liber::conf('APP_URL').Liber::conf('FUNKY_PATH');
+        $this->urlPattern = url_to_('/',true).Liber::conf('FUNKY_PATH');
     }
 
 	/**
@@ -74,7 +74,7 @@ class CommentCache extends Funky {
     function url($aContent, $page=1) {
         $oContType = Liber::loadModel('ContentType', true);
 		$oContType->get($aContent['content_type_id']);
-        $url = url_to_('/'.Liber::conf('FUNKY_PATH').rawurlencode($oContType->field('description')).'/'.rawurlencode($aContent['title'])."/comments_page{$page}.html", true);
+        $url = url_to_('/',true).Liber::conf('FUNKY_PATH').rawurlencode($oContType->field('description')).'/'.rawurlencode($aContent['title'])."/comments_page{$page}.html";
         return $url;
     }
 
@@ -87,7 +87,7 @@ class CommentCache extends Funky {
 		list($oContent, $oContType) = Liber::loadModel(Array('Content','ContentType'), true);
 		$oContent->get($aComment['content_id']);
 		$oContType->get( $oContent->field('content_type_id') );
-		$path = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $this->urlPattern).$oContType->field('description').'/'.$oContent->field('title').'/';
+		$path = str_replace(url_to_('/',true), Liber::conf('APP_ROOT'), $this->urlPattern).$oContType->field('description').'/'.$oContent->field('title').'/';
 		if ( file_exists($path) ) {
 			rename($path, Liber::conf('APP_PATH').'temp/_'.$oContent->field('title').date('YmdHis'));
 		}

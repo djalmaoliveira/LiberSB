@@ -12,7 +12,8 @@ class ContentCache extends Funky {
 
 
     function __construct() {
-        $this->urlPattern = Liber::conf('APP_URL').Liber::conf('FUNKY_PATH');
+
+        $this->urlPattern = url_to_('/',true).Liber::conf('FUNKY_PATH');
     }
 
 	/**
@@ -64,7 +65,8 @@ class ContentCache extends Funky {
 		$funky_cache = Liber::controller()->view()->template()->load('list.html', $aData, true);
 		Liber::loadClass('Minify');
 		$funky_cache = Minify::html($funky_cache);
-		$file = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($this->url($parts['content'])));
+
+		$file = str_replace(url_to_('/', true), Liber::conf('APP_ROOT'), rawurldecode($this->url($parts['content'])));
 		if ( $this->put($file, $funky_cache ) ) {
 			return $funky_cache;
 		}
@@ -79,7 +81,8 @@ class ContentCache extends Funky {
 		Liber::loadHelper('Url');
 		$oContType = Liber::loadModel('ContentType', true);
 		$oContType->get( $aContent['content_type_id'] );
-        $url = url_to_('/'.Liber::conf('FUNKY_PATH').url_clean_($oContType->field('description'),true).'/'.($aContent['permalink']).'.html', true);
+
+        $url = url_to_('/',true).Liber::conf('FUNKY_PATH').url_clean_($oContType->field('description'),true).'/'.($aContent['permalink']).'.html';
         return $url;
     }
 
@@ -90,7 +93,7 @@ class ContentCache extends Funky {
 	*/
 	function cleanCache($aContent) {
 		$url = $this->url($aContent);
-		parent::clean( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($url)) );
+		parent::clean( str_replace(url_to_('/', true), Liber::conf('APP_ROOT'), rawurldecode($url)) );
 		Liber::loadClass('FeedCache', 'APP', true)->cleanCache();
 	}
 

@@ -12,7 +12,7 @@ class SiteMapCache extends Funky {
 
 
     function __construct() {
-        $this->urlPattern = Liber::conf('APP_URL').'sitemap.xml';
+        $this->urlPattern = url_to_('/',true).'sitemap.xml';
     }
 
 	/**
@@ -65,7 +65,7 @@ class SiteMapCache extends Funky {
 
 
 		$funky_cache = $oSMap->xml();
-		if ( $this->put( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $url) , $funky_cache) ) {
+		if ( $this->put( str_replace(url_to_('/',true), Liber::conf('APP_ROOT'), $url) , $funky_cache) ) {
 			return $funky_cache;
 		}
     }
@@ -84,7 +84,7 @@ class SiteMapCache extends Funky {
 	*	@return boolean
 	*/
 	function cleanCache() {
-		$path = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), ($this->urlPattern));
+		$path = str_replace(url_to_('/',true), Liber::conf('APP_ROOT'), ($this->urlPattern));
 		return parent::clean( $path );
 	}
 

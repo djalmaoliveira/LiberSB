@@ -12,7 +12,7 @@ class FeedCache extends Funky {
 
 
     function __construct() {
-        $this->urlPattern = Liber::conf('APP_URL').Liber::conf('FUNKY_PATH');
+        $this->urlPattern = url_to_('/',true).Liber::conf('FUNKY_PATH');
     }
 
 	/**
@@ -63,7 +63,7 @@ class FeedCache extends Funky {
 					)  );
 
 		$funky_cache = $oFeed->rss2();
-		if ( $this->put( str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), $this->url('rss2')) , $funky_cache) ) {
+		if ( $this->put( str_replace(url_to_('/',true), Liber::conf('APP_ROOT'), $this->url('rss2')) , $funky_cache) ) {
 			return $funky_cache;
 		}
 
@@ -85,7 +85,7 @@ class FeedCache extends Funky {
 	*	@return boolean
 	*/
 	function cleanCache($type=null) {
-		$path = str_replace(Liber::conf('APP_URL'), Liber::conf('APP_ROOT'), rawurldecode($this->urlPattern));
+		$path = str_replace(url_to_('/',true), Liber::conf('APP_ROOT'), rawurldecode($this->urlPattern));
 		if ( $type ) {
 			return parent::clean( $path.$type.'.xml' );
 		} else {
