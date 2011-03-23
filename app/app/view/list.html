@@ -1,6 +1,7 @@
 <?
 html_title_( implode(' » ', $pageName) );
 html_header_('js', 'util.js');
+
 ?>
 <div id="css_content_wrapper">
 
@@ -25,6 +26,13 @@ html_header_('js', 'util.js');
 			foreach ($contents as $content) {
 				content_show_($content, $isSummary);
 			}
+
+			if ( !$isSummary ) {
+				html_meta_(Array('name'=>'description', 'content'=>"Talking about ".$content['title']));
+			} else {
+				html_meta_(Array('name'=>'description', 'content'=>implode(' » ',$pageName).". Access this blog and see more subjects."));
+			}
+
 		} else {
     ?>
         <div class="content_box">
