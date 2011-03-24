@@ -68,7 +68,9 @@ body {
 #login_area {
     width:  300px;
     margin: 50px auto;
-    padding:10px 0px 10px 90px;
+}
+#login_content {
+    margin-left:10%;
 }
 
 .clear {

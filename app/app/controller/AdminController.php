@@ -17,14 +17,16 @@ class AdminController extends Controller{
         $this->oTPL->model('admin.html');
 
 		Liber::loadModel('User');
-		if ( !User::logged() ) {
-			$this->login();
-			exit;
-		}
     }
 
 
     public function index(){
+		if ( !User::logged() ) {
+			$this->login();
+			exit;
+		}
+
+
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
         $aTotalContents = $oContent->getTotalByContentType();
         $aContType      = $oContType->search('');
@@ -82,7 +84,80 @@ class AdminController extends Controller{
 			User::logout();
 			Liber::redirect('/admin');
 		}
+	}
 
+	function recover() {
+		Liber::loadHelper('Util', 'APP');
+		$oUser = Liber::loadModel('User', true);
+		Liber::loadHelper( Array('Form', 'Url') );
+
+
+		if ( Liber::requestedMethod() == 'post' ) {
+
+			// send instructions
+			$error = '';
+			if ( Input::post('login') ) {
+				if ( User::sendRecover( Input::post('login') ) ) {
+					die( jsonout('ok', url_to_('/admin', true) ) );
+				} else {
+					$error = "The message can't be sent.";
+				}
+
+			} else {
+				$error = "Put your email address.";
+			}
+			die( jsonout('error', $error) );
+		} else {
+
+			// show form password
+			if ( Input::get('token') ) {
+				$users = $oUser->searchBy('token', Input::get('token'));
+				if ( $users ) {
+					$aUser = &$users[0];
+					if ( $aUser['status'] == "PC" ) {
+						$aData['action'] = url_to_('/admin/changepass', true );
+						$aData['token']  = Input::get('token');
+						$aData['user']   = &$aUser;
+						$this->oTPL->load('admin/recover_change_password.html', $aData);
+						exit;
+					} else {
+						die( "This resource is not avaiable." );
+					}
+				}
+			}
+		}
+
+		$aData['action']= url_to_('/admin/recover', true );
+		$aData['token'] = User::token(true);
+		$this->oTPL->load('admin/recover_password.html', $aData);
+	}
+
+	function changepass() {
+		Liber::loadHelper('Util', 'APP');
+		$oUser = Liber::loadModel('User', true);
+		Liber::loadHelper( Array('Form', 'Url') );
+		$error = '';
+
+		if ( Input::post('token') and Input::post('password')) {
+			$users = $oUser->searchBy('token', Input::post('token'));
+			if ( $users ) {
+				$aUser = &$users[0];
+				$oUser->loadFrom($users[0]);
+				$oUser->field('password', sha1(Input::post('password')) );
+				$oUser->field('status', 'A');
+				if ( $oUser->save() ) {
+					die( jsonout('ok', "ok" ) );
+				} else {
+					$error=  "Error: Your password didn't change.";
+				}
+			} else {
+				$error = "Invalid token.";
+			}
+		} else {
+			$error = "Invalid request.";
+		}
+
+		die( jsonout('error', $error) );
 	}
 }
 

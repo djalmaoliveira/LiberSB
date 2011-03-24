@@ -8,6 +8,7 @@ Liber::loadModel('TableModel');
 
 /**
 *   Class model for User table.
+*	Status: A = Active, PC= Password changing
 */
 class User extends TableModel {
 
@@ -22,7 +23,8 @@ class User extends TableModel {
             'login'             => Array('', 'Login',   Validation::NOTNULL),
             'email'          	=> Array('', 'Email', 	Validation::NOTNULL),
             'password'          => Array('', 'Password', Validation::NOTNULL),
-            'status'          	=> Array('', 'Status', 	Validation::NOTNULL)
+            'status'          	=> Array('', 'Status', 	Validation::NOTNULL),
+			'token'				=> Array('', 'Token', 	0),
         );
     }
 
@@ -92,6 +94,35 @@ class User extends TableModel {
 			$oSession->val('token', md5(uniqid()).uniqid());
 		}
 		return $oSession->val('token');
+	}
+
+	/**
+	*	Send a mail with instructions to change password.
+	*	@param String $email
+	*	@return boolean
+	*/
+	static function sendRecover( $email ) {
+		$oMail = Liber::loadClass('Mailer', true);
+		$oView = Liber::loadClass('View', true);
+		$oUser = new User;
+		$users = $oUser->searchBy('login', $email);
+		$token = uniqid('recover').md5($email);
+		if ( $users ) {
+			$oUser->loadFrom( $users[0] );
+			$oUser->field('token', $token);
+			$oUser->field('status', 'PC');
+			if ( $oUser->save() ) {
+				$aData['url'] = url_to_('/admin/recover?token='.$token, true);
+				$body = $oView->load('admin/email_change_password.html', $aData, true);
+				$oMail->to($email);
+				$oMail->body( $body );
+				$oMail->subject('Recover password from '.Liber::conf('APP_URL'));
+				$oMail->html(true);
+				return $oMail->send();
+			}
+		}
+
+		return false;
 	}
 
 }

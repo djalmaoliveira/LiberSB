@@ -1,8 +1,10 @@
 - CSRF (where update data)
 - paging
-- upload images
+- image upload
 - tags
 - layouting
 - join js/css and minify
 - sub content_type
 - content_type description
+- password change
+-
