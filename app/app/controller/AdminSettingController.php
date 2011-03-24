@@ -31,7 +31,6 @@ class AdminSettingController extends Controller {
 		$this->view()->load('admin/settings.html', $aData);
     }
 
-
 	public function save() {
 		Liber::loadHelper('Util', 'APP');
 		$oConfig = Liber::loadModel('Config', true);
@@ -49,7 +48,50 @@ class AdminSettingController extends Controller {
 		die( jsonout('error','Please reload this page.') );
 	}
 
+	public function user() {
+		$oSec  = Liber::loadClass('Security', true);
+		$aUser = User::logged();
 
+		if ( $oSec->validToken(Input::post('token')) ) {
+			Liber::loadHelper('Util', 'APP');
+			$oUser = new User;
+			$oUser->get( $aUser['user_id'] );
+			$oUser->field('status', 'A');
+
+			// change login
+			$login = trim(Input::post('login'));
+			if ( $login != $aUser['login'] ) {
+				$users = $oUser->searchBy('login', $login);
+				if ( $users ) {
+					die( jsonout('error', 'Login not avaiable, try another one.') );
+				} else {
+					$oUser->field('login', $login);
+					$oUser->field('email', $login);
+				}
+			}
+
+			// change password
+			if ( Input::post('new_password') ) {
+				if ( sha1(trim(Input::post('password'))) == $oUser->field('password') ) {
+					$oUser->field('password', sha1(trim( Input::post('new_password') )));
+				} else {
+					die( jsonout('error', 'Wrong password, try again.') );
+				}
+			}
+
+			if ( $oUser->save() ) {
+				die( jsonout('ok', date('h:i:s')) );
+			} else {
+				die( jsonout('error', $oUser->buildFriendlyErrorMsg()) );
+			}
+
+		}
+
+		$aData['token']  = $oSec->token();
+		$aData['action'] = url_current_(true);
+		$aData['user']	 = &$aUser;
+		$this->view()->load('admin/settings_user.html', $aData);
+	}
 
 }
 ?>

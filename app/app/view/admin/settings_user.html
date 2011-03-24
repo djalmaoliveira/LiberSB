@@ -1,0 +1,28 @@
+		<form action="" method="post" id='frmUser' onsubmit='return false;'>
+			<?form_hidden_('token', $token)?>
+			<p>User login: <?form_input_('login', $user, 'class="admin_input"')?></p>
+			Change password
+			<div class='group_area' style='text-align:right'>
+				Current: <?form_password_('password', '', 'class="admin_input" ')?><br/>New: <?form_password_('new_password', '', '')?>
+			</div>
+		</form>
+		<p><?form_button_('btnSaveUser', 'Save', 'onclick="saveUser()"')?><span id='out'></span></p>
+
+
+    <script type="text/javascript">
+    //<![CDATA[
+		function saveUser() {
+			buttonClick($('#btnSaveUser'), "Saving...", function(){
+				$('#out').html('');
+				$.post('<?=$action?>', $('#frmUser').serialize(), function(resp) {
+					$('#out').attr('class','msg_'+resp.status);
+					if ( resp.status == 'ok' ) {
+						$('#out').html("Saved at "+resp.content.text);
+					} else {
+						$('#out').html(resp.content.text);
+					}
+				},'json');
+			});
+		}
+    //]]>
+    </script>

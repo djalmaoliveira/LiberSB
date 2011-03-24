@@ -20,7 +20,7 @@ class AdminController extends Controller{
     }
 
 
-    public function index(){
+    public function index() {
 		if ( !User::logged() ) {
 			$this->login();
 			exit;
@@ -145,6 +145,7 @@ class AdminController extends Controller{
 				$oUser->loadFrom($users[0]);
 				$oUser->field('password', sha1(Input::post('password')) );
 				$oUser->field('status', 'A');
+				$oUser->field('token', ' ');
 				if ( $oUser->save() ) {
 					die( jsonout('ok', "ok" ) );
 				} else {

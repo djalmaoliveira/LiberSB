@@ -42,7 +42,7 @@ body {
     margin-right:5px;
     font-size:1.2em;
     cursor:pointer;
-    background-color:#f7fbfc;    
+    background-color:#F0F7FA;    
     color:#1e90ff;
 
     -moz-border-radius: 10px 10px 0px 0px;
@@ -71,6 +71,14 @@ body {
 }
 #login_content {
     margin-left:10%;
+}
+#content_area .group_area {
+    border:1px solid #bfbfbf;
+    background:  #e5e5e5;
+    padding:3px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
 }
 
 .clear {

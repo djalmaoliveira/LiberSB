@@ -1,18 +1,20 @@
 <br/>
 <div class='form_area'>
-    <div class='tabs'>General Settings</div>
-
+    <div class='tabs' onclick="loadSettings(this)" >General Settings</div>
+	<div class='tabs' onclick='loadUser(this)' style='background:white'>User</div>
 	<div class='clear'></div>
 	<div id='content_area'>
-		<form action="" method="post" id='frmConfig' onsubmit='return false;'>
-			<?form_hidden_('token', $token)?>
-			<p>Site Name: <?form_input_('site_name', $config, 'class="admin_input"')?></p>
-			<p>Contact Email: <?form_input_('contact_email', $config)?></p>
-			<p>Facebook Site: <?form_input_('facebook_url', $config)?></p>
-			<p>Twitter Site: <?form_input_('twitter_url', $config)?></p>
-
-		</form>
+		<div style='text-align:right'>
+			<form action="" method="post" id='frmConfig' onsubmit='return false;'>
+				<?form_hidden_('token', $token)?>
+				<p>Site Name: <?form_input_('site_name', $config, 'class="admin_input"')?></p>
+				<p>Contact Email: <?form_input_('contact_email', $config)?></p>
+				<p>Facebook Site: <?form_input_('facebook_url', $config)?></p>
+				<p>Twitter Site: <?form_input_('twitter_url', $config)?></p>
+			</form>
+		</div>
 		<p><?form_button_('btnSave', 'Save', 'onclick="saveConfig()"')?><span id='out'></span></p>
+
 	</div>
 </div>
 
@@ -27,5 +29,15 @@
 				},'json');
 			});
 		}
+
+		function loadUser(tab) {
+			$("#content_area").load('<?url_to_('/admin/setting/user')?>');
+			$(".tabs").css('background', 'white');
+			$(tab).css('background', '#F0F7FA');
+		}
+		function loadSettings(tab) {
+			loadPage('<?url_to_('/admin/setting')?>?t=<?=User::token()?>');
+		}
+
     //]]>
     </script>

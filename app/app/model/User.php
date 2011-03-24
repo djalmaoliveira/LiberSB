@@ -29,6 +29,11 @@ class User extends TableModel {
     }
 
 
+
+	/**
+	*	Return Array of value,
+	*
+	*/
 	static function logged() {
 		Liber::loadClass('Session');
 		$oSession = new Session('user_login');
