@@ -315,6 +315,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 				`email` varchar(255) NOT NULL,
 				`password` varchar(255) NOT NULL,
 				`status` char(2) NOT NULL,
+				`token` varchar(255),
 				PRIMARY KEY (`user_id`),
 				UNIQUE KEY `login` (`login`),
 				KEY `status` (`status`)
