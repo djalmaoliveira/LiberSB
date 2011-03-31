@@ -353,7 +353,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 					$oUser->field('name', 'Administrator');
 					$oUser->field('login', $_POST['login']);
 					$oUser->field('email', $_POST['login']);
-					$oUser->field('password', sha1($_POST['password']));
+					$oUser->field('password', sha1($_POST['login'].sha1($_POST['password'])) );
 					if ( $oUser->save() ) {
 						// login user
 						$token = $oUser->token();

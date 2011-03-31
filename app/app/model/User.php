@@ -9,6 +9,7 @@ Liber::loadModel('TableModel');
 /**
 *   Class model for User table.
 *	Status: A = Active, PC= Password changing
+*	password field pattern: sha1( login + sha1(plain text password) )
 */
 class User extends TableModel {
 
@@ -76,12 +77,13 @@ class User extends TableModel {
 	*/
 	static function authentication($login, $hash) {
 		$oUser = new User;
-		$rs = $oUser->searchBy('login', $login);
+		$rs    = $oUser->searchBy('login', $login);
+		$aUser = &$rs[0];
 
-		if ( $rs ) {
-			$hmac = hash_hmac('sha1', trim($login), $rs[0]['password'].self::token());
+		if ( $aUser ) {
+			$hmac = hash_hmac('sha1', trim($login), ($aUser['password']).self::token());
 			if ( $hmac == $hash ) {
-				return $rs[0];
+				return $aUser;
 			}
 		}
 		return Array();

@@ -24,8 +24,9 @@ html_header_('js','util.js');
 	function btnLogin(frm, btn) {
 		var token  = '<?=$token?>';
 		var sha1   = new jsSHA($('#hash').val(), "ASCII").getHash('HEX');
+		var sha1_  = new jsSHA($('#login').val()+sha1, "ASCII").getHash('HEX');
 		var shaObj = new jsSHA($('#login').val(), "ASCII");
-		var hash_send = shaObj.getHMAC(sha1+token, 'ASCII',  'HEX');
+		var hash_send = shaObj.getHMAC(sha1_+token, 'ASCII',  'HEX');
 		$("#hash").val(hash_send);
 
 		$('#out').html('');

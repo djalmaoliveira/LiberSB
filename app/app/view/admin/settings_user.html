@@ -14,6 +14,8 @@
 		function saveUser() {
 			buttonClick($('#btnSaveUser'), "Saving...", function(){
 				$('#out').html('');
+				$('#password').val( new jsSHA($('#password').val(), "ASCII").getHash('HEX') );
+				$('#new_password').val( new jsSHA($('#new_password').val(), "ASCII").getHash('HEX') );
 				$.post('<?=$action?>', $('#frmUser').serialize(), function(resp) {
 					$('#out').attr('class','msg_'+resp.status);
 					if ( resp.status == 'ok' ) {
@@ -22,6 +24,8 @@
 						$('#out').html(resp.content.text);
 					}
 				},'json');
+				$('#password').val('');
+				$('#new_password').val('');
 			});
 		}
     //]]>

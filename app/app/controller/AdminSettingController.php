@@ -71,12 +71,14 @@ class AdminSettingController extends Controller {
 			}
 
 			// change password
-			if ( Input::post('new_password') ) {
-				if ( sha1(trim(Input::post('password'))) == $oUser->field('password') ) {
-					$oUser->field('password', sha1(trim( Input::post('new_password') )));
+			if ( (Input::post('new_password')) != sha1('') ) {
+				if ( sha1($aUser['login'].trim(Input::post('password'))) == $oUser->field('password') ) {
+					$oUser->field('password', sha1($aUser['login'].trim( Input::post('new_password') )));
 				} else {
 					die( jsonout('error', 'Wrong password, try again.') );
 				}
+			} else {
+				die( jsonout('error', "New password can't be empty.") );
 			}
 
 			if ( $oUser->save() ) {
