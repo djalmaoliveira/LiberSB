@@ -307,6 +307,7 @@ h3 {
 #comment_form {
     text-align:center;
     margin-top:20px;
+    display:none;
 }
 #comment_form #comment{
     width:410px;

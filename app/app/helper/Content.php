@@ -56,7 +56,7 @@ function content_show_($aContent, $isSummary=true, $return=false) {
             <div class=\"cleaner\"></div>
 			<br/>
             <div id=\"comment_nav\">
-                <a href='javascript:void(0)' onmouseover=\"leaveComment('".url_to_('/comment', true)."?content_id=".$aContent['content_id']."', this)\">Leave a comment</a>
+                <a href='javascript:void(0)' onmouseover=\"leaveComment('{$aContent['content_id']}', '".url_to_('/comment', true)."', this)\">Leave a comment</a>
                 <a href='".content_comment_url_($aContent,1,true)."'>See comments</a>
             </div>
 
@@ -83,6 +83,16 @@ function content_comment_url_($aContent, $page=1, $return=false) {
     echo $url;
 }
 
+/**
+*	Return the html content of comment form.
+*	@return String
+*/
+function content_comment_form_() {
+	Liber::loadHelper('Util', 'APP');
+	Liber::loadHelper('Form');
+	$aData['action']     = url_to_('/comment', true);
+	return Liber::controller()->view()->load('comment_form.html', $aData, true);
+}
 
 
 /**

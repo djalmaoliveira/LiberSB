@@ -49,11 +49,6 @@ class CommentController extends Controller {
 				die(jsonout('error', 'Please, you have to reload this page before send this comment.'));
 			}
         }
-
-		$aData['token']		 = $oSec->token(true);
-		$aData['content_id'] = Input::get('content_id');
-        $aData['action']     = url_to_('/comment', true);
-        $this->view()->load('comment_form.html', $aData);
     }
 }
 

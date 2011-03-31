@@ -91,6 +91,14 @@ class MainController extends Controller{
 
 
 
+	public function token() {
+		if ( Liber::isAjax() ) {
+			$oSec = Liber::loadClass('Security', true);
+			Liber::loadHelper('Util', 'APP');
+			die( jsonout('ok', $oSec->token()) );
+		}
+	}
+
     public function setup() {
         // setup application
         if ( !file_exists(Liber::conf('APP_ROOT').Liber::conf('ASSETS_DIR').'app') ) {
