@@ -1,0 +1,42 @@
+<?
+html_header_('js', 'http://platform.twitter.com/widgets.js');
+html_script_("			(function() {
+				var s = document.createElement('SCRIPT'), s1 = document.getElementsByTagName('SCRIPT')[0];
+				s.type = 'text/javascript';
+				s.async = true;
+				s.src = 'http://widgets.digg.com/buttons.js';
+				s1.parentNode.insertBefore(s, s1);
+				})();
+	");
+?>
+
+<div class="content_box">
+	<h3><a href='<?=$url?>'><?=$content['title']?></a></h3>
+	<?=date('Y/m/d',strtotime($content['create_datetime']))?>
+	<br/><br/>
+	<div class='content_body'>
+		<?=($isSummary?strip_tags($content['body'])."<br/> <a href=\"$url\" title=\"see the entire content\"> read more...</a>":$content['body'])?>
+	</div>
+	<br/>
+
+	<div class='share_box' title='Share this content'>
+		<span><iframe height="20px" width="100px" scrolling="no" frameborder="0"  allowTransparency="true" style="border:none; overflow:hidden;"
+			src="http://www.facebook.com/plugins/like.php?href=$url_encoded&with=100&layout=button_count&show_faces=false&action=recommend&colorscheme=light" ></iframe>
+		</span>
+		<span><a class="DiggThisButton DiggCompact" href="http://digg.com/submit?style=no&url=<?=$url_encoded?>"></a></span>
+		<span>
+			<iframe allowtransparency="true" height="20px" width="100px" frameborder="0" scrolling="no"
+			src="http://platform.twitter.com/widgets/tweet_button.html?url=<?=$url_encoded?>"></iframe>
+		</span>
+	</div>
+
+	<div class="cleaner"></div>
+	<br/>
+	<div id="comment_nav">
+		<a href='javascript:void(0)' onmouseover="leaveComment('{<?=$content['content_id']?>}', '<?url_to_('/comment')?>', this)">Leave a comment</a>
+		<a href='<?content_comment_url_($content,1)?>'>See comments</a>
+	</div>
+
+</div>
+<div class="content_box_bottom"></div>
+

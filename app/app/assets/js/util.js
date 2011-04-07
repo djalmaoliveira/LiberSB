@@ -1,4 +1,3 @@
-
 function showMessage(elem, msg, type) {
     var className = "message_"+type;
     var id = 'id_message_'+type+elem.id;

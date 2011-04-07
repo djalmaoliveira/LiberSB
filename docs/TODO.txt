@@ -6,4 +6,4 @@
 - join js/css and minify
 - sub content_type
 - content_type description
-- change user password algoritm
+- install option to hide app/ and Liber/ folder one dir up, avoiding to use sub dir.

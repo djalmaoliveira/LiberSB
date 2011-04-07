@@ -1,0 +1,11 @@
+<div class='comment_box'>
+	<div class="content_box">
+		<h4><?=$comment['name']?></h4>
+		<?=dt_timesince_($comment['datetime'])?> ago
+		<br/><br/>
+		<div class='comment_comment'><?=nl2br($comment['comment'])?></div>
+		<div class="cleaner"></div>
+	</div>
+</div>
+<br/>
+
