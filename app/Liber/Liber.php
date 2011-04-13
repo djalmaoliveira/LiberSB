@@ -1,7 +1,7 @@
 <?php
 /**
  * Main framework class file.
- * Copyright (c) 2010, Djalma Oliveira (djalmaoliveira@gmail.com)
+ * Copyright (c) 2010, 2011 Djalma Oliveira (djalmaoliveira@gmail.com)
  * All rights reserved.
  * @license license.txt
  */
@@ -40,7 +40,7 @@ class Liber {
     /**
     *   Framework version
     */
-    const VERSION = '1.0';
+    const VERSION = '1.1';
 
 
     /**
@@ -165,21 +165,6 @@ class Liber {
     */
     public static function run() {
 
-        if (  self::conf('APP_MODE') == 'DEV' ) {
-            error_reporting(-1);
-        } elseif ( self::conf('APP_MODE') == 'PROD' ) {
-            ini_set('display_errors','Off');
-        }
-
-        function catchError() {
-            Liber::loadClass('Log', true)->handleError( func_get_args() );
-            die();
-        }
-
-        set_error_handler("catchError");
-        set_exception_handler('catchError');
-
-        self::loadClass('Input');
         self::processRoute();
         return;
 
@@ -187,12 +172,29 @@ class Liber {
 
 
     /**
-    *   Complete the basic configuration.
+    *   Complete the essencial enviroment configuration.
     *
     */
     public static function setup() {
         self::conf('APP_ROOT'  , dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR);
         self::conf('APP_URL'   , ((self::isSSL())?'https':'http').'://'.$_SERVER['HTTP_HOST'].str_replace('//','/',  dirname($_SERVER['SCRIPT_NAME']).'/') );
+
+        if (  self::conf('APP_MODE') == 'DEV' ) {
+            error_reporting(-1);
+        } elseif ( self::conf('APP_MODE') == 'PROD' ) {
+            ini_set('display_errors','Off');
+        }
+
+		function catchError() {
+			if ( !error_get_last() ) {
+				return;
+			} else {
+				Liber::log()->handlerError();
+			}
+		}
+		register_shutdown_function ( 'catchError' ) ;
+        self::loadClass('Input');
+
     }
 
 

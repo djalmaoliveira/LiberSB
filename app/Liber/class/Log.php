@@ -15,13 +15,14 @@ class Log {
     static $debug   = true;
     private static $handler = '';
     private static $instanced;
+	private static $error = false;
 
     function __construct() {
         if ( self::$instanced ) {
             return ;
         } else {
             self::$instanced = true;
-            register_shutdown_function ( Array($this, 'post') ) ;
+            register_shutdown_function ( Array($this, 'handlerLog') ) ;
         }
     }
 
@@ -32,15 +33,15 @@ class Log {
     *                                       PROD    => call to SYS_ERROR controller defined.
     *   Both APP_MODE write a file on /log folder with the pattern [yyyymmdd.log].
     */
-    public function post() {
+    public function handlerLog() {
 
         if ( !empty(self::$handler) and count(self::$aLogMsg) > 0) {
             call_user_func(self::$handler, self::$aLogMsg);
         }
 
         $this->toFile();
-        // action on error
-        if ( error_get_last() !== null) {
+        // do action on error
+        if ( self::$error ) {
             if ( Liber::conf('APP_MODE') == 'DEV' ) {
                 echo $this->toPopUp(); die();
             } else {
@@ -63,62 +64,40 @@ class Log {
 
 
     /**
-    *   Add a message of current error triggered.
-    *   At the end of method, the execution of script will be stopped.
+    *   Add a log message from current error triggered.
     */
-    function handleError() {
-        $args       = func_get_args();
-        $errorData  = current($args);
-        $aError     = Array() ;
-        $o          = $errorData[0];
+    function handlerError() {
+		self::$error = true;
 
-        if ( gettype($o) == 'object' ) {
-            $aError['no']   = $o->getCode();
-            $aError['msg']  = $o->getMessage();
-            $aError['file'] = $o->getFile();
-            $aError['line'] = $o->getLine();
-            $trace          = $o->getTrace();
-        } else {
-            $aError['no']   = $errorData[0];
-            $aError['msg']  = $errorData[1];
-            $aError['file'] = $errorData[2];
-            $aError['line'] = $errorData[3];
-            $trace          = debug_backtrace();
-        }
+		$aError  = error_get_last();
 
-        $profile = $this->profile($aError, $trace, (is_object($o)?'exception':'error'));
+        $profile = $this->profile($aError, debug_backtrace(), 'exception');
 
-        $this->add("Error: ".$aError['msg'].". \r\n".$profile, 'error');
+        $this->add($profile, 'error');
 
-        trigger_error('Error detected: '.$aError['msg'], E_USER_ERROR);
     }
 
 
     /**
     *   Return a String of current error and enviroment information.
     *   @param Array $context - Error context
-    *   @param Array $arr - backtrace
-    *   @param String $type - 'error' or 'exception'
     *   @return String
     */
-    private function profile($context, $arr, $type) {
+    private function profile($context) {
 
-        $offset = ($type=='exception')?0:2;
-        $traces = '';
-        for ($i=$offset; $i < count($arr); $i++ ) {
-            $t          = $arr[$i];
-            $t['file']  = isset($t['file'])?$t['file']:'';
-            $class      = (isset($t['class'])?$t['class'].$t['type']:'');
-            $function   = (isset($t['function'])?$t['function']:'');
-            $args       = (isset($t['args'])?str_replace("\n","",print_r($t['args'], true)):'');
+		$env = "\r\n_SERVER: ".print_r($_SERVER, true)."\r\n_POST: ".print_r($_POST, true)."\r\n_GET: ".print_r($_GET, true)."\r\n_SESSION: ".print_r($_SESSION, true)."\r\n_COOKIE: ".print_r($_COOKIE, true)."\r\n_FILES: ".print_r($_FILES, true);
 
-            $traces    .= ' '.$class.$function."( ".$args." ) \r\n    called at [".$t['file']."] line ".(isset($t['line'])?$t['line']:'')."\r\n";
-        }
-        $traces = "Where: [".$context['file']."] line ".$context['line']." \r\n \r\n".$traces;
+		$msg = "
+			<table border='0' padding='5px'>
+				<tr><td style='border:1px solid;'>TYPE:</td> <td style='border:1px solid;' width='30px'>{$context['type']}</td> <td style='border:1px solid;' width='10px'>LINE:</td> <td style='border:1px solid;'>{$context['line']}</td></tr>
+				<tr><td style='border:1px solid;'>FILE: </td><td style='border:1px solid;' colspan='3'>".str_replace(dirname(Liber::conf('APP_PATH')),'',$context['file'])."</td></tr>
+				<tr><td style='border:1px solid;'>MESSAGE: </td><td style='border:1px solid;' colspan='3'><pre>{$context['message']}</pre></td></tr>
+				<tr><td style='border:1px solid;'>STATE: </td><td style='border:1px solid;' colspan='3'><pre>$env</pre></td></tr>
+			</table>
+		";
 
-        $env = "\r\n_SERVER: ".print_r($_SERVER, true)."\r\n_POST: ".print_r($_POST, true)."\r\n_GET: ".print_r($_GET, true)."\r\n_SESSION: ".print_r($_SESSION, true)."\r\n_COOKIE: ".print_r($_COOKIE, true)."\r\n_FILES: ".print_r($_FILES, true);
 
-        return $traces.$env;
+        return $msg;
     }
 
 
@@ -155,7 +134,7 @@ class Log {
 			umask(0007);
 			mkdir($path, 0770, true);
 		}
-        file_put_contents( $path.date('Ymd').'.log', implode("\n", self::$aLogAll), FILE_APPEND | LOCK_EX );
+        file_put_contents( $path.date('Ymd').'.log', strip_tags(implode("\n", self::$aLogAll)), FILE_APPEND | LOCK_EX );
     }
 
 
