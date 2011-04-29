@@ -2,6 +2,11 @@
 html_title_( implode(' » ', $pageName) );
 html_header_('js', 'main.js');
 html_header_('js', 'util.js');
+html_meta_(Array(
+        'name'      => 'description',
+        'content'   => "See all comments about {$content['title']}. Please leave your comment too."
+    ));
+
 ?>
 <div id="css_content_wrapper">
 
