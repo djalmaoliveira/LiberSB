@@ -37,8 +37,9 @@
                 buttonClick($("#btnSave"), "Wait, saving...", function () {
                     $.post('<?=$action?>', $('#frmEditor').serialize(),function (resp){
                         $('#out').html(resp.content.text);
-                        $('#content_id').val(resp.content.content_id);
+                        $('#content_id').val(resp.content.content.content_id);
 						$('#out').attr('class','msg_'+resp.status);
+						$('#permalink').val(resp.content.content.permalink);
                     },'json');
                 });
             }

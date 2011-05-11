@@ -28,6 +28,7 @@ class AdminContentController extends Controller {
 		$oSec = Liber::loadClass('Security', true);
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
 
+        // saving content
         if ( Liber::requestedMethod() == 'post' ) {
 			if ( $oSec->validToken(Input::post('token')) ) {
 				$oContent->loadFrom( Input::post() );
@@ -36,8 +37,10 @@ class AdminContentController extends Controller {
 					$oContent->field('create_datetime', $oContent->field('datetime'));
 				}
 				if ( $oContent->save() ) {
-					$oCache = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache($oContent->toArray());
-					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content_id'=>$oContent->field('content_id'))) );
+				    $aContent = $oContent->toArray();
+					$oCache   = Liber::loadClass('ContentCache', 'APP' , true)->cleanCache( $aContent );
+					unset($aContent['body']);
+					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content' => $aContent)) );
 				} else {
 					Liber::log()->add('Document can\'t be saved.','error');
 					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
@@ -61,15 +64,24 @@ class AdminContentController extends Controller {
         $aData['content'] = $oContent->toArray();
 
 		// permalink field
-		$permalink = rawurldecode(str_replace(
-							$aData['content']['permalink'],
-							' '.form_input_('permalink',rawurldecode($aData['content']['permalink']), '', true),
-							Liber::loadClass('ContentCache', 'APP', true)->url($aData['content'])
+		$aData['permalink'] = Liber::loadClass('ContentCache', 'APP', true)->url($aData['content']);
+		$input = ' '.form_input_('permalink',rawurldecode($aData['content']['permalink']), '', true);
+		if ( empty($aData['content']['permalink']) ) {
+    		$aData['permalink'] = rawurldecode(str_replace(
+							'[]',
+							$input,
+							dirname($aData['permalink'])."/[].html"
 					));
 
+        } else {
+    		$aData['permalink'] = rawurldecode(str_replace(
+							$aData['content']['permalink'],
+							$input,
+							$aData['permalink']
+					));
+        }
 
         $aData['action']  = url_to_('/admin/content/edit', true);
-		$aData['permalink'] = &$permalink;
 		$aData['token']   = $oSec->token();
         $this->view()->load('admin/content_editor.html', $aData);
     }

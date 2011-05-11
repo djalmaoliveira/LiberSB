@@ -8,3 +8,4 @@
 - content_type description
 - install option to hide app/ and Liber/ folder one dir up, avoiding to use sub dir.
 - auto-update feature by URL or uploaded file.
+- draft, save, publish content
