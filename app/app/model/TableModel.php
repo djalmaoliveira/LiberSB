@@ -172,7 +172,7 @@ class TableModel {
     function fieldFilter() {
         $arr = current($this->aFields);
         do  {
-			if ( is_null($arr[0]) ) { continue; }
+            if ( is_null($arr[0]) ) { continue; }
             $this->aFields[key($this->aFields)][0] = strip_tags($arr[0]);
         } while ( ($arr=next($this->aFields)) );
     }
@@ -321,11 +321,11 @@ class TableModel {
         }
     }
 
-	/**
-	*	Return an Array of current fields model values or descriptions.
-	*	@param String $op - 'field' (default) - return field values; 'desc' - return description fields
-	*	@return Array
-	*/
+    /**
+    *   Return an Array of current fields model values or descriptions.
+    *   @param String $op - 'field' (default) - return field values; 'desc' - return description fields
+    *   @return Array
+    */
     function toArray($op='field') {
         $a = Array();
         if ( $op == 'field' ) {
@@ -410,6 +410,7 @@ class TableModel {
 
     /**
      *  Add a function for validation.
+     *  @param string $name
      *  @param function $func
      */
     function addValidation($name, $func) {
