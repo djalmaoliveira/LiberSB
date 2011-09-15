@@ -1,0 +1,22 @@
+################################################
+## GENERAL SETTINGS
+################################################
+shared_writable_dirs:
+    - /liberlog
+
+
+ 
+################################################
+## WEB SPECIFIC SETTINGS
+################################################
+index_list: [index.php]
+ 
+ 
+################################################
+## PHP SPECIFIC SETTINGS
+################################################
+
+php_extensions: [eaccelerator, mysql, pdo, pdo_mysql]
+php_default_mimetype: text/html
+php_date_timezone: US/central
+
