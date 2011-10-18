@@ -11,10 +11,12 @@
 
 /**
 *   Set or print Html tags for external CSS and JS files included in 'head' tag.
-*   Usage:  html_header_('css', 'my.css'); // register a css file in template file, used inside template files
+*   Usage:  html_header_('css', 'http://abc.com/somefile.css'); // external assets
+*           html_header_('css', '/mycss/my.css'); // absolute path from root path (i.e. www.domain.com/mycss/my.css)
+*           html_header_('css', 'my.css'); // relative to default /css folder (i.e. www.domain.com/css/my.css)
 *           html_header_(); // print tags to use among html head tags.
 *   @param String $type - 'css' or 'js'
-*   @param String $url - Relative url to assets folder.
+*   @param String $url - Relative url to assets folder or external url starting with http:// or https://.
 *   @return String - Html tags
 */
 function html_header_($type=null, $url=null) {
@@ -22,11 +24,21 @@ function html_header_($type=null, $url=null) {
     if ( $type == null ) {
         $tag = '';
         foreach ($headers['css'] as $url) {
-            $url = ($url[0] != '/')?url_asset_('/css/', true).$url:url_asset_($url, true);
+            if ( $url[0] == '/' ) {
+                $url = url_asset_($url, true);
+            } elseif( (strpos($url, "://") === false ) ) { // hasn't http:// or https://
+                $url = url_asset_('/css/', true).$url;
+            }
+
             $tag .= '<link rel="stylesheet" type="text/css" media="screen"  href="'.$url.'" />'."\r\n";
         }
         foreach ($headers['js'] as $url) {
-            $url = ($url[0] != '/')?url_asset_('/js/', true).$url:url_asset_($url, true);
+            if ( $url[0] == '/' ) {
+                $url = url_asset_($url, true);
+            } elseif( (strpos($url, "://") === false ) ) { // hasn't http:// or https://
+                $url = url_asset_('/js/', true).$url;
+            }
+
             $tag .= '<script src="'.$url.'" type="text/javascript"></script>'."\r\n";
         }
         echo $tag;
