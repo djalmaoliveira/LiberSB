@@ -1,22 +1,15 @@
-################################################
-## GENERAL SETTINGS
-################################################
-shared_writable_dirs:
-    - /liberlog
+web1: #component type & number
+  name: blog            #component settings
+  shared_writable_dirs:
+    - /var/cache
+    - /var/sessions
+  document_root: /app/www
+  php_version: 5.3.8
+  php_extensions:
+    - mysql
+    - gd
+    - eaccelerator
 
-
- 
-################################################
-## WEB SPECIFIC SETTINGS
-################################################
-index_list: [index.php]
- 
- 
-################################################
-## PHP SPECIFIC SETTINGS
-################################################
-
-php_extensions: [eaccelerator, mysql, pdo, pdo_mysql]
-php_default_mimetype: text/html
-php_date_timezone: US/central
-
+db1: #component type & number 
+  name: libersb            #component settings
+  type: mysql
