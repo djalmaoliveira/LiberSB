@@ -40,7 +40,7 @@ class Liber {
     /**
     *   Framework version
     */
-    const VERSION = '1.1';
+    const VERSION = '1.2.0';
 
 
     /**
@@ -167,49 +167,47 @@ class Liber {
 
         self::processRoute();
         return;
-
     }
 
-
     /**
-    *   Complete the essencial enviroment configuration.
-    *
+    *   Set and prepare the enviroment to a Liber application.
+    *   @param String $path
     */
-    public static function setup() {
-        self::conf('APP_ROOT'  , dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR);
-        self::conf('APP_URL'   , ((self::isSSL())?'https':'http').'://'.$_SERVER['HTTP_HOST'].str_replace('//','/',  dirname($_SERVER['SCRIPT_NAME']).'/') );
+    public static function loadApp( $path ) {
+        include $path."config/config.php";
 
-        if (  self::conf('APP_MODE') == 'DEV' ) {
+        // set config values
+        //
+        self::$aConfig    = array_merge(self::$aConfig,  $aConfigs['configs']);
+        self::$aDbConfig  = &$aConfigs['dbconfig'];
+        self::$aRoute     = &$aConfigs['routes'];
+        self::$aConfig['APP_PATH']  = $path;
+        self::$aConfig['BASE_PATH'] = dirname(__FILE__).'/';
+
+        // prepare the enviroment
+        //
+        self::$aConfig['APP_ROOT'] = dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR;
+        self::$aConfig['APP_URL']  = ((self::isSSL())?'https':'http').'://'.$_SERVER['HTTP_HOST'].str_replace('//','/',  dirname($_SERVER['SCRIPT_NAME']).'/') ;
+
+        if (  self::$aConfig['APP_MODE'] == 'DEV' ) {
             error_reporting(-1);
-        } elseif ( self::conf('APP_MODE') == 'PROD' ) {
+        } elseif ( self::$aConfig['APP_MODE'] == 'PROD' ) {
             ini_set('display_errors','Off');
         }
 
-		function catchError() {
-			if ( !error_get_last() ) {
-				return;
-			} else {
-				Liber::log()->handlerError();
-			}
-		}
-		register_shutdown_function ( 'catchError' ) ;
+        function catchError() {
+            if ( !error_get_last() ) {
+                return;
+            } else {
+                Liber::log()->handlerError();
+            }
+        }
+
+        register_shutdown_function ( 'catchError' ) ;
         self::loadClass('Input');
 
     }
 
-
-    /**
-    *   Load and set application configurations.
-    *   @param Array $aConfig  - configurations params.
-    */
-    public static function loadConfig( $aConfig ) {
-        // set config values
-        self::$aConfig = array_merge(self::$aConfig,  $aConfig['configs']);
-
-        self::$aDbConfig  = &$aConfig['dbconfig'];
-        self::$aRoute     = &$aConfig['routes'];
-        self::setup();
-    }
 
 
     /**

@@ -3,12 +3,10 @@
 $project    = realpath((dirname(__FILE__))."/../../")."/";
 $aConfigs   = Array(
                 "configs" => Array(
-                    "APP_PATH"      => $project."app/",
-                    "BASE_PATH"     => $project."Liber/",
                     "APP_MODE"      => "PROD",
                     "FUNKY_PATH"    => "static/",
 					"LAYOUT"		=> "",
-                    "VERSION"       => "1.1.RC4"
+                    "VERSION"       => "1.1"
                 ),
 
                 "routes"=>Array(),

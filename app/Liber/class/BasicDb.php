@@ -27,13 +27,18 @@ class BasicDb {
                         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'
                     );
                 break;
+                case 'firebird':
+                    $dsn = $config[4].":dbname={$config[1]};host={$config[0]}";
+                    $options = array();
+                break;
+
                 default:
             }
             try {
                 $o  = new PDO($dsn, $config[2], $config[3], $options);
                 return $o;
-            } catch(PDOException $e) {
-                trigger_error("No database connection."); // Caution: Exception message show password on stack trace.
+            } catch(PDOException $e) { 
+                trigger_error("No database connection. [".$e->getMessage().']'); // Caution: Exception message show password on stack trace.
                 return null;
             }
         } else {

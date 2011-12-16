@@ -263,7 +263,7 @@ class TableModel {
             $aParams[':value'] = $val;
         }
 
-        $q      = $this->db()->prepare("select * from $this->table where $where");
+        $q      = $this->db()->prepare("select ".implode(',',array_keys($this->aFields))." from $this->table where $where");
 
         $ret    = $q->execute( $aParams );
         if ( $ret === false ) {

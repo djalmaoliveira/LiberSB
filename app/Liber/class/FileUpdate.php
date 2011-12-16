@@ -245,11 +245,25 @@ class FileUpdate {
     *   Return an array of current added, ignored and deleted files.
     *   @return Array
     */
-    public function files() {
-        return Array(   'add'       =>  $this->updateData['add'],
-                        'ignore'    =>  $this->updateData['ignore'],
-                        'delete'    =>  $this->updateData['delete']
-        );
+    public function files($type=null) {
+        if ( $type === null ) {
+            return Array(   'add'       =>  $this->updateData['add'],
+                            'ignore'    =>  $this->updateData['ignore'],
+                            'delete'    =>  $this->updateData['delete']
+            );
+        } else {
+            $_arr = Array("add", "ignore", "delete");
+            $out = Array();
+            foreach( $_arr as $mode ) {
+                foreach( $this->updateData[$mode]  as $fileName => $value ) {
+                    $out[$mode][$fileName] = Array(
+                                                "size" => strlen($value['data']),
+                                                "sha1" => $value['sha1']
+                                            );
+                }
+            }
+            return $out;
+        }
     }
 
 }
