@@ -81,7 +81,7 @@ class User extends TableModel {
 		$aUser = &$rs[0];
 
 		if ( $aUser ) {
-			$hmac = hash_hmac('sha1', trim($login), ($aUser['password']).self::token());
+			$hmac = hash_hmac('sha1', trim($login), sha1($login.$aUser['password']).self::token());
 			if ( $hmac == $hash ) {
 				return $aUser;
 			}
