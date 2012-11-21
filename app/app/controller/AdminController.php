@@ -143,7 +143,7 @@ class AdminController extends Controller{
 			if ( $users ) {
 				$aUser = &$users[0];
 				$oUser->loadFrom($users[0]);
-				$oUser->field('password', sha1(Input::post('password')) );
+				$oUser->field('password', sha1($aUser['login'].Input::post('password')) );
 				$oUser->field('status', 'A');
 				$oUser->field('token', ' ');
 				if ( $oUser->save() ) {
