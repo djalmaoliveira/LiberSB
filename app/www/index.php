@@ -18,7 +18,7 @@ $aConfigs   = Array(
                     "APP_MODE"      => "PROD",
                     "FUNKY_PATH"    => "static/",
                     "LAYOUT"        => "",
-                    "VERSION"       => "1.2.0"
+                    "VERSION"       => "1.2.1"
                 ),
 
                 "routes"=>Array(),
