@@ -155,8 +155,12 @@ class TableModel {
     *   @return boolean
     */
     function save($data=Array()) {
+        if ( $data and isset($data[$this->idField]) ) {
+            $id = $data[$this->idField];
+        } else {
+            $id = $this->field( $this->idField );
+        }
 
-        $id = $this->field($this->idField);
         if ( empty( $id ) ) {
             $retS = $this->insert( $data );
         } else {
@@ -455,7 +459,7 @@ class TableModel {
     *   @return Array
     */
     function lastErrors() {
-        return $this->errorsFields + $this->errorsValidation;
+        return $this->errorsFields + $this->errorsValidation + $this->lastErrors;
     }
 
 
@@ -471,6 +475,10 @@ class TableModel {
 
         foreach ( $this->errorsValidation as $name => $value ) {
             $aOut[$name] = implode("\n", $value);
+        }
+
+        foreach ( $this->lastErrors as $key => $value ) {
+            $aOut[$key] = $value;
         }
 
         return $aOut;

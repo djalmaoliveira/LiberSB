@@ -26,7 +26,7 @@ class AdminSettingController extends Controller {
 		$oConfig = Liber::loadModel('Config', true);
 		$oSec    = Liber::loadClass('Security', true);
 		$aData['action'] = url_to_('/admin/setting', true);
-		$aData['config'] = $oConfig->data( Array('site_name', 'contact_email', 'facebook_url', 'twitter_url') );
+		$aData['config'] = $oConfig->data( );
 		$aData['token']  = $oSec->token();
 		$this->view()->load('admin/settings.html', $aData);
     }

@@ -1,3 +1,4 @@
+- install system using only one file (compressed)
 - CSRF (where update data)
 - paging
 - image upload

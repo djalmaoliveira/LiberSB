@@ -85,7 +85,7 @@ class Log {
     */
     private function profile($context) {
 
-		$env = "\r\n_SERVER: ".print_r($_SERVER, true)."\r\n_POST: ".print_r($_POST, true)."\r\n_GET: ".print_r($_GET, true)."\r\n_SESSION: ".print_r($_SESSION, true)."\r\n_COOKIE: ".print_r($_COOKIE, true)."\r\n_FILES: ".print_r($_FILES, true);
+		$env = "\r\n_SERVER: ".print_r($_SERVER, true)."\r\n_POST: ".print_r($_POST, true)."\r\n_GET: ".print_r($_GET, true)."\r\n_SESSION: ".(isset($_SESSION)?print_r($_SESSION, true):'')."\r\n_COOKIE: ".print_r($_COOKIE, true)."\r\n_FILES: ".print_r($_FILES, true);
 
 		$msg = "
 			<table border='0' padding='5px'>

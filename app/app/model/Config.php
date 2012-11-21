@@ -21,12 +21,20 @@ class Config extends TableModel {
             'site_name'        	=> Array('', 'Site Name', 0),
             'contact_email'    	=> Array('', 'Contact Email', Validation::EMAIL),
             'twitter_url'      	=> Array('', 'Twitter', Validation::URL),
-            'facebook_url'     	=> Array('', 'Facebook', Validation::URL)
+            'facebook_url'     	=> Array('', 'Facebook', Validation::URL),
+            'googleplus_url'    => Array('', 'Google+', Validation::URL)
         );
     }
 
-	function data( $aFields ) {
-		if ( !is_array($aFields) ) {
+    /**
+     * Return config data by specified params $aFields.
+     * @param  mixed $aFields If Array return Array of specified fields, if NULL return all fields and if String return String field value.
+     * @return mixed
+     */
+	function data( $aFields=null ) {
+		if( $aFields==null ) {
+            $aFields = Array( "*", 'id' );
+        } elseif ( !is_array($aFields) ) {
 			$aFields = Array( $aFields );
 		}
 

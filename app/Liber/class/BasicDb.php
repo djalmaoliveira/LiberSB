@@ -31,13 +31,17 @@ class BasicDb {
                     $dsn = $config[4].":dbname={$config[1]};host={$config[0]}";
                     $options = array();
                 break;
+                case 'sqlite':
+                    $dsn = $config[4].":{$config[1]}";
+                    $options = array();
+                break;
 
                 default:
             }
             try {
                 $o  = new PDO($dsn, $config[2], $config[3], $options);
                 return $o;
-            } catch(PDOException $e) { 
+            } catch(PDOException $e) {
                 trigger_error("No database connection. [".$e->getMessage().']'); // Caution: Exception message show password on stack trace.
                 return null;
             }

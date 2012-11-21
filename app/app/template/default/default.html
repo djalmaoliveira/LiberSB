@@ -1,6 +1,6 @@
 <?
 $url	= url_to_('/', true);
-$config = Liber::loadModel('Config', true)->data( Array('site_name', 'facebook_url', 'twitter_url') );
+$config = Liber::loadModel('Config', true)->data();
 $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
 $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 
@@ -42,6 +42,9 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
         <div id='search_form' style='text-align:right'>
 			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
 			<div id='nav_social'>
+                <?  if ( $config['googleplus_url'] ) {?>
+                    <a href='<?=$config['googleplus_url']?>?rel=author' title='Go to Google+'><img src="<?url_asset_('/image/googleplus.png')?>" alt="Google+"/></a>
+                <?  }?>
 				<? 	if ( $config['facebook_url'] ) {?>
 					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>
 				<?	}?>

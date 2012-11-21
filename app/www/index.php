@@ -18,7 +18,7 @@ $aConfigs   = Array(
                     "APP_MODE"      => "PROD",
                     "FUNKY_PATH"    => "static/",
                     "LAYOUT"        => "",
-                    "VERSION"       => "1.1"
+                    "VERSION"       => "1.2.0"
                 ),
 
                 "routes"=>Array(),
@@ -291,6 +291,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 `contact_email` varchar(255) NOT NULL,
                 `twitter_url` varchar(255) NOT NULL,
                 `facebook_url` varchar(255) NOT NULL,
+                `googleplus_url` varchar(255) NOT NULL,
                 PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
             ";
@@ -337,7 +338,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 (1, 'admin',    'admin@localhost',  'admin@localhost',  '', 'A');
             ";
             $schemes[] = "INSERT INTO `config` (`id`, `site_name`, `contact_email`, `twitter_url`, `facebook_url`) VALUES
-                (1, 'teste site name',  'email',    'twitter',  'facebook');
+                (1, 'test site name',  'email',    'twitter',  'facebook');
             ";
             $schemes[] = "INSERT INTO `content` (`content_id`, `content_type_id`, `title`, `body`, `datetime`) VALUES
                 (1, 1,  'Welcome to Liber Simple Blog', '<p>\n  &nbsp;</p>\n\n<p style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n  This is a simple LiberBlog example that you can change.</p>\n<p style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; \">\n   This application has some features like:</p>\n<div class=\"cleaner_h20\" style=\"clear: both; width: 530px; height: 20px; \">\n &nbsp;</div>\n<ul class=\"list_01\" style=\"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 20px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; list-style-type: decimal-leading-zero; list-style-position: initial; list-style-image: initial; \">\n  <li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n        Very simple manipulation content;</li>\n    <li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n        Uses Funky cache concept to maximize page load speed;</li>\n    <li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n        Can be changed to your personal project;</li>\n <li style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n        Uses Liber Framework as a application core;</li>\n</ul>\n<p style=\"color: rgb(0, 132, 0); margin-bottom: 7px; \">\n    &nbsp;</p>\n',  '2011-02-09 19:01:22');
