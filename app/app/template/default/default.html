@@ -43,7 +43,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
 			<div id='nav_social'>
                 <?  if ( $config['googleplus_url'] ) {?>
-                    <a href='<?=$config['googleplus_url']?>?rel=author' title='Go to Google+'><img src="<?url_asset_('/image/googleplus.png')?>" alt="Google+"/></a>
+                    <a href='<?=$config['googleplus_url']?>?rel=author' rel="publisher" title='Go to Google+'><img src="<?url_asset_('/image/googleplus.png')?>" alt="Google+"/></a>
                 <?  }?>
 				<? 	if ( $config['facebook_url'] ) {?>
 					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>

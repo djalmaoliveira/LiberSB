@@ -39,7 +39,7 @@ class Liber {
     /**
     *   Framework version
     */
-    const VERSION = '1.2.6';
+    const VERSION = '1.2.10';
 
 
     /**
@@ -186,7 +186,7 @@ class Liber {
         // prepare the enviroment
         //
         self::$aConfig['APP_ROOT'] = dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR;
-        self::$aConfig['APP_URL']  = ((self::isSSL())?'https':'http').'://'.$_SERVER['HTTP_HOST'].str_replace('//','/',  dirname($_SERVER['SCRIPT_NAME']).'/') ;
+        self::$aConfig['APP_URL']  = ((self::isSSL())?'https':'http').'://'.$_SERVER['SERVER_NAME'].str_replace('//','/',  dirname($_SERVER['SCRIPT_NAME']).'/') ;
 
         if (  self::$aConfig['APP_MODE'] == 'DEV' ) {
             error_reporting(-1);
