@@ -1,1 +1,1 @@
-../../../../delivery/system/appbase/model/TableModel.php
+../../../delivery/system/appbase/model/TableModel.php
