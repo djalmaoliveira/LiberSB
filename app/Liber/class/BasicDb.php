@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-/**
-*   Basic class that manipulates action with a some database
-*   Should be used as a model for future Database Layers
+*   Basic class that manipulates action with a some database.
+*   Should be used as a model for future Database Layers.
+*   @package classes
 */
 class BasicDb {
 
@@ -13,12 +10,10 @@ class BasicDb {
     *   Return the instance
     *   @return object PDO
     */
-    static function getInstance($app_mode=null) {
-        if ($app_mode==null) {
-            $app_mode = Liber::conf('APP_MODE');
-        }
-        if ( isset(Liber::$aDbConfig[$app_mode]) ) {
-            $config = Liber::$aDbConfig[$app_mode];
+    static function getInstance($connection_name='default') {
+
+        if ( isset(Liber::$aDbConfig[$connection_name]) ) {
+            $config = Liber::$aDbConfig[$connection_name];
             switch( $config[4] ) {
                 case 'mysql':
                     $host   = ($config[0][0]=='/')?"unix_socket=".$config[0]:"host={$config[0]}";

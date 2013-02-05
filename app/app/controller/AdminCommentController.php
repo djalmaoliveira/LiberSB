@@ -24,10 +24,10 @@ class AdminCommentController extends Controller {
 
 	public function search() {
         Liber::loadHelper('DT');
-		$oSec = Liber::loadClass('Security', true);
-		$oComment = Liber::loadModel('Comment', true);
-		$aData['list']		   = $oComment->search(Input::post('search'), Array('limit'=>'10'));
-        $aData['search']       = Input::post('search');
+		$oSec 		= Liber::loadClass('Security', true);
+		$oComment 	= Liber::loadModel('Comment', true);
+		$aData['list']		   = $oComment->search(Http::post('search'), Array('limit'=>'10'));
+        $aData['search']       = Http::post('search');
         $aData['action']       = url_current_(true);
 		$aData['context']	   = "Comment Search";
         $aData['url_operation']= url_to_('/admin/comment/', true);
@@ -39,8 +39,8 @@ class AdminCommentController extends Controller {
         Liber::loadHelper('DT');
 		$oSec = Liber::loadClass('Security', true);
 		$oComment = Liber::loadModel('Comment', true);
-		$aData['list']		   = $oComment->search(Input::post('search'), Array('limit'=>'10','where'=>' and comment.status="W"', 'order'=>'comment_id desc'));
-        $aData['search']       = Input::post('search');
+		$aData['list']		   = $oComment->search(Http::post('search'), Array('limit'=>'10','where'=>' and comment.status="W"', 'order'=>'comment_id desc'));
+        $aData['search']       = Http::post('search');
         $aData['action']       = url_current_(true);
 		$aData['context']	   = "Comments Waiting";
         $aData['url_operation']= url_to_('/admin/comment/', true);
@@ -52,8 +52,8 @@ class AdminCommentController extends Controller {
 		Liber::loadHelper('Util', 'APP');
 		$oComment = Liber::loadModel('Comment', true );
 		$oSec = Liber::loadClass('Security', true);
-		if ( $oSec->validToken(Input::post('token')) ) {
-			if ( $oComment->get( Input::post('id') ) ) {
+		if ( $oSec->validToken(Http::post('token')) ) {
+			if ( $oComment->get( Http::post('id') ) ) {
 				$aComment = $oComment->toArray();
 				if ( $oComment->delete() ) {
 					Liber::loadClass('CommentCache', 'APP', true)->cleanCache( $aComment );
@@ -92,8 +92,8 @@ class AdminCommentController extends Controller {
 		Liber::loadHelper('Util', 'APP');
 		$oComment = Liber::loadModel('Comment', true );
 		$oSec = Liber::loadClass('Security', true);
-		if ( $oSec->validToken(Input::post('token')) ) {
-			if ( $oComment->get( Input::post('id') ) ) {
+		if ( $oSec->validToken(Http::post('token')) ) {
+			if ( $oComment->get( Http::post('id') ) ) {
 				$oComment->field('status', $status);
 				if ( $oComment->save() ) {
 					Liber::loadClass('CommentCache', 'APP', true)->cleanCache( $oComment->toArray() );

@@ -1,12 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Generic class create sitemaps to Search Engine.
 *	Protocol at http://sitemaps.org/
+*   @package classes
 */
 class SiteMap {
 	/**
@@ -18,9 +14,17 @@ class SiteMap {
 
 	/**
 	*	Set or get urls.
-	*	Usage: 	url( Array('loc'=>'http://someurl.com') ) to set one url;
-	*			url( Array(Array('loc'=>'http://someurl.com'), Array('loc'=>'http://someurl2.com')) ) put a set of urls replacing current set;
-	*			url() to return Array of urls currently stored;
+	*	Usage:
+	*	<code>
+	*		// to set one url;
+	*	 	url( Array('loc'=>'http://someurl.com') );
+	*
+	*	 	// put a set of urls replacing current set;
+	*		url( Array(Array('loc'=>'http://someurl.com'), Array('loc'=>'http://someurl2.com')) );
+	*
+	*		// to return Array of urls currently stored;
+	*		url();
+	*	</code>
 	*	@param Array $arr
 	*	@return Array
 	*/

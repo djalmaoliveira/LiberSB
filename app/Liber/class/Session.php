@@ -1,13 +1,9 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class that manage values stored in session.
 *   It manage sessions using a context during its creation.
 *   Context is like a namespace to separate the stored data.
+*   @package classes
 */
 class Session {
 
@@ -15,11 +11,11 @@ class Session {
     static $started = false;
 
     function __construct( $context = 'default', $id=null ) {
-    
+
         $this->context = $context;
-        if ( $id ) { session_id($id);} 
-        if ( !self::$started  ) { 
-            session_start(); 
+        if ( $id ) { session_id($id);}
+        if ( !self::$started  ) {
+            session_start();
             self::$started = true;
         }
     }

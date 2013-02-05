@@ -1,14 +1,10 @@
 <?php
 /**
-* @package cache
-*/
-
-
-/**
  * Default class of Caching features.
  * @author Djalma Oliveira <djalmaoliveira@gmail.com>
  * @copyright Copyright &copy; 2010 Djalma Oliveira
  * @license license.txt
+ * @package cache
  */
 class FileCache {
     private $context;

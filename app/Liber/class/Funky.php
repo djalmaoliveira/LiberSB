@@ -1,14 +1,10 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class that manage funky cache files.
 *   Funky cache simply write a raw html content to a file to improve speed access.
 *   This files used to be put on a public url path and auto-created when it's missing, using NotFoundController for example.
 *	Some methods can be overrided by a extended class to adapt to current features of application.
+*  @package classes
 */
 class Funky {
     /**

@@ -63,8 +63,8 @@ class AdminController extends Controller{
 		Liber::loadHelper('Util', 'APP');
 
 
-		if ( Liber::requestedMethod() == 'post' ) {
-			if ( User::login(Input::post('login'), Input::post('hash')) ) {
+		if ( Http::post() ) {
+			if ( User::login(Http::post('login'), Http::post('hash')) ) {
 				die( jsonout('ok', url_to_('/admin', true) ) );
 			} else {
 				die( jsonout('error', 'Login/Password invalid, try again.') );
@@ -80,7 +80,7 @@ class AdminController extends Controller{
 	function logout() {
 		Liber::loadModel('User');
 
-		if ( Input::get('t') == User::token() ) {
+		if ( Http::get('t') == User::token() ) {
 			User::logout();
 			Liber::redirect('/admin');
 		}
@@ -92,12 +92,12 @@ class AdminController extends Controller{
 		Liber::loadHelper( Array('Form', 'Url') );
 
 
-		if ( Liber::requestedMethod() == 'post' ) {
+		if ( Http::post() ) {
 
 			// send instructions
 			$error = '';
-			if ( Input::post('login') ) {
-				if ( User::sendRecover( Input::post('login') ) ) {
+			if ( Http::post('login') ) {
+				if ( User::sendRecover( Http::post('login') ) ) {
 					die( jsonout('ok', url_to_('/admin', true) ) );
 				} else {
 					$error = "The message can't be sent.";
@@ -110,13 +110,13 @@ class AdminController extends Controller{
 		} else {
 
 			// show form password
-			if ( Input::get('token') ) {
-				$users = $oUser->searchBy('token', Input::get('token'));
+			if ( Http::get('token') ) {
+				$users = $oUser->searchBy('token', Http::get('token'));
 				if ( $users ) {
 					$aUser = &$users[0];
 					if ( $aUser['status'] == "PC" ) {
 						$aData['action'] = url_to_('/admin/changepass', true );
-						$aData['token']  = Input::get('token');
+						$aData['token']  = Http::get('token');
 						$aData['user']   = &$aUser;
 						$this->oTPL->load('admin/recover_change_password.html', $aData);
 						exit;
@@ -138,12 +138,12 @@ class AdminController extends Controller{
 		Liber::loadHelper( Array('Form', 'Url') );
 		$error = '';
 
-		if ( Input::post('token') and Input::post('password')) {
-			$users = $oUser->searchBy('token', Input::post('token'));
+		if ( Http::post('token') and Http::post('password')) {
+			$users = $oUser->searchBy('token', Http::post('token'));
 			if ( $users ) {
 				$aUser = &$users[0];
 				$oUser->loadFrom($users[0]);
-				$oUser->field('password', sha1($aUser['login'].Input::post('password')) );
+				$oUser->field('password', sha1($aUser['login'].Http::post('password')) );
 				$oUser->field('status', 'A');
 				$oUser->field('token', ' ');
 				if ( $oUser->save() ) {

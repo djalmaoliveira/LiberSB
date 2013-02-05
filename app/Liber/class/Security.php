@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class with some useful method used with security implementations.
+*   .
+*   @package classes
 */
 class Security {
 

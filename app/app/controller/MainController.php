@@ -22,6 +22,7 @@ class MainController extends Controller{
 		$aData['isSummary'] = false;
 		$aData['content']	= Liber::loadModel('Content', true)->lastContent();
 		$aData['commented'] = Liber::loadModel('Comment', true)->mostCommented();
+
 		$this->oTPL->load('home.html', $aData);
     }
 
@@ -36,7 +37,7 @@ class MainController extends Controller{
             $aData['pageName']    = Array($oContType->field('description'));
             $this->oTPL->load('list.html', $aData);
         } else {
-            parent::__call($action, $args);
+            Liber::loadController(Liber::conf('PAGE_NOT_FOUND'), true)->index($action);
         }
     }
 
@@ -45,26 +46,26 @@ class MainController extends Controller{
         Liber::loadHelper('Content', 'APP');
         $oContent = Liber::loadModel('Content', true);
 		$aData['isSummary']   = true;
-        $aData['contents'] = $oContent->searchContent( Input::post('search') );
-        $aData['pageName'] = Array('Search results for "'.Input::post('search').'"');
+        $aData['contents'] = $oContent->searchContent( Http::post('search') );
+        $aData['pageName'] = Array('Search results for "'.Http::post('search').'"');
         $this->oTPL->load('list.html', $aData);
     }
 
     public function contact() {
         Liber::loadHelper('Form');
         $oSec = Liber::loadClass('Security', true);
-        if ( Liber::requestedMethod() == 'post' ) {
+        if ( Http::post() ) {
             Liber::loadHelper('Util', 'APP');
 			$oConfig = Liber::loadModel('Config', true);
-            if ( $oSec->validToken(Input::post('token')) ) {
+            if ( $oSec->validToken(Http::post('token')) ) {
 
-                if ( !Input::post('email') or !Input::post('text') ) { die( jsonout('error', "Please fill the form fields.") ); }
+                if ( !Http::post('email') or !Http::post('text') ) { die( jsonout('error', "Please fill the form fields.") ); }
 
                 $oM = Liber::loadClass('Mailer', true);
                 $oM->to( $oConfig->data('contact_email') );
                 $oM->subject('Contact from '.Liber::conf('APP_URL'));
-                $oM->from( Input::post('email') );
-                $oM->body( Input::post('name')." <".Input::post('email').">\n\n".Input::post('text') );
+                $oM->from( Http::post('email') );
+                $oM->body( Http::post('name')." <".Http::post('email').">\n\n".Http::post('text') );
                 if ( $oM->send() ) {
                     die( jsonout('ok', "Your message was sent. ") );
                 } else {
@@ -92,7 +93,7 @@ class MainController extends Controller{
 
 
 	public function token() {
-		if ( Liber::isAjax() ) {
+		if ( Http::ajax() ) {
 			$oSec = Liber::loadClass('Security', true);
 			Liber::loadHelper('Util', 'APP');
 			die( jsonout('ok', $oSec->token()) );

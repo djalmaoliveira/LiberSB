@@ -28,9 +28,11 @@ class AdminTopicController extends Controller {
 		$oSec = Liber::loadClass('Security', true);
         $oContType = Liber::loadModel('ContentType', true);
 
-        if ( Liber::requestedMethod() == 'post' ) {
-			if ( $oSec->validToken(Input::post('token')) ) {
-				$oContType->loadFrom( Input::post() );
+        if ( Http::post() ) {
+			if ( $oSec->validToken(Http::post('token')) ) {
+                $oContType->field('content_type_id',  Http::post('content_type_id') );
+                $oContType->field('description',  Http::post('description') );
+                $oContType->field('status',  Http::post('status') );
 				if ( $oContType->save() ) {
 					cleancache();
 
@@ -44,11 +46,11 @@ class AdminTopicController extends Controller {
         }
 
         // new content
-        if ( !Input::get('id') ) {
+        if ( !Http::get('id') ) {
             $aData['content_type_id'] = '';
 			$aData['tab'] = 'New Topic';
         } else {
-			$oContType->get( Input::get('id') );
+			$oContType->get( Http::get('id') );
 			$aData['tab'] = 'Editing '.$oContType->field('description');
             $aData['content_type_id'] = $oContType->field('content_type_id');
         }
@@ -64,10 +66,10 @@ class AdminTopicController extends Controller {
     public function delete() {
         Liber::loadHelper('Util', 'APP');
 		$oSec = Liber::loadClass('Security', true);
-        if ( Liber::requestedMethod() == 'post' ) {
-			if ( $oSec->validToken( Input::post('token') ) ) {
+        if ( Http::post() ) {
+			if ( $oSec->validToken( Http::post('token') ) ) {
 				$oContType = Liber::loadModel('ContentType', true);
-				if ( $oContType->delete( Input::post('content_type_id') ) ) {
+				if ( $oContType->delete( Http::post('content_type_id') ) ) {
 					Liber::loadClass('SiteMapCache', 'APP', true)->cleanCache();
 					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
 				} else {
@@ -87,13 +89,13 @@ class AdminTopicController extends Controller {
         $oContType = Liber::loadModel('ContentType', true);
 
         $options  = Array('fields'=>Array('description'),'limit'=>'20', 'start'=>'0', 'order'=>'content_type_id desc');
-        if ( Liber::requestedMethod() == 'post' ) {
-            $aData['list'] = $oContType->search(Input::post('search'), $options);
+        if ( Http::post() ) {
+            $aData['list'] = $oContType->search(Http::post('search'), $options);
         } else {
             $aData['list'] = $oContType->search('', $options);
         }
 		$aData['status']	   = $oContType->status();
-        $aData['search']       = Input::post('search');
+        $aData['search']       = Http::post('search');
         $aData['action']       = url_to_('/admin/topic/search', true);
         $aData['url_operation']= url_to_('/admin/topic', true);
 		$aData['token']		   = $oSec->token();

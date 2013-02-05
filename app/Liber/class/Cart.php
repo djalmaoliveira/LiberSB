@@ -1,13 +1,9 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Generic class to manipulates some items like 'shop cart'.
 *   It uses session to store this items.
 *   Context is like a namespace to separate the stored data.
+*   @package classes
 */
 class Cart {
 

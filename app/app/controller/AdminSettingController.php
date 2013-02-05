@@ -21,7 +21,7 @@ class AdminSettingController extends Controller {
     public function index() {
 
 		// avoid CSRF access settings data
-		if ( (User::token() != Input::get('t')) ) {	exit;}
+		if ( (User::token() != Http::get('t')) ) {	exit;}
 
 		$oConfig = Liber::loadModel('Config', true);
 		$oSec    = Liber::loadClass('Security', true);
@@ -36,8 +36,14 @@ class AdminSettingController extends Controller {
 		$oConfig = Liber::loadModel('Config', true);
 		$oSec    = Liber::loadClass('Security', true);
 
-		if ( $oSec->validToken(Input::post('token')) ) {
-			$oConfig->loadFrom( Input::post() );
+		if ( $oSec->validToken(Http::post('token')) ) {
+			$oConfig->loadFrom( Http::post() );
+			$oConfig->field('id',  Http::post('id') );
+			$oConfig->field('site_name',  Http::post('site_name') );
+			$oConfig->field('contact_email',  Http::post('contact_email') );
+			$oConfig->field('twitter_url',  Http::post('twitter_url') );
+			$oConfig->field('facebook_url',  Http::post('facebook_url') );
+			$oConfig->field('googleplus_url',  Http::post('googleplus_url') );
 			if ( $oConfig->save() ) {
 				cleancache();
 				die( jsonout('ok','Configurations saved successfully.') );
@@ -52,14 +58,14 @@ class AdminSettingController extends Controller {
 		$oSec  = Liber::loadClass('Security', true);
 		$aUser = User::logged();
 
-		if ( $oSec->validToken(Input::post('token')) ) {
+		if ( $oSec->validToken(Http::post('token')) ) {
 			Liber::loadHelper('Util', 'APP');
 			$oUser = new User;
 			$oUser->get( $aUser['user_id'] );
 			$oUser->field('status', 'A');
 
 			// change login
-			$login = trim(Input::post('login'));
+			$login = trim(Http::post('login'));
 			if ( $login != $aUser['login'] ) {
 				$users = $oUser->searchBy('login', $login);
 				if ( $users ) {
@@ -71,9 +77,9 @@ class AdminSettingController extends Controller {
 			}
 
 			// change password
-			if ( (Input::post('new_password')) != sha1('') ) {
-				if ( sha1($aUser['login'].trim(Input::post('password'))) == $oUser->field('password') ) {
-					$oUser->field('password', sha1($aUser['login'].trim( Input::post('new_password') )));
+			if ( (Http::post('new_password')) != sha1('') ) {
+				if ( sha1($aUser['login'].trim(Http::post('password'))) == $oUser->field('password') ) {
+					$oUser->field('password', sha1($aUser['login'].trim( Http::post('new_password') )));
 				} else {
 					die( jsonout('error', 'Wrong password, try again.') );
 				}

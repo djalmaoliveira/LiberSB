@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class that manipulates global template system.
+*   .
+*  @package classes
 */
 class GlobalTemplate {
     /**

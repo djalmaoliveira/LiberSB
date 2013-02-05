@@ -1,27 +1,22 @@
 <?php
-
-/**
-*   @package core.class
-*/
-
-
 /**
 *   Class that manipulates extraction from databases.
 *   Current suport: MySQL
+*   @package classes
 */
 class SqlExtract {
     private $db_app_mode = '';
     private $_tb_status  = Array();
     private $db;
-    
+
     function __construct($db_app_mode='PROD') {
         $this->db_app_mode = $db_app_mode;
         Liber::loadClass('BasicDb');
         $this->db = BasicDb::getInstance($this->db_app_mode);
-        
+
         switch( Liber::$aDbConfig[$this->db_app_mode][4] ) {
             case 'mysql':
-                $this->_tb_status = $this->db->query("show table status")->fetchAll(PDO::FETCH_GROUP);            
+                $this->_tb_status = $this->db->query("show table status")->fetchAll(PDO::FETCH_GROUP);
             break;
         }
     }
@@ -90,7 +85,7 @@ class SqlExtract {
     }
 
 
-    
+
     /**
     *   Return the constraints(PRIMARY and FOREIGN KEYS) of $tables specified.
     *   @param String | Array $tables
@@ -123,7 +118,7 @@ class SqlExtract {
     *   Remember that you have to remove the files written after its use.
     *   Usage:  ->tableData('customer'); // return Array('customer'=>'INSERT ...');
     *           ->tableData('customer', '/home/user/sql/'); // written on '/home/user/sql/customer.sql'
-    *           ->tableData('customer', 'temp/'); // written on 'APP_PATH/temp/customer.sql'  
+    *           ->tableData('customer', 'temp/'); // written on 'APP_PATH/temp/customer.sql'
     *   @param String | Array $tables
     *   @param String $destFolder
     *   @return Array
@@ -135,7 +130,7 @@ class SqlExtract {
         $destFolder = trim(str_replace('/', DIRECTORY_SEPARATOR, $destFolder));
         if ( $destFolder[strlen($destFolder)-1] != DIRECTORY_SEPARATOR ) { $destFolder .= DIRECTORY_SEPARATOR; }
         if ( !is_dir($destFolder) ) { mkdir ( $destFolder, 0760, true); }
-        
+
         $aList = Array();
         $funcValue = create_function('$value','
             if ( is_null($value) ) {
@@ -144,7 +139,7 @@ class SqlExtract {
             $value = filter_var($value, FILTER_SANITIZE_MAGIC_QUOTES);
             return "\'$value\'";
         ');
-        
+
         foreach( $tables as $tableName ) {
             $aList[$tableName] = '';
             $q = $this->db->query("SELECT * FROM $tableName");
@@ -173,12 +168,12 @@ class SqlExtract {
                 } while ( $row = $q->fetch(PDO::FETCH_ASSOC) );
                 file_put_contents($aList[$tableName], implode("\r\n", $buffer) ,FILE_APPEND);
             }
-        }        
-        
+        }
+
         return $aList;
     }
-        
-    
+
+
     /**
     *   Return if $table is table or not.
     *   The entity $table can be a view.
@@ -187,14 +182,14 @@ class SqlExtract {
     */
     protected function isTable($table) {
         switch ( Liber::$aDbConfig[$this->db_app_mode][4] ) {
-            case 'mysql':    
+            case 'mysql':
                 return empty($this->_tb_status[$table][0]['Engine'])?false:true;
             break;
         }
         return false;
     }
-    
-        
-    
+
+
+
 }
 ?>

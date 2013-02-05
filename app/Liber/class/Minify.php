@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class used to minify HTML, CSS and JavaScript code.
+*   .
+*  @package classes
 */
 class Minify {
 

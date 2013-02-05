@@ -32,12 +32,12 @@ html_meta_(Array(
             <div class="cleaner"></div>
 			<br/>
             <div id="comment_nav">
-                <a href='javascript:void(0)' onmouseover='leaveComment("<?url_to_('/comment')?>?content_id=<?=$content['content_id']?>", this)'>Leave a comment</a>
+                <a href='javascript:void(0)' onmouseover='leaveComment(<?=$content['content_id']?>, "<?url_to_('/comment')?>", this)'>Leave a comment</a>
+                <a href='<?content_comment_url_($content,1)?>'>See comments</a>
             </div>
         </div>
 
-        <div class="content_box_bottom" >
-        </div>
+        <div class="content_box_bottom" ></div>
 
     <?
         foreach ($comments as $comment) {
@@ -51,3 +51,4 @@ html_meta_(Array(
     <div class="cleaner"></div>
 
 </div>
+<?=content_comment_form_();?>

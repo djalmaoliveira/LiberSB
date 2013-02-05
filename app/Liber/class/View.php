@@ -1,10 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-/**
 *   Class that manipulates html output and html template engine loads.
+*   .
+*   @package classes
 */
 class View {
 

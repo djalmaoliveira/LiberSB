@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class used for create a update file and to use it for updates remote an application.
+*   .
+*  @package classes
 */
 class FileUpdate {
 
@@ -42,13 +39,13 @@ class FileUpdate {
     /**
     *   Add a path that can be a file or directory, returning the status of operation.
     *   @param String $path
-    *   @param boolean $recursive - only used for directory 
+    *   @param boolean $recursive - only used for directory
     *   @return boolean
     */
     public function add($path, $recursive=false) {
         $_path = str_replace($this->updateData['workingDir'], '', $path);
         if ( is_dir($path) ) {
-            
+
             if ($recursive) {
                 Liber::loadHelper("FS");
                 $func = create_function('$dir, $file', '
@@ -66,7 +63,7 @@ class FileUpdate {
             if ( $this->_ignore($_path) ) {
                 return true;
             }
-            
+
             $this->updateData['add'][$_path]['data'] = file_get_contents($path);
             $this->updateData['add'][$_path]['sha1'] = sha1($this->updateData['add'][$_path]['data']);
             return (strlen($this->updateData['add'][$_path]['data']) > 0);
@@ -86,15 +83,15 @@ class FileUpdate {
     /**
     *   Path to delete, that can be a file or directory.
     *   @param String $filePath
-    *   @param boolean $recursive - only used for directory         
+    *   @param boolean $recursive - only used for directory
     */
     public function delete($path, $recursive=false) {
        $_path = str_replace($this->updateData['workingDir'], '', $path);
        if ($this->_ignore($_path)) { return; }
        $this->updateData['delete'][$_path] = $recursive;
     }
-    
-    
+
+
     /**
     *   Search in ignore list if there is a path that match with $path specified.
     *   @param String $path
@@ -176,8 +173,8 @@ class FileUpdate {
                 }
             } else {
                 $dir = $aFile;
-            }    
-            
+            }
+
             if ( !empty($dir) ) {
                 try {
                     mkdir($dir, 0700, true);
@@ -190,7 +187,7 @@ class FileUpdate {
             if ( is_array($aFile) and file_put_contents($filePath, $aFile['data']) === false ) {
                 $errors[$file] = $msg['NOTWRITED'];
             }
-            
+
         }
 
         // error found
@@ -202,7 +199,7 @@ class FileUpdate {
         // delete files
         foreach( $this->updateData['delete'] as $file => $recursive ) {
             $filePath = $this->updateData['workingDir'].$file;
-            
+
             if ( is_dir($filePath) ) {
                 if ( $recursive ) {
                     Liber::loadHelper("FS");
@@ -223,7 +220,7 @@ class FileUpdate {
                             unlink($deletePath);
                         }
                     }
-                }   
+                }
                 rmdir($filePath);
             } else if ( file_exists(($filePath)) ) {
                 if ( !unlink($filePath) ) {

@@ -1,6 +1,7 @@
 <?php
 /**
- * Class Minify_HTML
+ * Class Minify_HTML.
+ * .
  * @package Minify
  */
 

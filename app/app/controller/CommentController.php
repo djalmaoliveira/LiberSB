@@ -22,11 +22,14 @@ class CommentController extends Controller {
         Liber::loadHelper('Util', 'APP');
 		$oSec = Liber::loadClass('Security', true);
 
-        if ( Liber::requestedMethod() == 'post' ) {
+        if ( Http::post() ) {
 			Liber::loadHelper("Util", 'APP');
-			if ( $oSec->validToken(Input::post('token')) ) {
+			if ( $oSec->validToken(Http::post('token')) ) {
 				$oComment = Liber::loadModel('Comment', true);
-				$oComment->loadFrom( Input::post() );
+                $oComment->field('content_id',  Http::post('content_id') );
+                $oComment->field('name',  Http::post('name') );
+                $oComment->field('email',  Http::post('email') );
+                $oComment->field('comment',  Http::post('comment') );
 				$oComment->field('datetime', date('Y-m-d H:i:s'));
 				$oComment->field('status', "W");
 				$oComment->field('netinfo', $_SERVER['REMOTE_ADDR']);

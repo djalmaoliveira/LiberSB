@@ -1,13 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-
-/**
 *   A simple Mailer class, for sending e-mails.
 *   It is capable to send text or html messages.
+*  @package classes
 */
 class Mailer {
 

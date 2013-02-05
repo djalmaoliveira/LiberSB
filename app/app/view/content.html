@@ -21,7 +21,7 @@ html_script_("			(function() {
 
 	<div class='share_box' title='Share this content'>
 		<span><iframe height="20px" width="100px" scrolling="no" frameborder="0"  allowTransparency="true" style="border:none; overflow:hidden;"
-			src="http://www.facebook.com/plugins/like.php?href=$url_encoded&with=100&layout=button_count&show_faces=false&action=recommend&colorscheme=light" ></iframe>
+			src="http://www.facebook.com/plugins/like.php?href=<?=$url_encoded?>&with=100&layout=button_count&show_faces=false&action=recommend&colorscheme=light" ></iframe>
 		</span>
 		<span><a class="DiggThisButton DiggCompact" href="http://digg.com/submit?style=no&url=<?=$url_encoded?>"></a></span>
 		<span>
@@ -33,10 +33,9 @@ html_script_("			(function() {
 	<div class="cleaner"></div>
 	<br/>
 	<div id="comment_nav">
-		<a href='javascript:void(0)' onmouseover="leaveComment('{<?=$content['content_id']?>}', '<?url_to_('/comment')?>', this)">Leave a comment</a>
+		<a href='javascript:void(0)' onmouseover="leaveComment('<?=$content['content_id']?>', '<?url_to_('/comment')?>', this)">Leave a comment</a>
 		<a href='<?content_comment_url_($content,1)?>'>See comments</a>
 	</div>
 
 </div>
 <div class="content_box_bottom"></div>
-

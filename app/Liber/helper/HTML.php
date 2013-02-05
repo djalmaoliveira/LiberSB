@@ -1,7 +1,7 @@
 <?php
 /**
- *
- * @package core.helpers
+ *  Html helpers.
+ * @package     helpers
  * @author		djalmaoliveira@gmail.com
  * @copyright	djalmaoliveira@gmail.com
  * @license     license.txt

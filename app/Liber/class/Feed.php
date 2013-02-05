@@ -1,12 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Generic class create feeds.
 *	Supported types: rss2
+*  @package classes
 */
 class Feed {
 	/**

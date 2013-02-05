@@ -29,9 +29,13 @@ class AdminContentController extends Controller {
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
 
         // saving content
-        if ( Liber::requestedMethod() == 'post' ) {
-			if ( $oSec->validToken(Input::post('token')) ) {
-				$oContent->loadFrom( Input::post() );
+        if ( Http::post() ) {
+			if ( $oSec->validToken(Http::post('token')) ) {
+				$oContent->field('content_id', Http::post('content_id'));
+                $oContent->field('content_type_id', Http::post('content_type_id'));
+                $oContent->field('title', Http::post('title'));
+                $oContent->field('body', Http::post('body'));
+                $oContent->field('permalink', Http::post('permalink'));
 				$oContent->field('datetime', date('Y-m-d H:i:s'));
 				if ( !$oContent->field('content_id') ){
 					$oContent->field('create_datetime', $oContent->field('datetime'));
@@ -50,12 +54,12 @@ class AdminContentController extends Controller {
         }
 
         // new content
-        if ( !Input::get('id') ) {
-			$oContType->get( Input::get('content_type_id') );
-            $aData['content_type_id'] = Input::get('content_type_id');
+        if ( !Http::get('id') ) {
+			$oContType->get( Http::get('content_type_id') );
+            $aData['content_type_id'] = Http::get('content_type_id');
 			$aData['tab'] = 'New Topic » '.$oContType->field('description');
         } else {
-            $oContent->get( Input::get('id') );
+            $oContent->get( Http::get('id') );
 			$oContType->get( $oContent->field('content_type_id') );
 			$aData['tab'] = 'Editing Topic » '.$oContType->field('description');
             $aData['content_type_id'] = $oContent->field('content_type_id');
@@ -90,10 +94,10 @@ class AdminContentController extends Controller {
     public function delete() {
         Liber::loadHelper('Util', 'APP');
 		$oSec = Liber::loadClass('Security', true);
-        if ( Liber::requestedMethod() == 'post' ) {
-			if ( $oSec->validToken( Input::post('token') ) ) {
+        if ( Http::post() ) {
+			if ( $oSec->validToken( Http::post('token') ) ) {
 				$oContent = Liber::loadModel('Content', true);
-				if ( $oContent->delete( Input::post('content_id') ) ) {
+				if ( $oContent->delete( Http::post('content_id') ) ) {
 					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
 				} else {
 					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
@@ -111,17 +115,17 @@ class AdminContentController extends Controller {
 		$oSec = Liber::loadClass('Security', true);
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
 
-        $oContType->get( Input::get('content_type_id')?Input::get('content_type_id'):Input::post('content_type_id') );
+        $oContType->get( Http::get('content_type_id')?Http::get('content_type_id'):Http::post('content_type_id') );
         $options  = Array('fields'=>Array('title'),'where'=>'and content_type_id='.$oContType->field('content_type_id'),'limit'=>'20', 'start'=>'0', 'order'=>'content_id desc');
-        if ( Liber::requestedMethod() == 'post' ) {
-            $aData['list'] = $oContent->search(Input::post('search'), $options);
+        if ( Http::post() ) {
+            $aData['list'] = $oContent->search(Http::post('search'), $options);
         } else {
             $aData['list'] = $oContent->search('', $options);
         }
 
         $aData['content_type_id'] = $oContType->field('content_type_id');
         $aData['content_type'] = $oContType->field('description');
-        $aData['search']       = Input::post('search');
+        $aData['search']       = Http::post('search');
         $aData['action']       = url_to_('/admin/content/search', true);
         $aData['url_operation']= url_to_('/admin/content', true);
 		$aData['token']		   = $oSec->token();

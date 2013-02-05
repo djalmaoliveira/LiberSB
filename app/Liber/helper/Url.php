@@ -1,8 +1,8 @@
 <?php
 
 /**
- *
- * @package core.helpers
+ *  Helpers to URL manipulation.
+ * @package     helpers
  * @author		djalmaoliveira@gmail.com
  * @copyright	djalmaoliveira@gmail.com
  * @license
@@ -45,7 +45,7 @@ function url_to_($relative_url = '', $return=false) {
  * @return string
  */
 function url_current_($return=false) 	{
-    $url = (Liber::isSSL()?'https':'http').'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+    $url = (Http::ssl()?'https':'http').'://'.$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
     if ($return) {
         return $url;
     } else {

@@ -1,10 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-/**
 *   Class that manipulates some jobs, to aid set up application.
+*   .
+*   @package classes
 */
 class Setup {
 

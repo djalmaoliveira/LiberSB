@@ -1,8 +1,8 @@
 <?php
 
 /**
- *
- * @package core.helpers
+ *  Html Form helpers.
+ * @package     helpers
  * @author		djalmaoliveira@gmail.com
  * @copyright	djalmaoliveira@gmail.com
  * @license

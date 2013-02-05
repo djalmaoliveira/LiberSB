@@ -1,15 +1,9 @@
 <?php
-
 /**
-*   @package core.class
+*  Class that manipulates several kind of values validation.
+*  Support notnull, numeric, email, date and url validations.
+*  @package classes
 */
-
-
-/**
-*   Class that manipulates several kind of values validation.
-*
-*/
-
 class Validation {
 
     const NOTNULL = 1;

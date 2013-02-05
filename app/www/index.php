@@ -18,27 +18,28 @@ $aConfigs   = Array(
                     "APP_MODE"      => "PROD",
                     "FUNKY_PATH"    => "static/",
                     "LAYOUT"        => "",
-                    "VERSION"       => "1.2.1"
+                    "VERSION"       => "2.0.1"
                 ),
 
                 "routes"=>Array(),
 
-                "dbconfig"=>Array(
-                    "DEV"  => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql"),
-                    "PROD" => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql")
+                "db"=>Array(
+                    "default"   => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql"),
+                    "DEV"       => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql"),
+                    "PROD"      => Array("'.$aData['db']['server'].'","'.$aData['db']['database'].'","'.$aData['db']['user'].'","'.$aData['db']['password'].'", "mysql")
                 )
             );
 
 $route      = &$aConfigs["routes"];
 
-$route["/"]["*"]                 = Array("MainController", "*");
-$route["/notfound"]["*"]         = Array("NotFoundController", "index");
+$route["/"]["*"]                 = Array("MainController");
+$route["/notfound"]["*"]         = Array("NotFoundController");
 $route["/comment"]["*"]          = Array("CommentController", "comment");
-$route["/admin"]["*"]            = Array("AdminController", "*");
-$route["/admin/setting"]["*"]    = Array("AdminSettingController", "*");
-$route["/admin/content"]["*"]    = Array("AdminContentController", "*");
-$route["/admin/topic"]["*"]      = Array("AdminTopicController", "*");
-$route["/admin/comment"]["*"]    = Array("AdminCommentController", "*");
+$route["/admin"]["*"]            = Array("AdminController");
+$route["/admin/setting"]["*"]    = Array("AdminSettingController");
+$route["/admin/content"]["*"]    = Array("AdminContentController");
+$route["/admin/topic"]["*"]      = Array("AdminTopicController");
+$route["/admin/comment"]["*"]    = Array("AdminCommentController");
 ?>
 ';
     return trim($file);

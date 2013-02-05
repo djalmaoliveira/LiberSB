@@ -29,7 +29,6 @@ function content_show_($aContent, $isSummary=true, $return=false) {
 	$aData['url_encoded'] = rawurlencode(rawurldecode($aData['url']));
 	$v 				    = new View();
 	$html 			    = $v->load('content.html', $aData, true);
-
     if ($return) return $html;
     echo $html;
 }

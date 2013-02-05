@@ -1,6 +1,7 @@
 <?php
 /**
- * Class Minify_CSS_Compressor
+ * Class Minify_CSS_Compressor.
+ * .
  * @package Minify
  */
 

@@ -1,12 +1,8 @@
 <?php
-
-/**
-*   @package core.class
-*/
-
-
 /**
 *   Class that manipulate produced logs in general.
+*   .
+*  @package classes
 */
 class Log {
 

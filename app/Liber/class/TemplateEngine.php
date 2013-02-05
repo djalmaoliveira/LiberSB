@@ -1,11 +1,8 @@
 <?php
 /**
-*   @package core.class
-*/
-
-
-/**
 *   Class base from others Template Engines classes.
+*   .
+*   @package classes
 */
 class TemplateEngine {
 

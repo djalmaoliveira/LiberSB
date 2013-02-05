@@ -15,6 +15,7 @@ function leaveComment(content_id, url, elem) {
 	}
 
 	if ( !$("#comment_form_area").get(0) ) {
+
 		$(par).append("<div id='comment_form_area'></div>");
 		$("#comment_form_area").css('display', 'none');
 		$("#comment_form_area").append( $("#comment_form") );
@@ -22,7 +23,9 @@ function leaveComment(content_id, url, elem) {
 		$("#comment_form #frmComment").attr('action', url);
 		$("#comment_form #btnSend").css('display', 'inline');
 		$('#comment_form #out').html('');
-		$("#frmComment").get(0).reset();
+		if ( $("#frmComment").get(0) ) {
+            $("#frmComment").get(0).reset();
+        }
 		$("#comment_form").css('display', 'block');
 
 		$('#comment_form_area').slideDown(500, function(){
@@ -35,8 +38,9 @@ function leaveComment(content_id, url, elem) {
 
 function sendComment(frm, btn) {
 	buttonClick(btn, "Sending...", function(){
+        var urlBase = $("#site_title a").attr('href');
 
-		$.get('/token', function(resp){
+		$.get(urlBase+'token', function(resp){
 			$("#comment_form #token").val(resp.content.text);
 		}, 'json');
 
