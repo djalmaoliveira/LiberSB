@@ -134,7 +134,6 @@ class Comment extends TableModel {
 		return $q->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-
 }
 
 ?>
