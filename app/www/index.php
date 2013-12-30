@@ -18,7 +18,7 @@ $aConfigs   = Array(
                     "APP_MODE"      => "PROD",
                     "FUNKY_PATH"    => "static/",
                     "LAYOUT"        => "",
-                    "VERSION"       => "2.0.1"
+                    "VERSION"       => "2.1.0"
                 ),
 
                 "routes"=>Array(),
@@ -36,10 +36,6 @@ $route["/"]["*"]                 = Array("MainController");
 $route["/notfound"]["*"]         = Array("NotFoundController");
 $route["/comment"]["*"]          = Array("CommentController", "comment");
 $route["/admin"]["*"]            = Array("AdminController");
-$route["/admin/setting"]["*"]    = Array("AdminSettingController");
-$route["/admin/content"]["*"]    = Array("AdminContentController");
-$route["/admin/topic"]["*"]      = Array("AdminTopicController");
-$route["/admin/comment"]["*"]    = Array("AdminCommentController");
 ?>
 ';
     return trim($file);

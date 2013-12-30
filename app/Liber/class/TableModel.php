@@ -368,7 +368,7 @@ abstract class TableModel {
             $id = $this->field($this->idField);
         }
         $sql = "delete from $this->table where ".$this->idField.'=:'.$this->idField;
-        $params= Array(':id' => $id);
+        $params= Array(':'.$this->idField => $id);
         if ( ($q = $this->executePreparedSql($sql, $params)) ) {
             $this->aChanges = Array();
             return true;

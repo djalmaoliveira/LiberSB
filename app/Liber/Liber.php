@@ -32,7 +32,7 @@
  * By default all <i>paths</i> used, must have a final slash '/', like "/my/log/dir/".
  * @author Djalma Oliveira (djalmaoliveira@gmail.com)
  * @package core
- * @version 2.0.13
+ * @version 2.0.14
  * @since 1.0
  */
 class Liber {
@@ -40,7 +40,7 @@ class Liber {
     /**
     *   Framework version
     */
-    const VERSION = '2.0.13';
+    const VERSION = '2.0.14';
 
 
     /**
@@ -581,14 +581,14 @@ class Liber {
 
 
     /**
-     * Process the controller associated with the processed route.
-     * @param  string $controller
-     * @param  string $method
-     * @param  string $module
-     * @param  Array  $params
+     * Try to process the controller method's specified.
+     * @param  string $controller   Controller name
+     * @param  string $method       Method name
+     * @param  string $module       Module name
+     * @param  Array  $params       List of detected route params
      * @return boolean
      */
-    protected static function processController( $controller, $method='', $module='', $params=Array() ) {
+    public static function processController( $controller, $method='', $module='', $params=Array() ) {
 
         if ( !(self::loadController( $controller, $module ) )) {
             return false;
