@@ -1,4 +1,4 @@
-<?
+<?php
 html_title_('Contact');
 html_header_('js','contact.js');
 html_header_('js','util.js');
@@ -34,16 +34,16 @@ html_meta_(Array(
             <h2>Contact</h2>
                 <br/>
 
-                <form action='<?=$action?>' onsubmit='return btnSend();' id='frmContact'>
-                    <?form_hidden_('token', $token);?>
-                    <div class='fieldname'>Name:</div> <?form_input_('name')?>
+                <form action='<?php echo $action?>' onsubmit='return btnSend();' id='frmContact'>
+                    <?php form_hidden_('token', $token);?>
+                    <div class='fieldname'>Name:</div> <?php form_input_('name')?>
                     <div class='cleaner'></div>
-                    <div class='fieldname'>Email:</div> <?form_input_('email')?>
+                    <div class='fieldname'>Email:</div> <?php form_input_('email')?>
                     <div class='cleaner'></div>
-                    <div class='fieldname'>Text:</div><?form_textarea_('text')?>
+                    <div class='fieldname'>Text:</div><?php form_textarea_('text')?>
                     <div class='cleaner'></div>
 					<br/>
-                    <?form_button_('send', 'Send', 'onclick="btnSend($(\'#frmContact\'), this)"')?> <span id='out'></span>
+                    <?php form_button_('send', 'Send', 'onclick="btnSend($(\'#frmContact\'), this)"')?> <span id='out'></span>
                 </form>
             <div class="cleaner"></div>
         </div><div class="content_box_bottom"></div>

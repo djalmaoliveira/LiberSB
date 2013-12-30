@@ -1,4 +1,4 @@
-<?
+<?php
 html_title_( implode(' » ', $pageName) );
 html_header_('js', 'main.js');
 html_header_('js', 'util.js');
@@ -25,21 +25,21 @@ html_meta_(Array(
     </div> <!-- end of sidebar -->
 
     <div id="css_content">
-    <div id="location">You are seeing » <?=implode(' » ',$pageName)?></div>
+    <div id="location">You are seeing » <?php echo implode(' » ',$pageName)?></div>
 
         <div class="content_box">
-            <h3><a href="<?content_url_($content)?>"><?=$content['title']?></a></h3>
+            <h3><a href="<?php content_url_($content)?>"><?php echo $content['title']?></a></h3>
             <div class="cleaner"></div>
 			<br/>
             <div id="comment_nav">
-                <a href='javascript:void(0)' onmouseover='leaveComment(<?=$content['content_id']?>, "<?url_to_('/comment')?>", this)'>Leave a comment</a>
-                <a href='<?content_comment_url_($content,1)?>'>See comments</a>
+                <a href='javascript:void(0)' onmouseover='leaveComment(<?php echo $content['content_id']?>, "<?php url_to_('/comment')?>", this)'>Leave a comment</a>
+                <a href='<?php content_comment_url_($content,1)?>'>See comments</a>
             </div>
         </div>
 
         <div class="content_box_bottom" ></div>
 
-    <?
+    <?php
         foreach ($comments as $comment) {
             content_comment_show_($comment);
         }
@@ -51,4 +51,4 @@ html_meta_(Array(
     <div class="cleaner"></div>
 
 </div>
-<?=content_comment_form_();?>
+<?php echo content_comment_form_();?>

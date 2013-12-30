@@ -1,15 +1,15 @@
 <div id='comment_form_place'>
 	<div id='comment_form'>
 		<hr/>
-		<form action='<?=$action?>' onsubmit='return false;' id='frmComment'>
-			<?form_hidden_('token');?>
-			<?form_hidden_('content_id');?>
-			Name : <?form_input_('name')?> Email : <?form_input_('email')?>
+		<form action='<?php echo $action?>' onsubmit='return false;' id='frmComment'>
+			<?php form_hidden_('token');?>
+			<?php form_hidden_('content_id');?>
+			Name : <?php form_input_('name')?> Email : <?php form_input_('email')?>
 
-			<p><?form_textarea_('comment')?></p>
+			<p><?php form_textarea_('comment')?></p>
 			<span id='out'></span>
 			<div></div>
-			<?form_button_('btnSend', 'Submit Comment', 'onclick="sendComment($(\'#frmComment\'), this)"')?>
+			<?php form_button_('btnSend', 'Submit Comment', 'onclick="sendComment($(\'#frmComment\'), this)"')?>
 
 		</form>
 	</div>

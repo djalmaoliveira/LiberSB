@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 *   Return json default format string.
 *   @param String $status

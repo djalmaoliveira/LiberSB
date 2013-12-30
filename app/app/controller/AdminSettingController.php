@@ -67,7 +67,7 @@ class AdminSettingController extends Controller {
 			// change login
 			$login = trim(Http::post('login'));
 			if ( $login != $aUser['login'] ) {
-				$users = $oUser->searchBy('login', $login);
+				$users = $oUser->searchBy('login', $login)->fetchAll();
 				if ( $users ) {
 					die( jsonout('error', 'Login not avaiable, try another one.') );
 				} else {

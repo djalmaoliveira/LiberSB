@@ -1,4 +1,4 @@
-<?html_title_('Page not found')?>
+<?php html_title_('Page not found')?>
 <div id="css_content_wrapper">
 <br/>
     <div id="css_content" style='margin-right:150px'>
@@ -10,13 +10,13 @@
             <div>
 
                 <p>Trying to access: </p>
-                <p><?=$url?></p>
+                <p><?php echo $url?></p>
                 <br/>
                 <p>Please try one these options:</p>
                 <ul>
                     <li>Search using some terms that you would like to find;</li>
                     <li>Verify typed url address;</li>
-                    <li>Try to make a <a href='<?url_to_('/')?>contact'>contact</a> telling about this problem;</li>
+                    <li>Try to make a <a href='<?php url_to_('/')?>contact'>contact</a> telling about this problem;</li>
                     <li>Wait while the requested page is fixed;</li>
                     <li>Might the page can not exist any more;</li>
 

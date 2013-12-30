@@ -29,7 +29,7 @@ class AdminController extends Controller{
 
         list($oContent, $oContType) = Liber::loadModel(Array('Content', 'ContentType'), true);
         $aTotalContents = $oContent->getTotalByContentType();
-        $aContType      = $oContType->search('');
+        $aContType      = $oContType->search('')->fetchAll();
 
         /*
          build array of content_type_id indicating if should have to show  one or two menus.
@@ -46,7 +46,7 @@ class AdminController extends Controller{
                         'type'          =>  isset($aTotalContents[$record['content_type_id']])?($aTotalContents[$record['content_type_id']]>1?2:1):1
                     );
             if ( $menu['type'] == 1 ) {
-                $aContent = current( $oContent->searchBy('content_type_id', $record['content_type_id']) );
+                $aContent = current( $oContent->searchBy('content_type_id', $record['content_type_id'])->fetch() );
                 $menu     = array_merge($menu, Array('content_id'=>$aContent['content_id']));
             }
             $aMenu[$record['content_type_id']] = $menu;
@@ -111,7 +111,7 @@ class AdminController extends Controller{
 
 			// show form password
 			if ( Http::get('token') ) {
-				$users = $oUser->searchBy('token', Http::get('token'));
+				$users = $oUser->searchBy('token', Http::get('token'))->fetchAll();
 				if ( $users ) {
 					$aUser = &$users[0];
 					if ( $aUser['status'] == "PC" ) {
@@ -139,7 +139,7 @@ class AdminController extends Controller{
 		$error = '';
 
 		if ( Http::post('token') and Http::post('password')) {
-			$users = $oUser->searchBy('token', Http::post('token'));
+			$users = $oUser->searchBy('token', Http::post('token'))->fetchAll();
 			if ( $users ) {
 				$aUser = &$users[0];
 				$oUser->loadFrom($users[0]);

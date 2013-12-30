@@ -1,5 +1,5 @@
 <?php
-Liber::loadModel('TableModel');
+Liber::loadClass('TableModel');
 /**
 *   @package Content
 */
@@ -12,7 +12,7 @@ Liber::loadModel('TableModel');
 class Config extends TableModel {
 
     function __construct () {
-        parent::__construct();
+        parent::__construct( Liber::db('default') );
         $this->table   = 'config';
         $this->idField = 'id';
 

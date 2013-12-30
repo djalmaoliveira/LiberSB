@@ -26,6 +26,44 @@ class MainController extends Controller{
 		$this->oTPL->load('home.html', $aData);
     }
 
+    public function admin() {
+        $args = func_get_args();
+//print_r($args);
+        $args[1] = !isset($args[1])?'index':$args[1];
+        if ( !Liber::processController( "AdminController", $args[0], '', $args) ) {
+            switch ( $args[0] ) {
+                case 'setting':
+                    Liber::processController( "AdminSettingController", $args[1], '', $args);
+                break;
+
+                case 'content':
+                    Liber::processController( "AdminContentController", $args[1], '', $args);
+                break;
+
+                case 'topic':
+                    Liber::processController( "AdminTopicController", $args[1], '', $args);
+                break;
+
+                case 'comment':
+                    Liber::processController( "AdminCommentController", $args[1], '', $args);
+                break;
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+
+
+// $route["/admin/setting"]["*"]    = Array("AdminSettingController");
+// $route["/admin/content"]["*"]    = Array("AdminContentController");
+// $route["/admin/topic"]["*"]      = Array("AdminTopicController");
+// $route["/admin/comment"]["*"]    = Array("AdminCommentController");
+
+        return;
+
+    }
+
     /* missing action */
     function __call($action, $args=Array()) {
         list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'), true );

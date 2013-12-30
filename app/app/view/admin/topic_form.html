@@ -1,18 +1,18 @@
 <br/>
 <div class='form_area'>
-    <div class='tabs'><?=$tab?></div>
+    <div class='tabs'><?php echo $tab?></div>
     <div class='clear'></div>
     <div id="editor_tab_area">
 
             <form action="" method="post" id='frm'>
-                <?form_hidden_('content_type_id', $topic)?>
-                <?form_hidden_('token', $token)?>
-                <span class='admin_field'>Description:</span><?form_input_('description', $topic, 'class="admin_input"')?>
+                <?php form_hidden_('content_type_id', $topic)?>
+                <?php form_hidden_('token', $token)?>
+                <span class='admin_field'>Description:</span><?php form_input_('description', $topic, 'class="admin_input"')?>
                 <p>
-                <span class='admin_field'>Status:</span><?form_select_('status', $status, Array($topic['status']))?>
+                <span class='admin_field'>Status:</span><?php form_select_('status', $status, Array($topic['status']))?>
                 </p>
                 <p>
-                    <?form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out'></span>
+                    <?php form_button_('btnSave', 'Save', 'onclick="save( )"');?> <span id='out'></span>
                 </p>
             </form>
 
@@ -24,7 +24,7 @@
             function save() {
                 $('#out').html('');
                 buttonClick($("#btnSave"), "Wait, saving...", function () {
-                    $.post('<?=$action?>', $('#frm').serialize(),function (resp){
+                    $.post('<?php echo $action?>', $('#frm').serialize(),function (resp){
                         $('#out').html(resp.content.text);
                         $('#content_type_id').val(resp.content.content_type_id);
 						$('#out').attr('class','msg_'+resp.status);

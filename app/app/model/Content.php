@@ -1,5 +1,5 @@
 <?php
-Liber::loadModel('TableModel');
+Liber::loadClass('TableModel');
 /**
 *   @package Content
 */
@@ -14,7 +14,7 @@ class Content extends TableModel {
 	const SIZE_TEXT_SUMMARY = 500;
 
     function __construct () {
-        parent::__construct();
+        parent::__construct( Liber::db('default') );
         $this->table   = 'content';
         $this->idField = 'content_id';
 
@@ -66,7 +66,7 @@ class Content extends TableModel {
     */
     function get($id) {
         if ( !is_numeric($id) ) {
-            $out = $this->searchBy('title', $id);
+            $out = $this->searchBy('title', $id)->fetchAll();
             if ( !$out ) { return false; }
             return $this->loadFrom($out[0]);
         } else {

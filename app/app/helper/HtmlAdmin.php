@@ -1,4 +1,4 @@
-<?
+<?php
 
 function htmlAdmin_tab_($tabs, $extras='') {
 

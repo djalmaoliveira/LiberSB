@@ -1,4 +1,4 @@
-<?
+<?php
 html_title_('Login');
 html_header_('js','sha1.js');
 html_header_('js','util.js');
@@ -7,22 +7,22 @@ html_header_('js','util.js');
 <div id='login_area'>
 	<div id="login_content">
 		<h2>User identification</h2>
-		<form action='<?=$action?>' onsubmit='return btnLogin();' id='frmLogin'>
-			<?form_hidden_('token', $token);?>
-			<p><div class='fieldname'>Login:</div> <?form_input_('login','','class="admin_input"')?></p>
-			<p><div class='fieldname'>Password:</div> <?form_password_('hash','','class="admin_input"')?></p>
+		<form action='<?php echo $action?>' onsubmit='return btnLogin();' id='frmLogin'>
+			<?php form_hidden_('token', $token);?>
+			<p><div class='fieldname'>Login:</div> <?php form_input_('login','','class="admin_input"')?></p>
+			<p><div class='fieldname'>Password:</div> <?php form_password_('hash','','class="admin_input"')?></p>
 			<span id='out'></span>
-			<p><?form_button_('send', 'Login', 'onclick="btnLogin($(\'#frmLogin\'), this)"')?></p>
+			<p><?php form_button_('send', 'Login', 'onclick="btnLogin($(\'#frmLogin\'), this)"')?></p>
 		</form>
 
-		<a href='<?url_to_('/admin/recover')?>'>Didn't remember your password ?</a>
+		<a href='<?php url_to_('/admin/recover')?>'>Didn't remember your password ?</a>
 	</div>
 </div>
 
 <script type="text/javascript">
 
 	function btnLogin(frm, btn) {
-		var token  = '<?=$token?>';
+		var token  = '<?php echo $token?>';
 		var sha1   = new jsSHA($('#hash').val(), "ASCII").getHash('HEX');
 		var sha1_  = new jsSHA($('#login').val()+sha1, "ASCII").getHash('HEX');
 		var shaObj = new jsSHA($('#login').val(), "ASCII");

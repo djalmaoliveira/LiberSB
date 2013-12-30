@@ -6,15 +6,15 @@
 	<div id='content_area'>
 		<div style='text-align:right'>
 			<form action="" method="post" id='frmConfig' onsubmit='return false;'>
-				<?form_hidden_('token', $token)?>
-				<p>Site Name: <?form_input_('site_name', $config, 'class="admin_input"')?></p>
-				<p>Contact Email: <?form_input_('contact_email', $config)?></p>
-				<p>Google+ Site: <?form_input_('googleplus_url', $config)?></p>
-				<p>Facebook Site: <?form_input_('facebook_url', $config)?></p>
-				<p>Twitter Site: <?form_input_('twitter_url', $config)?></p>
+				<?php form_hidden_('token', $token)?>
+				<p>Site Name: <?php form_input_('site_name', $config, 'class="admin_input"')?></p>
+				<p>Contact Email: <?php form_input_('contact_email', $config)?></p>
+				<p>Google+ Site: <?php form_input_('googleplus_url', $config)?></p>
+				<p>Facebook Site: <?php form_input_('facebook_url', $config)?></p>
+				<p>Twitter Site: <?php form_input_('twitter_url', $config)?></p>
 			</form>
 		</div>
-		<p><?form_button_('btnSave', 'Save', 'onclick="saveConfig()"')?><span id='out'></span></p>
+		<p><?php form_button_('btnSave', 'Save', 'onclick="saveConfig()"')?><span id='out'></span></p>
 
 	</div>
 </div>
@@ -24,7 +24,7 @@
 		function saveConfig() {
 			buttonClick($('#btnSave'), "Saving...", function(){
 				$('#out').html('');
-				$.post('<?=$action?>/save', $('#frmConfig').serialize(), function(resp) {
+				$.post('<?php echo $action?>/save', $('#frmConfig').serialize(), function(resp) {
 					$('#out').attr('class','msg_'+resp.status);
 					$('#out').html(resp.content.text);
 				},'json');
@@ -32,12 +32,12 @@
 		}
 
 		function loadUser(tab) {
-			$("#content_area").load('<?url_to_('/admin/setting/user')?>');
+			$("#content_area").load('<?php url_to_('/admin/setting/user')?>');
 			$(".tabs").css('background', 'white');
 			$(tab).css('background', '#F0F7FA');
 		}
 		function loadSettings(tab) {
-			loadPage('<?url_to_('/admin/setting')?>?t=<?=User::token()?>');
+			loadPage('<?php url_to_('/admin/setting')?>?t=<?php echo User::token()?>');
 		}
 
     //]]>

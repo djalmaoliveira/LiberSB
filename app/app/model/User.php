@@ -1,5 +1,5 @@
 <?php
-Liber::loadModel('TableModel');
+Liber::loadClass('TableModel');
 /**
 *   @package Content
 */
@@ -14,7 +14,7 @@ Liber::loadModel('TableModel');
 class User extends TableModel {
 
     function __construct () {
-        parent::__construct();
+        parent::__construct( Liber::db('default') );
         $this->table   = 'user';
         $this->idField = 'user_id';
 
@@ -77,7 +77,7 @@ class User extends TableModel {
 	*/
 	static function authentication($login, $hash) {
 		$oUser = new User;
-		$rs    = $oUser->searchBy('login', $login);
+		$rs    = $oUser->searchBy('login', $login)->fetchAll();
 		$aUser = &$rs[0];
 
 		if ( $aUser ) {
@@ -112,7 +112,7 @@ class User extends TableModel {
 		$oMail = Liber::loadClass('Mailer', true);
 		$oView = Liber::loadClass('View', true);
 		$oUser = new User;
-		$users = $oUser->searchBy('login', $email);
+		$users = $oUser->searchBy('login', $email)->fetchAll();
 		$token = uniqid('recover').md5($email);
 		if ( $users ) {
 			$oUser->loadFrom( $users[0] );

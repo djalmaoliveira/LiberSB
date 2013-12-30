@@ -1,4 +1,4 @@
-<?
+<?php
 include '../Liber/Liber.php';
 Liber::setup();
 Liber::conf('BASE_PATH', realpath('../Liber/').'/');
@@ -180,7 +180,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
         }
     ?>
 
-    <h2><?=$nav?></h2>
+    <h2><?php echo $nav?></h2>
 
     <?
         if ( $_REQUEST['step'] == 1 ) {
@@ -188,9 +188,9 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 
         <div class='form_area'>
             <div id='content_area'>
-                <h3>Step <?=$_REQUEST['step']?>: MySQL database settings</h3>
+                <h3>Step <?php echo $_REQUEST['step']?>: MySQL database settings</h3>
                 <p>Please fill correct informations about your database connection.</p>
-                <form method='post' action='<?=$action?>' id='frm' onsubmit='return false;'>
+                <form method='post' action='<?php echo $action?>' id='frm' onsubmit='return false;'>
                     <?form_hidden_('step', '2')?>
                     <p>
                         <div class='field_name'>Server name:</div><?form_input_('server',$oSession->val('database'),"title='IP or Hostname of mysql server'")?>
@@ -210,13 +210,13 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                         $('#frm').submit();
                     }
                 </script>
-                <?  if ( isset($error) ) {?>
-                    <p class='msg_error'><?=$error?></p>
-                <?  }?>
+                <?php  if ( isset($error) ) {?>
+                    <p class='msg_error'><?php echo $error?></p>
+                <?php  }?>
                 <?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
             </div>
         </div>
-    <?  }?>
+    <?php  }?>
 
 
 
@@ -226,9 +226,9 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 
         <div class='form_area'>
             <div id='content_area'>
-                <h3>Step <?=$_REQUEST['step']?>: Application settings</h3>
+                <h3>Step <?php echo $_REQUEST['step']?>: Application settings</h3>
                 <p>Please fill correct informations about your application.</p>
-                <form method='post' action='<?=$action?>' id='frm' onsubmit='return false;'>
+                <form method='post' action='<?php echo $action?>' id='frm' onsubmit='return false;'>
                     <?form_hidden_('step', '3')?>
                     <p>
                         <div class='field_name'>Site Name:</div><?form_input_('site_name',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
@@ -255,13 +255,13 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                         $('#frm').submit();
                     }
                 </script>
-                <?  if ( isset($error) ) {?>
-                    <p class='msg_error'><?=$error?></p>
-                <?  }?>
+                <?php  if ( isset($error) ) {?>
+                    <p class='msg_error'><?php echo $error?></p>
+                <?php  }?>
                 <?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
             </div>
         </div>
-    <?  }
+    <?php  }
 
         if ( $_REQUEST['step'] == 3 and $_POST) {
 

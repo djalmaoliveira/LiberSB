@@ -118,9 +118,9 @@ class AdminContentController extends Controller {
         $oContType->get( Http::get('content_type_id')?Http::get('content_type_id'):Http::post('content_type_id') );
         $options  = Array('fields'=>Array('title'),'where'=>'and content_type_id='.$oContType->field('content_type_id'),'limit'=>'20', 'start'=>'0', 'order'=>'content_id desc');
         if ( Http::post() ) {
-            $aData['list'] = $oContent->search(Http::post('search'), $options);
+            $aData['list'] = $oContent->search(Http::post('search'), $options)->fetchAll();
         } else {
-            $aData['list'] = $oContent->search('', $options);
+            $aData['list'] = $oContent->search('', $options)->fetchAll();
         }
 
         $aData['content_type_id'] = $oContType->field('content_type_id');

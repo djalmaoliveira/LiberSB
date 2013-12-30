@@ -90,9 +90,9 @@ class AdminTopicController extends Controller {
 
         $options  = Array('fields'=>Array('description'),'limit'=>'20', 'start'=>'0', 'order'=>'content_type_id desc');
         if ( Http::post() ) {
-            $aData['list'] = $oContType->search(Http::post('search'), $options);
+            $aData['list'] = $oContType->search(Http::post('search'), $options)->fetchAll();
         } else {
-            $aData['list'] = $oContType->search('', $options);
+            $aData['list'] = $oContType->search('', $options)->fetchAll();
         }
 		$aData['status']	   = $oContType->status();
         $aData['search']       = Http::post('search');

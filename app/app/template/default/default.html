@@ -1,4 +1,4 @@
-<?
+<?php
 $url	= url_to_('/', true);
 $config = Liber::loadModel('Config', true)->data();
 $url_rss = Liber::loadClass('FeedCache', 'APP', true)->url('rss2');
@@ -9,17 +9,17 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<? html_meta_(); ?>
-	<title><?=html_title_();?></title>
-	<link rel="stylesheet" type="text/css" media="screen" href="<?url_asset_('/css/main.css?v=11')?>"/>
-	<link rel="alternate" type="application/rss+xml" title="<?=html_title_();?>" href="<?=$url_rss?>" />
-	<script type="text/javascript" src="<? url_asset_('/js/jquery.js?v=142')?>"></script>
-	<script type="text/javascript" src="<?url_asset_('/js/main.js?v=11')?>"></script>
-    <? html_header_(); ?>
+	<?php html_meta_(); ?>
+	<title><?php echo html_title_();?></title>
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php url_asset_('/css/main.css?v=11')?>"/>
+	<link rel="alternate" type="application/rss+xml" title="<?php echo html_title_();?>" href="<?php echo $url_rss?>" />
+	<script type="text/javascript" src="<?php url_asset_('/js/jquery.js?v=142')?>"></script>
+	<script type="text/javascript" src="<?php url_asset_('/js/main.js?v=11')?>"></script>
+    <?php html_header_(); ?>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#sidebar").load("<?=$url?>recents");
+            $("#sidebar").load("<?php echo $url?>recents");
             $("#search").focusout(function (){
                 this.value = "Search";
                 $(this).css('color','#969696');
@@ -27,7 +27,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
             $("#search").focusin(function (){
                 this.value = "";
             });
-            <?=html_script_();?>
+            <?php echo html_script_();?>
         });
     </script>
 </head>
@@ -36,22 +36,22 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 <div id="css_header_wrapper">
     <div id="css_header" >
         <div id="site_title">
-            <h1><a href="<?=$url?>" target="_parent"><span class='app_title'><?=$config['site_name']?></span></a></h1>
+            <h1><a href="<?php echo $url?>" target="_parent"><span class='app_title'><?php echo $config['site_name']?></span></a></h1>
         </div>
         <br/>
         <div id='search_form' style='text-align:right'>
-			<form method='post' action='<?=$url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
+			<form method='post' action='<?php echo $url?>search' ><input id='search' type='text' name='search' value='Search' /></form>
 			<div id='nav_social'>
-                <?  if ( $config['googleplus_url'] ) {?>
-                    <a href='<?=$config['googleplus_url']?>?rel=author' rel="publisher" title='Go to Google+'><img src="<?url_asset_('/image/googleplus.png')?>" alt="Google+"/></a>
-                <?  }?>
-				<? 	if ( $config['facebook_url'] ) {?>
-					<a href='<?=$config['facebook_url']?>' title='Go to Facebook page'><img src="<?url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>
+                <?php  if ( $config['googleplus_url'] ) {?>
+                    <a href='<?php echo $config['googleplus_url']?>?rel=author' rel="publisher" title='Go to Google+'><img src="<?php url_asset_('/image/googleplus.png')?>" alt="Google+"/></a>
+                <?php  }?>
+				<?php 	if ( $config['facebook_url'] ) {?>
+					<a href='<?php echo $config['facebook_url']?>' title='Go to Facebook page'><img src="<?php url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>
 				<?	}?>
-				<? 	if ( $config['twitter_url'] ) {?>
-					<a href='<?=$config['twitter_url']?>' title='Go to Twitter page'><img src="<?url_asset_('/image/twitter.png')?>" alt="Twitter"/></a>
+				<?php 	if ( $config['twitter_url'] ) {?>
+					<a href='<?php echo $config['twitter_url']?>' title='Go to Twitter page'><img src="<?php url_asset_('/image/twitter.png')?>" alt="Twitter"/></a>
 				<?	}?>
-				<a href='<?=$url_rss?>' title='Lasts Contents'><img src="<?url_asset_('/image/rss.png')?>" alt="Feed"/></a>
+				<a href='<?php echo $url_rss?>' title='Lasts Contents'><img src="<?php url_asset_('/image/rss.png')?>" alt="Feed"/></a>
 			</div>
 		</div>
 
@@ -63,11 +63,11 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
     <div id="css_menu">
 
         <ul class="nav_menu">
-            <li><h2><a href="<?=$url?>" >Home</a></h2></li>
-			<?  foreach($topics as $aContType) {?>
-				<li><h2><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></h2></li>
+            <li><h2><a href="<?php echo $url?>" >Home</a></h2></li>
+			<?php  foreach($topics as $aContType) {?>
+				<li><h2><a href="<?php echo $url.rawurlencode($aContType['description'])?>" ><?php echo $aContType['description']?></a></h2></li>
 			<?	}?>
-            <li><h2><a href="<?=$url.rawurlencode('contact')?>">Contact</a></h2></li>
+            <li><h2><a href="<?php echo $url.rawurlencode('contact')?>">Contact</a></h2></li>
         </ul>
 
 
@@ -75,21 +75,21 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 </div>
 
 
-<?=$content ?>
+<?php echo $content ?>
 
 <div id="css_footer_wrapper">
 
     <div id="css_footer">
 
         <ul class="footer_menu">
-            <li><a href="<?=$url?>" >Home</a></li>
-			<?  foreach($topics as $aContType) {?>
-				<li><a href="<?=$url.rawurlencode($aContType['description'])?>" ><?=$aContType['description']?></a></li>
+            <li><a href="<?php echo $url?>" >Home</a></li>
+			<?php  foreach($topics as $aContType) {?>
+				<li><a href="<?php echo $url.rawurlencode($aContType['description'])?>" ><?php echo $aContType['description']?></a></li>
 			<?	}?>
-            <li class="last_menu"><a href="<?=$url.rawurlencode('contact')?>">Contact</a></li>
+            <li class="last_menu"><a href="<?php echo $url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
-        Copyright © 2011 <?=$config['site_name']?> <a href="<?=$url?>"><?html_title_();?></a> |
+        Copyright © 2011 <?php echo $config['site_name']?> <a href="<?php echo $url?>"><?html_title_();?></a> |
         Powered by: <a href="http://github.com/djalmaoliveira/LiberSB">LiberSB</a>
         <br/>
         Website Template

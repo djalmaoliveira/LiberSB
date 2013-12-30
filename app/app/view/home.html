@@ -1,4 +1,4 @@
-<?html_header_('js','util.js')?>
+<?php html_header_('js','util.js')?>
 
 <div id="css_content_wrapper">
 
@@ -18,15 +18,15 @@
     <div id="css_content">
 
 
-		<?content_show_($content, $isSummary)?>
+		<?php content_show_($content, $isSummary)?>
 
         <div class="content_box">
 
             <h3>Most Commented</h3>
 
-			<?	foreach($commented as $content) {?>
-				<p><a href='<?content_url_($content)?>'><?=$content['title']?></a></p>
-			<?	}?>
+			<?php	foreach($commented as $content) {?>
+				<p><a href='<?php content_url_($content)?>'><?php echo $content['title']?></a></p>
+			<?php	}?>
 
             <div class="cleaner"></div>
         </div><div class="content_box_bottom"></div>
@@ -36,4 +36,4 @@
     <div class="cleaner"></div>
 
 </div>
-<?content_comment_form_();?>
+<?php content_comment_form_();?>

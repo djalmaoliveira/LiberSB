@@ -1,5 +1,5 @@
 <?php
-Liber::loadModel('TableModel');
+Liber::loadClass('TableModel');
 /**
 *   @package Content
 */
@@ -12,7 +12,7 @@ Liber::loadModel('TableModel');
 class ContentType extends TableModel {
 
     function __construct () {
-        parent::__construct();
+        parent::__construct( Liber::db('default') );
         $this->table   = 'content_type';
         $this->idField = 'content_type_id';
 
@@ -31,7 +31,7 @@ class ContentType extends TableModel {
     */
     function get($id) {
         if ( !is_numeric($id) ) {
-            $out = $this->searchBy('description', $id);
+            $out = $this->searchBy('description', $id)->fetchAll();
             if ( !$out ) { return false; }
             return $this->loadFrom($out[0]);
         } else {

@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title><?=html_title_();?></title>
-	<?html_header_('css', 'admin.css?v=1')?>
-	<script type="text/javascript" src="<? url_asset_('/js/jquery.js?v=142')?>"></script>
-	<?html_header_('js','sha1.js');?>
-    <? html_header_(); ?>
+	<title><?php echo html_title_();?></title>
+	<?php html_header_('css', 'admin.css?v=1')?>
+	<script type="text/javascript" src="<?php url_asset_('/js/jquery.js?v=142')?>"></script>
+	<?php html_header_('js','sha1.js');?>
+    <?php html_header_(); ?>
 </head>
 <body>
 
-<?=$content ?>
+<?php echo $content ?>
 
 </body>
 </html>

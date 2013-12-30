@@ -1,4 +1,4 @@
-<?
+<?php
 html_header_('css', 'superfish.css?v=1');
 html_header_('js', 'hoverIntent.js?v=1');
 html_header_('js', 'superfish.js?v=1');
@@ -19,8 +19,8 @@ html_header_('js', 'util.js?v=1');
             <li>
                 <a href="#topics">Topics</a>
 				<ul>
-					<li><a href="javascript:loadPage('<?url_to_('/admin/topic/search')?>')">Search</a></li>
-					<li><a href="javascript:loadPage('<?url_to_('/admin/topic/edit')?>')">New</a></li>
+					<li><a href="javascript:loadPage('<?php url_to_('/admin/topic/search')?>')">Search</a></li>
+					<li><a href="javascript:loadPage('<?php url_to_('/admin/topic/edit')?>')">New</a></li>
 				</ul>
 
             </li>
@@ -28,33 +28,33 @@ html_header_('js', 'util.js?v=1');
             <li class="current">
                 <a href="#content">Content</a>
                 <ul>
-                    <?  foreach($content_menu as $content_type_id => $menu) { ?>
+                    <?php  foreach($content_menu as $content_type_id => $menu) { ?>
                             <li class="current">
-                                <a href="javascript:void()"><?=$menu['description']?></a>
+                                <a href="javascript:void()"><?php echo $menu['description']?></a>
                                 <ul>
-                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/search?content_type_id='.$content_type_id)?>')">Search</a></li>
-                                    <li><a href="javascript:loadPage('<?url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">New</a></li>
+                                    <li><a href="javascript:loadPage('<?php url_to_('/admin/content/search?content_type_id='.$content_type_id)?>')">Search</a></li>
+                                    <li><a href="javascript:loadPage('<?php url_to_('/admin/content/edit?content_type_id='.$content_type_id)?>')">New</a></li>
                                 </ul>
                             </li>
 
-                    <?  } ?>
+                    <?php  } ?>
                 </ul>
             </li>
             <li class="current">
                 <a href="#">Comments</a>
 				<ul>
 
-						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/search')?>')">Search</a></li>
-						<li><a href="javascript:loadPage('<?url_to_('/admin/comment/waiting')?>')">Waiting</a></li>
+						<li><a href="javascript:loadPage('<?php url_to_('/admin/comment/search')?>')">Search</a></li>
+						<li><a href="javascript:loadPage('<?php url_to_('/admin/comment/waiting')?>')">Waiting</a></li>
 
 				</ul>
             </li>
 
             <li>
-                <a href="javascript:loadPage('<?url_to_('/admin/setting')?>?t=<?=$token?>')">Settings</a>
+                <a href="javascript:loadPage('<?php url_to_('/admin/setting')?>?t=<?php echo $token?>')">Settings</a>
             </li>
             <li>
-                <a href="<?url_to_('/admin/logout')?>?t=<?=$token?>">Logout</a>
+                <a href="<?php url_to_('/admin/logout')?>?t=<?php echo $token?>">Logout</a>
             </li>
 
     </ul>

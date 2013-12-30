@@ -1,4 +1,4 @@
-<?
+<?php
 html_title_( implode(' » ', $pageName) );
 html_header_('js', 'util.js');
 ?>
@@ -20,8 +20,8 @@ html_header_('js', 'util.js');
     </div> <!-- end of sidebar -->
 
     <div id="css_content">
-    <div id="location">You are seeing » <?=implode(' » ',$pageName)?></div>
-    <?
+    <div id="location">You are seeing » <?php echo implode(' » ',$pageName)?></div>
+    <?php
 		if ( count($contents) != 0 ) {
 			foreach ($contents as $content) {
 				content_show_($content, $isSummary);
@@ -47,9 +47,9 @@ html_header_('js', 'util.js');
 
 
 
-	<?	}?>
+	<?php	}?>
     </div> <!-- end of content -->
 
     <div class="cleaner"></div>
 </div>
-<?=content_comment_form_();?>
+<?php echo content_comment_form_();?>

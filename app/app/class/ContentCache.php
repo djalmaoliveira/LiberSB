@@ -26,7 +26,7 @@ class ContentCache extends Funky {
 		list($oContent, $oContType) = Liber::loadModel( Array('Content', 'ContentType'),  true );
 
 		$aUrl = pathinfo( str_replace($this->urlPattern, '', $url) );
-		$contents = $oContent->searchBy('permalink', $aUrl['filename']);
+		$contents = $oContent->searchBy('permalink', $aUrl['filename'])->fetchAll();
 
 		// detect if has more than one content with the same permalink, but different content_type
 		foreach ($contents as $aContent) {
