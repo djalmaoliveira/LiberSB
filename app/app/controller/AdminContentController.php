@@ -47,7 +47,7 @@ class AdminContentController extends Controller {
 					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content' => $aContent)) );
 				} else {
 					Liber::log()->add('Document can\'t be saved.','error');
-					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
+					die( jsonout('error', implode($oContent->errors()) ) ) ;
 				}
 			}
 			die( jsonout('error', 'Please reload this page.' ) ) ;
@@ -100,7 +100,7 @@ class AdminContentController extends Controller {
 				if ( $oContent->delete( Http::post('content_id') ) ) {
 					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
 				} else {
-					die( jsonout('error', implode($oContent->buildFriendlyErrorMsg()) ) ) ;
+					die( jsonout('error', implode($oContent->errors()) ) ) ;
 				}
 			} else {
 				die( jsonout('error', 'Please reload search page.' ) ) ;

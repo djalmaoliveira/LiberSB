@@ -5,13 +5,10 @@
  */
 class FeedController extends Controller{
 
-    var $oTPL;
-
     function __construct($p) {
         parent::__construct($p);
         Liber::loadHelper(Array('Url', 'HTML'));
 		Liber::loadModel('Config');
-        $this->oTPL = $this->view()->template();
     }
 
 

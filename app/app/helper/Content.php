@@ -28,7 +28,7 @@ function content_show_($aContent, $isSummary=true, $return=false) {
 	$aData['content']   = &$aContent;
 	$aData['url_encoded'] = rawurlencode(rawurldecode($aData['url']));
 	$v 				    = new View();
-	$html 			    = $v->load('content.html', $aData, true);
+	$html 			    = $v->element('content.html', $aData, true);
     if ($return) return $html;
     echo $html;
 }
@@ -55,7 +55,7 @@ function content_comment_form_() {
 	Liber::loadHelper('Util', 'APP');
 	Liber::loadHelper('Form');
 	$aData['action']     = url_to_('/comment', true);
-	return Liber::controller()->view()->load('comment_form.html', $aData, true);
+	return Liber::controller()->view()->element('comment_form.html', $aData, true);
 }
 
 
@@ -70,7 +70,7 @@ function content_comment_show_($aComment, $return=false) {
 
 	$aData['comment']   = &$aComment;
 	$v 				    = new View();
-	$html 			    = $v->load('comment.html', $aData, true);
+	$html 			    = $v->element('comment.html', $aData, true);
 
     if ($return) return $html;
     echo $html;

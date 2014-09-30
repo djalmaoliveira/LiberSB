@@ -5,13 +5,12 @@
  */
 class MainController extends Controller{
 
-    var $oTPL;
 
     function __construct($p) {
         parent::__construct($p);
         Liber::loadHelper(Array('Url', 'HTML'));
 		Liber::loadModel('Config');
-        $this->oTPL = $this->view()->template();
+        $this->view()->template('default.html');
     }
 
 
@@ -23,7 +22,7 @@ class MainController extends Controller{
 		$aData['content']	= Liber::loadModel('Content', true)->lastContent();
 		$aData['commented'] = Liber::loadModel('Comment', true)->mostCommented();
 
-		$this->oTPL->load('home.html', $aData);
+		$this->view()->load('home.html', $aData);
     }
 
     public function admin() {
@@ -73,7 +72,7 @@ class MainController extends Controller{
 			$aData['isSummary']   = true;
             $aData['contents']    = $oContent->lastContentsByType( $oContType->field('content_type_id') );
             $aData['pageName']    = Array($oContType->field('description'));
-            $this->oTPL->load('list.html', $aData);
+            $this->view()->load('list.html', $aData);
         } else {
             Liber::loadController(Liber::conf('PAGE_NOT_FOUND'), true)->index($action);
         }
@@ -86,7 +85,7 @@ class MainController extends Controller{
 		$aData['isSummary']   = true;
         $aData['contents'] = $oContent->searchContent( Http::post('search') );
         $aData['pageName'] = Array('Search results for "'.Http::post('search').'"');
-        $this->oTPL->load('list.html', $aData);
+        $this->view()->load('list.html', $aData);
     }
 
     public function contact() {
@@ -117,7 +116,7 @@ class MainController extends Controller{
 
         $aData['token']  = $oSec->token(true);
         $aData['action'] = url_current_(true);
-        $this->oTPL->load('contact.html', $aData);
+        $this->view()->load('contact.html', $aData);
     }
 
     public function recents() {
@@ -125,7 +124,7 @@ class MainController extends Controller{
         Liber::loadHelper('Content', 'APP');
         $oContent      = Liber::loadModel('Content', true);
         $aData['list'] = $oContent->lastContents();
-        $this->view()->load('sidebar.html', $aData);
+        $this->view()->element('sidebar.html', $aData);
     }
 
 

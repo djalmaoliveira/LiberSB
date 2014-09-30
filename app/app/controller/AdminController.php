@@ -6,15 +6,13 @@
  */
 class AdminController extends Controller{
 
-    var $oTPL;
 
     function __construct($p) {
         parent::__construct($p);
 		session_cache_expire (30);
 
         Liber::loadHelper(Array('Url', 'HTML'));
-        $this->oTPL = $this->view()->template();
-        $this->oTPL->model('admin.html');
+        $this->view()->template('admin.html');
 
 		Liber::loadModel('User');
     }
@@ -54,7 +52,7 @@ class AdminController extends Controller{
 
         $aData['content_menu'] = &$aMenu;
 		$aData['token'] = User::token();
-		$this->oTPL->load('admin/admin_home.html', $aData);
+		$this->view()->load('admin/admin_home.html', $aData);
     }
 
 	function login() {
@@ -74,7 +72,7 @@ class AdminController extends Controller{
 
 		$aData['action']= url_to_('/admin/login', true );
 		$aData['token'] = User::token(true);
-		$this->oTPL->load('admin/login.html', $aData);
+		$this->view()->load('admin/login.html', $aData);
 	}
 
 	function logout() {
@@ -118,7 +116,7 @@ class AdminController extends Controller{
 						$aData['action'] = url_to_('/admin/changepass', true );
 						$aData['token']  = Http::get('token');
 						$aData['user']   = &$aUser;
-						$this->oTPL->load('admin/recover_change_password.html', $aData);
+						$this->view()->load('admin/recover_change_password.html', $aData);
 						exit;
 					} else {
 						die( "This resource is not avaiable." );
@@ -129,7 +127,7 @@ class AdminController extends Controller{
 
 		$aData['action']= url_to_('/admin/recover', true );
 		$aData['token'] = User::token(true);
-		$this->oTPL->load('admin/recover_password.html', $aData);
+		$this->view()->load('admin/recover_password.html', $aData);
 	}
 
 	function changepass() {

@@ -45,7 +45,7 @@ class CommentController extends Controller {
 
 					die(jsonout('ok', 'Comment sent successfully.'));
 				} else {
-					$errors = $oComment->buildFriendlyErrorMsg();
+					$errors = $oComment->errors();
 					die(jsonout('error', 'Please fill fields with correct information and try again.<br/>'.implode('<br/>', $errors)));
 				}
 			} else {

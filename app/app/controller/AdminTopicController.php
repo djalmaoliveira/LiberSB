@@ -39,7 +39,7 @@ class AdminTopicController extends Controller {
 					die( jsonout('ok', Array('text'=>'Document saved at '.date('H:i:s'), 'content_type_id'=>$oContType->field('content_type_id'))) );
 				} else {
 					Liber::log()->add('Document can\'t be saved.','error');
-					die( jsonout('error', implode($oContType->buildFriendlyErrorMsg()) ) ) ;
+					die( jsonout('error', implode($oContType->errors()) ) ) ;
 				}
 			}
 			die( jsonout('error', 'Please reload this page.' ) ) ;
@@ -73,7 +73,7 @@ class AdminTopicController extends Controller {
 					Liber::loadClass('SiteMapCache', 'APP', true)->cleanCache();
 					die( jsonout('ok', 'Document deleted successfully.' ) ) ;
 				} else {
-					die( jsonout('error', implode($oContType->buildFriendlyErrorMsg()) ) ) ;
+					die( jsonout('error', implode($oContType->errors()) ) ) ;
 				}
 			} else {
 				die( jsonout('error', 'Please reload search page.' ) ) ;

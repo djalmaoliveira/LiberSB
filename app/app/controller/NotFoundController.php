@@ -2,12 +2,10 @@
 
 class NotFoundController extends Controller{
 
-    var $oTPL;
-
     function __construct( $p=Array() ) {
         parent::__construct($p);
         Liber::loadHelper( Array('Url', 'HTML') );
-        $this->oTPL = $this->view()->template();
+        $this->view()->template('default.html');
     }
 
 
@@ -35,7 +33,7 @@ class NotFoundController extends Controller{
     protected function show404() {
         header('HTTP/1.0 404 Not Found');
 
-        $this->oTPL->load('notfound.html', Array('url'=>rawurldecode(url_current_(true))));
+        $this->view()->load('notfound.html', Array('url'=>rawurldecode(url_current_(true))));
     }
 
 }

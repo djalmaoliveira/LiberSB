@@ -48,7 +48,7 @@ class AdminSettingController extends Controller {
 				cleancache();
 				die( jsonout('ok','Configurations saved successfully.') );
 			} else {
-				die( jsonout('error',implode($oConfig->buildFriendlyErrorMsg())) );
+				die( jsonout('error',implode($oConfig->errors())) );
 			}
 		}
 		die( jsonout('error','Please reload this page.') );
@@ -90,7 +90,7 @@ class AdminSettingController extends Controller {
 			if ( $oUser->save() ) {
 				die( jsonout('ok', date('h:i:s')) );
 			} else {
-				die( jsonout('error', $oUser->buildFriendlyErrorMsg()) );
+				die( jsonout('error', $oUser->errors()) );
 			}
 
 		}

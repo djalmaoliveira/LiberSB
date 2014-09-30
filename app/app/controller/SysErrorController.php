@@ -6,10 +6,10 @@ class SysErrorController extends Controller {
         Liber::loadHelper('HTML');
         header('HTTP/1.0 500 Not Found');
 
-
-        $this->view()->template()->load('syserror.html', Array());
+        $this->view()->template('default.html');
+        $this->view()->load('syserror.html', Array());
         $oConfig = Liber::loadModel('Config', true);
-        $oMail = Liber::loadClass("Mailer",true);
+        $oMail   = Liber::loadClass("Mailer",true);
         $oMail->to($oConfig->data('contact_email'));
         $oMail->from($oConfig->data('contact_email'));
         $oMail->subject("Warning from ".Liber::conf('APP_URL'));

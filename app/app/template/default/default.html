@@ -10,7 +10,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<?php html_meta_(); ?>
-	<title><?php echo html_title_();?></title>
+	<title><?php html_title_();?></title>
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php url_asset_('/css/main.css?v=11')?>"/>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo html_title_();?>" href="<?php echo $url_rss?>" />
 	<script type="text/javascript" src="<?php url_asset_('/js/jquery.js?v=142')?>"></script>
@@ -47,10 +47,10 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
                 <?php  }?>
 				<?php 	if ( $config['facebook_url'] ) {?>
 					<a href='<?php echo $config['facebook_url']?>' title='Go to Facebook page'><img src="<?php url_asset_('/image/facebook.png')?>" alt="Facebook"/></a>
-				<?	}?>
+				<?php	}?>
 				<?php 	if ( $config['twitter_url'] ) {?>
 					<a href='<?php echo $config['twitter_url']?>' title='Go to Twitter page'><img src="<?php url_asset_('/image/twitter.png')?>" alt="Twitter"/></a>
-				<?	}?>
+				<?php	}?>
 				<a href='<?php echo $url_rss?>' title='Lasts Contents'><img src="<?php url_asset_('/image/rss.png')?>" alt="Feed"/></a>
 			</div>
 		</div>
@@ -66,7 +66,7 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
             <li><h2><a href="<?php echo $url?>" >Home</a></h2></li>
 			<?php  foreach($topics as $aContType) {?>
 				<li><h2><a href="<?php echo $url.rawurlencode($aContType['description'])?>" ><?php echo $aContType['description']?></a></h2></li>
-			<?	}?>
+			<?php	}?>
             <li><h2><a href="<?php echo $url.rawurlencode('contact')?>">Contact</a></h2></li>
         </ul>
 
@@ -85,11 +85,11 @@ $topics = Liber::loadModel('ContentType', true)->listByStatus('A');
             <li><a href="<?php echo $url?>" >Home</a></li>
 			<?php  foreach($topics as $aContType) {?>
 				<li><a href="<?php echo $url.rawurlencode($aContType['description'])?>" ><?php echo $aContType['description']?></a></li>
-			<?	}?>
+			<?php	}?>
             <li class="last_menu"><a href="<?php echo $url.rawurlencode('contact')?>">Contact</a></li>
         </ul>
 
-        Copyright © 2011 <?php echo $config['site_name']?> <a href="<?php echo $url?>"><?html_title_();?></a> |
+        Copyright © 2011 <?php echo $config['site_name']?> <a href="<?php echo $url?>"><?php html_title_();?></a> |
         Powered by: <a href="http://github.com/djalmaoliveira/LiberSB">LiberSB</a>
         <br/>
         Website Template

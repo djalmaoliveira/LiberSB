@@ -62,13 +62,20 @@ class ContentCache extends Funky {
 		$aData['contents'] = Array( &$parts['content'] );
 		$aData['pageName'] = Array(&$parts['contentType']['description'], &$parts['content']['title']);
 		$aData['isSummary'] = false;
-		$funky_cache = Liber::controller()->view()->template()->load('list.html', $aData, true);
+		$funky_cache = Liber::controller()->view()->load('list.html', $aData, true);
 		Liber::loadClass('Minify');
 		$funky_cache = Minify::html($funky_cache);
 
 		$file = str_replace(url_to_('/', true), Liber::conf('APP_ROOT'), rawurldecode($this->url($parts['content'])));
 		if ( $this->put($file, $funky_cache ) ) {
-			return $funky_cache;
+
+            // avoid Http 404 when see comments
+            $comment_path_dir = dirname($file).'/'.$parts['content']['title'];
+            if ( !file_exists($comment_path_dir) ) {
+                mkdir( $comment_path_dir , 0775, true);
+            }
+
+            return $funky_cache;
 		}
     }
 
