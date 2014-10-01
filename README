@@ -14,7 +14,7 @@ Features
 How to install
 -------------------------------------
 
-- Download from http://github.com/djalmaoliveira/LiberSB/tarball/master;
+- Download from https://github.com/djalmaoliveira/LiberSB/releases;
 - Extract to a folder;
 - Copy the folder 'app/' (this can be renamed to what you want) to your 'public_html' on web server;
 - You have to change the owner of 'app/' folder to the same as web server user, using "sudo chown -R www-data:www-data app/";

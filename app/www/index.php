@@ -1,6 +1,6 @@
 <?php
 include '../Liber/Liber.php';
-Liber::setup();
+Liber::loadApp('../app/');
 Liber::conf('BASE_PATH', realpath('../Liber/').'/');
 Liber::conf('APP_PATH', realpath('../app/').'/');
 Liber::conf('APP_MODE', 'PROD');
@@ -90,10 +90,10 @@ if ( $_REQUEST['step'] == 'info' ) {
 if ( ($_REQUEST['step'])==2 and $_POST) {
     $oSession->val('database', $_POST);
     if ( ($aDbConfig = $oSession->val('database')) ) {
-        Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
+        Liber::$aDbConfig = Array('default'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
     }
 
-    $db = Liber::db('PROD');
+    $db = Liber::db('default');
     if ( !$db ) {
         $error = "Wrong database connection, please fill correct informations.";
     }
@@ -108,7 +108,7 @@ if ( ($_REQUEST['step'])==2 and $_POST) {
     }
 } else {
     if ( ($aDbConfig = $oSession->val('database')) ) {
-        Liber::$aDbConfig = Array('PROD'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
+        Liber::$aDbConfig = Array('default'=>Array($aDbConfig['server'],$aDbConfig['database'],$aDbConfig['user'],$aDbConfig['password'], 'mysql'));
     }
 }
 
@@ -162,7 +162,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 </head>
 <body>
     <h1>Welcome to Liber Simple Blog Wizard Installer</h1>
-    <?
+    <?php
         $nav = '';
         switch( $_REQUEST['step'] ) {
             case 4:
@@ -178,7 +178,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
 
     <h2><?php echo $nav?></h2>
 
-    <?
+    <?php
         if ( $_REQUEST['step'] == 1 ) {
     ?>
 
@@ -187,18 +187,18 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 <h3>Step <?php echo $_REQUEST['step']?>: MySQL database settings</h3>
                 <p>Please fill correct informations about your database connection.</p>
                 <form method='post' action='<?php echo $action?>' id='frm' onsubmit='return false;'>
-                    <?form_hidden_('step', '2')?>
+                    <?php form_hidden_('step', '2')?>
                     <p>
-                        <div class='field_name'>Server name:</div><?form_input_('server',$oSession->val('database'),"title='IP or Hostname of mysql server'")?>
+                        <div class='field_name'>Server name:</div><?php form_input_('server',$oSession->val('database'),"title='IP or Hostname of mysql server'")?>
                     </p>
                     <p>
-                        <div class='field_name'>Database name:</div><?form_input_('database',$oSession->val('database'), "title='Existing database name'")?>
+                        <div class='field_name'>Database name:</div><?php form_input_('database',$oSession->val('database'), "title='Existing database name'")?>
                     </p>
                     <p>
-                        <div class='field_name'>User:</div><?form_input_('user',$oSession->val('database'), "title='Database User name'")?>
+                        <div class='field_name'>User:</div><?php form_input_('user',$oSession->val('database'), "title='Database User name'")?>
                     </p>
                     <p>
-                        <div class='field_name'>Password:</div><?form_password_('password', $oSession->val('database'), "title='Database Password'")?>
+                        <div class='field_name'>Password:</div><?php form_password_('password', $oSession->val('database'), "title='Database Password'")?>
                     </p>
                 </form>
                 <script>
@@ -209,14 +209,14 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 <?php  if ( isset($error) ) {?>
                     <p class='msg_error'><?php echo $error?></p>
                 <?php  }?>
-                <?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
+                <?php form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
             </div>
         </div>
     <?php  }?>
 
 
 
-    <?
+    <?php
         if ( $_REQUEST['step'] == 2 ) {
     ?>
 
@@ -225,24 +225,24 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 <h3>Step <?php echo $_REQUEST['step']?>: Application settings</h3>
                 <p>Please fill correct informations about your application.</p>
                 <form method='post' action='<?php echo $action?>' id='frm' onsubmit='return false;'>
-                    <?form_hidden_('step', '3')?>
+                    <?php form_hidden_('step', '3')?>
                     <p>
-                        <div class='field_name'>Site Name:</div><?form_input_('site_name',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
+                        <div class='field_name'>Site Name:</div><?php form_input_('site_name',$oSession->val('app'),"title='Put your site name.(i.e. my blog)'")?>
                     </p>
                     <p>
-                        <div class='field_name'>Contact Email:</div><?form_input_('contact_email',$oSession->val('app'), "title='Put a default email address to receive messages.'")?>
+                        <div class='field_name'>Contact Email:</div><?php form_input_('contact_email',$oSession->val('app'), "title='Put a default email address to receive messages.'")?>
                     </p>
                     <p>
-                        <div class='field_name'>Facebook URL:</div><?form_input_('facebook_url',$oSession->val('app'), "title='If you have a Facebook account, put here your URL.'")?> (optional)
+                        <div class='field_name'>Facebook URL:</div><?php form_input_('facebook_url',$oSession->val('app'), "title='If you have a Facebook account, put here your URL.'")?> (optional)
                     </p>
                     <p>
-                        <div class='field_name'>Twitter URL:</div><?form_input_('twitter_url',$oSession->val('app'), "title='If you have a Twitter account, put here your URL.'")?> (optional)
+                        <div class='field_name'>Twitter URL:</div><?php form_input_('twitter_url',$oSession->val('app'), "title='If you have a Twitter account, put here your URL.'")?> (optional)
                     </p>
                     <p>
-                        <div class='field_name'>Login:</div><?form_input_('login',$oSession->val('app'), "title='Administrator User to allow access administration area.'")?>
+                        <div class='field_name'>Login:</div><?php form_input_('login',$oSession->val('app'), "title='Administrator User to allow access administration area.'")?>
                     </p>
                     <p>
-                        <div class='field_name'>Password:</div><?form_password_('password',$oSession->val('app'), "title='Administrator Password'")?>
+                        <div class='field_name'>Password:</div><?php form_password_('password',$oSession->val('app'), "title='Administrator Password'")?>
                     </p>
 
                 </form>
@@ -254,7 +254,7 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                 <?php  if ( isset($error) ) {?>
                     <p class='msg_error'><?php echo $error?></p>
                 <?php  }?>
-                <?form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
+                <?php form_button_('btnContinue', 'Continue', 'onclick="_next()"')?>
             </div>
         </div>
     <?php  }
@@ -390,11 +390,11 @@ if ( ($_REQUEST['step'])==3 and $_POST) {
                         <div class='form_area'>
                             <div id='content_area'>
                             <h2>Congratulations, your blog is ready.</h2>
-                            <h3><a href='<?url_to_('/')?>' target='_blank'>Go to Blog</a></h3>
-                            <h3><a href='<?url_to_('/admin')?>' target='_blank'>Go to Administration</a></h3>
+                            <h3><a href='<?php url_to_('/')?>' target='_blank'>Go to Blog</a></h3>
+                            <h3><a href='<?php url_to_('/admin')?>' target='_blank'>Go to Administration</a></h3>
                             </div>
                         </div>
-                        <?
+                        <?php
                     }
                 }
             } else {
