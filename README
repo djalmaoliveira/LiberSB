@@ -22,6 +22,7 @@ How to install
 - And you should see a Install Wizard;
 - After install go to http://yourdomain/app/admin, to start to fill your blog content;
 
+
 Recommendations
 -------------------------------------
 - Use .htaccess, to get friendly URLs.
